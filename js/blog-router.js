@@ -209,7 +209,7 @@ const BlogRouter = {
           const postItem = document.createElement('div');
           postItem.className = 'blog-post-related-item';
           postItem.innerHTML = `
-            <h4><a href="/blog.html/${relatedPost.slug}">${relatedPost.title}</a></h4>
+            <h4><a href="/main/blog.html/${relatedPost.slug}">${relatedPost.title}</a></h4>
             <p>${relatedPost.formattedDate || 'Recently'}</p>
           `;
           relatedPostsContainer.appendChild(postItem);
@@ -232,7 +232,7 @@ const BlogRouter = {
         postItem.innerHTML = `
           <strong>${latestPost.title}</strong>
           <p>${latestPost.formattedDate || 'Recently'}</p>
-          <a href="/blog.html/${latestPost.slug}" class="read-more">Read More</a>
+          <a href="/main/blog.html/${latestPost.slug}" class="read-more">Read More</a>
         `;
         latestPostsContainer.appendChild(postItem);
       });
@@ -252,7 +252,7 @@ const BlogRouter = {
         <div class="error-message">
           <h2>${title}</h2>
           <p>${message}</p>
-          <p><a href="/blog.html" class="cta-button" style="margin-top: 20px;">View All Blog Posts</a></p>
+          <p><a href="/main/blog.html" class="cta-button" style="margin-top: 20px;">View All Blog Posts</a></p>
         </div>
       `;
     } else {

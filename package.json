@@ -1,0 +1,39 @@
+{
+  "name": "smart-live-tv",
+  "version": "1.0.0",
+  "description": "Sports streaming website",
+  "main": "index.js",
+  "scripts": {
+    "sass": "sass scss/main.scss:css/styles.css && sass scss/main.scss:css/styles.min.css --style compressed",
+    "sass:watch": "sass scss/main.scss:css/styles.css --watch",
+    "build": "npm run sass",
+    "dev": "npm run sass:watch"
+  },
+  "keywords": [
+    "sports",
+    "streaming",
+    "scss"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "^1.85.1"
+  },
+  "dependencies": {
+    "braces": "^3.0.3",
+    "chokidar": "^4.0.3",
+    "detect-libc": "^1.0.3",
+    "fill-range": "^7.1.1",
+    "immutable": "^5.0.3",
+    "is-extglob": "^2.1.1",
+    "is-glob": "^4.0.3",
+    "is-number": "^7.0.0",
+    "micromatch": "^4.0.8",
+    "node-addon-api": "^7.1.1",
+    "picomatch": "^2.3.1",
+    "readdirp": "^4.1.2",
+    "source-map-js": "^1.2.1",
+    "to-regex-range": "^5.0.1"
+  },
+  "type": "commonjs"
+}

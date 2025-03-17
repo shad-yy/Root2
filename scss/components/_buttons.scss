@@ -1,0 +1,26 @@
+.cta-button {
+  display: inline-block;
+  padding: $spacing-sm $spacing-md;
+  background-color: $primary-color;
+  color: $light-text;
+  border-radius: $border-radius;
+  font-weight: $font-weight-medium;
+  text-align: center;
+  cursor: pointer;
+  transition: $transition-base;
+  
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+  
+  &.outline {
+    background-color: transparent;
+    border: 1px solid $primary-color;
+    color: $primary-color;
+    
+    &:hover {
+      background-color: $primary-color;
+      color: $light-text;
+    }
+  }
+} 

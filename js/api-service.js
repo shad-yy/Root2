@@ -15,6 +15,7 @@
 // Import the configuration
 import CONFIG from './config.js';
 import DataProcessor from './data-processor.js';
+import ErrorHandler from './error-handler.js';
 
 /**
  * Cache manager for sports data
@@ -1158,7 +1159,7 @@ const ApiService = {
     const cacheKey = `f1_calendar_${season}`;
     
     // Check cache first
-    const cachedData = this.dataCache.get(cacheKey);
+    const cachedData = this.cache.get(cacheKey);
     if (cachedData) {
       return Promise.resolve(cachedData);
     }
@@ -1167,18 +1168,18 @@ const ApiService = {
     const options = {
       method: 'GET',
       headers: {
-        'X-RapidAPI-Key': CONFIG.API.KEY,
+        'X-RapidAPI-Key': CONFIG.API_KEY,
         'X-RapidAPI-Host': CONFIG.ENDPOINTS.F1_HOST
       }
     };
     
-    return this.fetchWithRetry(endpoint, options)
+    return this.fetchWithCache(endpoint, {}, cacheKey, CONFIG.CACHE_DURATION.F1_SCHEDULE, options)
       .then(data => {
         // Process F1 calendar data
         const processedData = DataProcessor.processF1Calendar(data);
         
         // Cache the processed data
-        this.dataCache.set(cacheKey, processedData, CONFIG.API.CACHE_DURATION);
+        this.cache.set(cacheKey, processedData, CONFIG.CACHE_DURATION.F1_SCHEDULE);
         
         return processedData;
       })
@@ -1199,7 +1200,7 @@ const ApiService = {
     const cacheKey = `f1_driver_standings_${season}`;
     
     // Check cache first
-    const cachedData = this.dataCache.get(cacheKey);
+    const cachedData = this.cache.get(cacheKey);
     if (cachedData) {
       return Promise.resolve(cachedData);
     }
@@ -1208,18 +1209,18 @@ const ApiService = {
     const options = {
       method: 'GET',
       headers: {
-        'X-RapidAPI-Key': CONFIG.API.KEY,
+        'X-RapidAPI-Key': CONFIG.API_KEY,
         'X-RapidAPI-Host': CONFIG.ENDPOINTS.F1_HOST
       }
     };
     
-    return this.fetchWithRetry(endpoint, options)
+    return this.fetchWithCache(endpoint, {}, cacheKey, CONFIG.CACHE_DURATION.F1_STANDINGS, options)
       .then(data => {
         // Process F1 driver standings data
         const processedData = DataProcessor.processF1DriverStandings(data);
         
         // Cache the processed data
-        this.dataCache.set(cacheKey, processedData, CONFIG.API.CACHE_DURATION);
+        this.cache.set(cacheKey, processedData, CONFIG.CACHE_DURATION.F1_STANDINGS);
         
         return processedData;
       })
@@ -1240,7 +1241,7 @@ const ApiService = {
     const cacheKey = `f1_constructor_standings_${season}`;
     
     // Check cache first
-    const cachedData = this.dataCache.get(cacheKey);
+    const cachedData = this.cache.get(cacheKey);
     if (cachedData) {
       return Promise.resolve(cachedData);
     }
@@ -1249,18 +1250,18 @@ const ApiService = {
     const options = {
       method: 'GET',
       headers: {
-        'X-RapidAPI-Key': CONFIG.API.KEY,
+        'X-RapidAPI-Key': CONFIG.API_KEY,
         'X-RapidAPI-Host': CONFIG.ENDPOINTS.F1_HOST
       }
     };
     
-    return this.fetchWithRetry(endpoint, options)
+    return this.fetchWithCache(endpoint, {}, cacheKey, CONFIG.CACHE_DURATION.F1_STANDINGS, options)
       .then(data => {
         // Process F1 constructor standings data
         const processedData = DataProcessor.processF1ConstructorStandings(data);
         
         // Cache the processed data
-        this.dataCache.set(cacheKey, processedData, CONFIG.API.CACHE_DURATION);
+        this.cache.set(cacheKey, processedData, CONFIG.CACHE_DURATION.F1_STANDINGS);
         
         return processedData;
       })
@@ -1270,6 +1271,609 @@ const ApiService = {
         // Return dummy data as fallback
         return this.getDummyF1ConstructorStandings(season);
       });
+  },
+
+  /**
+   * Make an API request
+   * @param {string} type - API type (FOOTBALL, UFC, F1, BOXING)
+   * @param {string} endpoint - API endpoint
+   * @param {Object} params - Query parameters
+   * @returns {Promise<Object>} - API response
+   */
+  async makeRequest(type, endpoint, params = {}) {
+    // Check if mock data is enabled
+    if (CONFIG.FEATURES.USE_MOCK_DATA) {
+      return this.getMockData(type, endpoint, params);
+    }
+    
+    // Check cache
+    const cacheKey = this.getCacheKey(type, endpoint, params);
+    const cachedData = this.cache.get(cacheKey);
+    if (cachedData) {
+      console.log(`Using cached data for ${cacheKey}`);
+      return cachedData;
+    }
+    
+    // Show loading state
+    this.showLoading(type, endpoint);
+    
+    try {
+      // Build request URL
+      const baseUrl = CONFIG.ENDPOINTS[type].BASE;
+      const url = new URL(`${baseUrl}${endpoint}`);
+      
+      // Add query parameters
+      for (const key in params) {
+        url.searchParams.append(key, params[key]);
+      }
+      
+      // Make request
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: CONFIG.HEADERS[type]
+      });
+      
+      // Check for error response
+      if (!response.ok) {
+        throw new Error(`API responded with status: ${response.status}`);
+      }
+      
+      // Parse response
+      const data = await response.json();
+      
+      // Cache response
+      if (CONFIG.CACHE.ENABLED) {
+        this.saveToCache(cacheKey, data, type, endpoint);
+      }
+      
+      // Hide loading state
+      this.hideLoading(type, endpoint);
+      
+      return data;
+    } catch (error) {
+      // Handle error
+      console.error(`API request failed for ${type} ${endpoint}:`, error);
+      
+      // Hide loading state
+      this.hideLoading(type, endpoint);
+      
+      // Show error message
+      this.showError(type, endpoint, error.message);
+      
+      // Return fallback data from error handler
+      return ErrorHandler.handleApiError(error, `${type}/${endpoint}`, params);
+    }
+  },
+
+  /**
+   * Generate cache key from request parameters
+   * @param {string} type - API type
+   * @param {string} endpoint - API endpoint
+   * @param {Object} params - Request parameters
+   * @returns {string} - Cache key
+   */
+  getCacheKey(type, endpoint, params) {
+    return `${type}_${endpoint}_${JSON.stringify(params)}`;
+  },
+
+  /**
+   * Save data to cache
+   * @param {string} key - Cache key
+   * @param {Object} data - Data to cache
+   * @param {string} type - API type
+   * @param {string} endpoint - API endpoint
+   */
+  saveToCache(key, data, type, endpoint) {
+    // Determine TTL based on endpoint type
+    let ttl = CONFIG.CACHE.TTL.MATCHES; // Default
+    
+    if (endpoint.includes('standings') || endpoint.includes('rankings')) {
+      ttl = CONFIG.CACHE.TTL.STANDINGS;
+    } else if (endpoint.includes('events') || endpoint.includes('races')) {
+      ttl = CONFIG.CACHE.TTL.EVENTS;
+    }
+    
+    // Save to cache with expiration
+    this.cache.set(key, {
+      data: data,
+      expires: Date.now() + (ttl * 1000)
+    }, ttl);
+    
+    console.log(`Cached data for ${key} (expires in ${ttl} seconds)`);
+  },
+
+  /**
+   * Get data from cache
+   * @param {string} key - Cache key
+   * @returns {Object|null} - Cached data or null if not found/expired
+   */
+  getFromCache(key) {
+    const cacheItem = this.cache.get(key);
+    
+    // Check if item exists and is not expired
+    if (cacheItem && cacheItem.expires > Date.now()) {
+      return cacheItem.data;
+    }
+    
+    // Remove expired item
+    if (cacheItem) {
+      this.cache.delete(key);
+    }
+    
+    return null;
+  },
+
+  /**
+   * Clean expired cache items
+   */
+  cleanCache() {
+    const now = Date.now();
+    let count = 0;
+    
+    for (const key in this.cache) {
+      if (this.cache.get(key).expires <= now) {
+        this.cache.delete(key);
+        count++;
+      }
+    }
+    
+    if (count > 0) {
+      console.log(`Cleaned ${count} expired cache items`);
+    }
+  },
+
+  /**
+   * Show loading state for API request
+   * @param {string} type - API type
+   * @param {string} endpoint - API endpoint
+   */
+  showLoading(type, endpoint) {
+    // Determine loading container based on type and endpoint
+    let container = '';
+    
+    if (type === 'FOOTBALL') {
+      if (endpoint.includes('matches')) {
+        container = '.football-matches';
+      } else if (endpoint.includes('standings')) {
+        container = '.football-standings';
+      }
+    } else if (type === 'UFC') {
+      if (endpoint.includes('events')) {
+        container = '.ufc-events';
+      } else if (endpoint.includes('rankings')) {
+        container = '.ufc-rankings';
+      }
+    } else if (type === 'F1') {
+      if (endpoint.includes('races')) {
+        container = '.f1-races';
+      } else if (endpoint.includes('drivers')) {
+        container = '.f1-drivers';
+      } else if (endpoint.includes('constructors')) {
+        container = '.f1-constructors';
+      }
+    } else if (type === 'BOXING') {
+      if (endpoint.includes('events')) {
+        container = '.boxing-events';
+      }
+    }
+    
+    // Show loading indicator
+    if (container) {
+      const loadingHtml = `
+        <div class="loading-indicator">
+          <div class="spinner"></div>
+          <p>Loading data...</p>
+        </div>
+      `;
+      
+      const containerElement = document.querySelector(container);
+      if (containerElement) {
+        containerElement.innerHTML = loadingHtml;
+      }
+    }
+  },
+  
+  /**
+   * Hide loading state for API request
+   * @param {string} type - API type
+   * @param {string} endpoint - API endpoint
+   */
+  hideLoading(type, endpoint) {
+    // This will be handled by the component that renders the data
+  },
+  
+  /**
+   * Show error message for API request
+   * @param {string} type - API type
+   * @param {string} endpoint - API endpoint
+   * @param {string} message - Error message
+   */
+  showError(type, endpoint, message) {
+    // Determine error container based on type and endpoint
+    let container = '';
+    
+    if (type === 'FOOTBALL') {
+      if (endpoint.includes('matches')) {
+        container = '.football-matches';
+      } else if (endpoint.includes('standings')) {
+        container = '.football-standings';
+      }
+    } else if (type === 'UFC') {
+      if (endpoint.includes('events')) {
+        container = '.ufc-events';
+      } else if (endpoint.includes('rankings')) {
+        container = '.ufc-rankings';
+      }
+    } else if (type === 'F1') {
+      if (endpoint.includes('races')) {
+        container = '.f1-races';
+      } else if (endpoint.includes('drivers')) {
+        container = '.f1-drivers';
+      } else if (endpoint.includes('constructors')) {
+        container = '.f1-constructors';
+      }
+    } else if (type === 'BOXING') {
+      if (endpoint.includes('events')) {
+        container = '.boxing-events';
+      }
+    }
+    
+    // Show error message
+    if (container) {
+      const errorHtml = `
+        <div class="error-message">
+          <i class="fas fa-exclamation-circle"></i>
+          <p>Unable to load data. Using cached or mock data.</p>
+          <small>${message}</small>
+        </div>
+      `;
+      
+      const containerElement = document.querySelector(container);
+      if (containerElement) {
+        containerElement.innerHTML = errorHtml;
+      }
+    }
+  },
+
+  // ========== MOCK DATA METHODS ==========
+
+  /**
+   * Get mock data for testing without API
+   * @param {string} type - API type
+   * @param {string} endpoint - API endpoint
+   * @param {Object} params - Query parameters
+   * @returns {Object} - Mock data
+   */
+  getMockData(type, endpoint, params) {
+    console.log(`Using mock data for ${type} ${endpoint}`);
+    
+    // Return different mock data based on type and endpoint
+    if (type === 'FOOTBALL') {
+      if (endpoint.includes('matches')) {
+        return this.getMockFootballMatches();
+      } else if (endpoint.includes('standings')) {
+        return this.getMockFootballStandings();
+      }
+    } else if (type === 'UFC') {
+      if (endpoint.includes('events')) {
+        return this.getMockUFCEvents();
+      } else if (endpoint.includes('rankings')) {
+        return this.getMockUFCRankings();
+      }
+    } else if (type === 'F1') {
+      if (endpoint.includes('races')) {
+        return this.getMockF1Races();
+      } else if (endpoint.includes('drivers')) {
+        return this.getMockF1DriverStandings();
+      } else if (endpoint.includes('constructors')) {
+        return this.getMockF1ConstructorStandings();
+      }
+    } else if (type === 'BOXING') {
+      if (endpoint.includes('events')) {
+        return this.getMockBoxingEvents();
+      }
+    }
+    
+    // Default empty response
+    return { response: [] };
+  },
+  
+  /**
+   * Get mock football matches
+   * @returns {Object} - Mock matches data
+   */
+  getMockFootballMatches() {
+    return {
+      response: [
+        {
+          fixture: {
+            id: 1,
+            date: '2023-11-04T15:00:00+00:00',
+            status: { short: 'NS' },
+            venue: { name: 'Old Trafford', city: 'Manchester' }
+          },
+          league: {
+            id: 39,
+            name: 'Premier League',
+            country: 'England',
+            logo: 'https://media.api-sports.io/football/leagues/39.png'
+          },
+          teams: {
+            home: {
+              id: 33,
+              name: 'Manchester United',
+              logo: 'https://media.api-sports.io/football/teams/33.png'
+            },
+            away: {
+              id: 42,
+              name: 'Arsenal',
+              logo: 'https://media.api-sports.io/football/teams/42.png'
+            }
+          },
+          goals: { home: null, away: null }
+        },
+        {
+          fixture: {
+            id: 2,
+            date: '2023-11-05T16:30:00+00:00',
+            status: { short: 'NS' },
+            venue: { name: 'Anfield', city: 'Liverpool' }
+          },
+          league: {
+            id: 39,
+            name: 'Premier League',
+            country: 'England',
+            logo: 'https://media.api-sports.io/football/leagues/39.png'
+          },
+          teams: {
+            home: {
+              id: 40,
+              name: 'Liverpool',
+              logo: 'https://media.api-sports.io/football/teams/40.png'
+            },
+            away: {
+              id: 50,
+              name: 'Manchester City',
+              logo: 'https://media.api-sports.io/football/teams/50.png'
+            }
+          },
+          goals: { home: null, away: null }
+        }
+      ]
+    };
+  },
+  
+  /**
+   * Get mock football standings
+   * @returns {Object} - Mock standings data
+   */
+  getMockFootballStandings() {
+    return {
+      response: [
+        {
+          league: {
+            id: 39,
+            name: 'Premier League',
+            country: 'England',
+            logo: 'https://media.api-sports.io/football/leagues/39.png',
+            standings: [
+              [
+                {
+                  rank: 1,
+                  team: {
+                    id: 50,
+                    name: 'Manchester City',
+                    logo: 'https://media.api-sports.io/football/teams/50.png'
+                  },
+                  points: 26,
+                  goalsDiff: 14,
+                  all: {
+                    played: 10,
+                    win: 8,
+                    draw: 2,
+                    lose: 0
+                  }
+                },
+                {
+                  rank: 2,
+                  team: {
+                    id: 42,
+                    name: 'Arsenal',
+                    logo: 'https://media.api-sports.io/football/teams/42.png'
+                  },
+                  points: 24,
+                  goalsDiff: 12,
+                  all: {
+                    played: 10,
+                    win: 7,
+                    draw: 3,
+                    lose: 0
+                  }
+                },
+                {
+                  rank: 3,
+                  team: {
+                    id: 40,
+                    name: 'Liverpool',
+                    logo: 'https://media.api-sports.io/football/teams/40.png'
+                  },
+                  points: 23,
+                  goalsDiff: 11,
+                  all: {
+                    played: 10,
+                    win: 7,
+                    draw: 2,
+                    lose: 1
+                  }
+                },
+                {
+                  rank: 4,
+                  team: {
+                    id: 47,
+                    name: 'Tottenham',
+                    logo: 'https://media.api-sports.io/football/teams/47.png'
+                  },
+                  points: 20,
+                  goalsDiff: 7,
+                  all: {
+                    played: 10,
+                    win: 6,
+                    draw: 2,
+                    lose: 2
+                  }
+                },
+                {
+                  rank: 5,
+                  team: {
+                    id: 66,
+                    name: 'Aston Villa',
+                    logo: 'https://media.api-sports.io/football/teams/66.png'
+                  },
+                  points: 19,
+                  goalsDiff: 7,
+                  all: {
+                    played: 10,
+                    win: 6,
+                    draw: 1,
+                    lose: 3
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      ]
+    };
+  },
+  
+  /**
+   * Get mock UFC events
+   * @returns {Object} - Mock UFC events data
+   */
+  getMockUFCEvents() {
+    return {
+      response: [
+        {
+          id: 1,
+          name: 'UFC 307: Jones vs Aspinall',
+          date: '2023-11-11T22:00:00+00:00',
+          location: 'T-Mobile Arena, Las Vegas, USA',
+          status: 'upcoming',
+          fights: [
+            {
+              id: 101,
+              title: 'Heavyweight Championship',
+              fighters: [
+                {
+                  id: 1001,
+                  name: 'Jon Jones',
+                  record: '26-1-0',
+                  image: '/main/images/fighters/jon-jones.jpg'
+                },
+                {
+                  id: 1002,
+                  name: 'Tom Aspinall',
+                  record: '14-3-0',
+                  image: '/main/images/fighters/tom-aspinall.jpg'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: 2,
+          name: 'UFC Fight Night: Cannonier vs Imavov',
+          date: '2023-11-18T22:00:00+00:00',
+          location: 'UFC APEX, Las Vegas, USA',
+          status: 'upcoming',
+          fights: [
+            {
+              id: 102,
+              title: 'Middleweight Main Event',
+              fighters: [
+                {
+                  id: 1003,
+                  name: 'Jared Cannonier',
+                  record: '16-6-0',
+                  image: '/main/images/fighters/jared-cannonier.jpg'
+                },
+                {
+                  id: 1004,
+                  name: 'Nassourdine Imavov',
+                  record: '12-4-0',
+                  image: '/main/images/fighters/nassourdine-imavov.jpg'
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+  },
+  
+  /**
+   * Get mock boxing events
+   * @returns {Object} - Mock boxing events data
+   */
+  getMockBoxingEvents() {
+    return {
+      response: [
+        {
+          id: 1,
+          name: 'Fury vs Usyk',
+          date: '2023-12-23T22:00:00+00:00',
+          location: 'Wembley Stadium, London, UK',
+          status: 'upcoming',
+          fights: [
+            {
+              id: 101,
+              title: 'Heavyweight Unification',
+              fighters: [
+                {
+                  id: 1001,
+                  name: 'Tyson Fury',
+                  record: '33-0-1',
+                  image: '/main/images/fighters/tyson-fury.jpg'
+                },
+                {
+                  id: 1002,
+                  name: 'Oleksandr Usyk',
+                  record: '20-0-0',
+                  image: '/main/images/fighters/oleksandr-usyk.jpg'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: 2,
+          name: 'Canelo vs Benavidez',
+          date: '2023-11-30T22:00:00+00:00',
+          location: 'T-Mobile Arena, Las Vegas, USA',
+          status: 'upcoming',
+          fights: [
+            {
+              id: 102,
+              title: 'Super Middleweight Championship',
+              fighters: [
+                {
+                  id: 1003,
+                  name: 'Saul "Canelo" Alvarez',
+                  record: '59-2-2',
+                  image: '/main/images/fighters/canelo-alvarez.jpg'
+                },
+                {
+                  id: 1004,
+                  name: 'David Benavidez',
+                  record: '27-0-0',
+                  image: '/main/images/fighters/david-benavidez.jpg'
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    };
   }
 };
 

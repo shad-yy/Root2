@@ -1,34 +1,40 @@
 /**
- * SMART Live TV - Enhanced Configuration
+ * SMART Live TV - Configuration File
  * 
  * This file contains all configurable parameters for the website
  * including API keys, endpoints, refresh intervals, and feature flags.
  * 
- * Enhanced version with better organization, clearer documentation,
- * and expanded configuration options for all website features.
+ * ===== IMPORTANT: CONFIGURATION INSTRUCTIONS =====
+ * 1. Replace the API_KEY value with your actual RapidAPI key
+ * 2. Verify all API endpoints match your subscribed APIs
+ * 3. Update the SITE information to match your domain
+ * 4. Adjust feature flags as needed
  */
 
 const CONFIG = {
-  // Site information
+  // ===== SITE INFORMATION =====
+  // Update these values to match your domain and preferences
   SITE: {
     NAME: 'SMART Live TV',
     DOMAIN: 'smartlivetv.net',
     BASE_URL: 'https://smartlivetv.net',
-    MAIN_PATH: '/main', // Path to main site files
+    MAIN_PATH: '/main', // Path to main site files (IMPORTANT: must match your directory structure)
     SHOP_URL: 'https://smartlivetv.net/shop',
     DEFAULT_TITLE: 'SMART Live TV – The Ultimate Sports Streaming & News Hub',
     DEFAULT_DESCRIPTION: 'Watch live sports streaming in HD - football, basketball, UFC, F1 and more. Get real-time scores, rankings and sports news.'
   },
   
-  // API configuration
+  // ===== API CONFIGURATION =====
+  // Replace with your actual API key from RapidAPI
   API: {
-    KEY: 'e0d3bf230amsha7e9bcaa7a18fe2p1fb71cjsn8076650ec333', // Replace with your actual API key
+    KEY: 'e0d3bf230amsha7e9bcaa7a18fe2p1fb71cjsn8076650ec333', // REPLACE THIS with your actual RapidAPI key
     CACHE_DURATION: 3600, // Default cache duration in seconds (1 hour)
     RETRY_ATTEMPTS: 3,
     RETRY_DELAY: 1000 // Initial retry delay in ms
   },
   
-  // API endpoints
+  // ===== API ENDPOINTS =====
+  // Verify these match your subscribed APIs on RapidAPI
   ENDPOINTS: {
     // Base URLs
     BASE_URL: 'https://allsportsapi2.p.rapidapi.com',
@@ -41,33 +47,49 @@ const CONFIG = {
     
     // UFC/MMA APIs
     UFC_FIGHTERS_HOST: 'ufc-fighters.p.rapidapi.com',
-    UFC_RANKINGS: '/rankings',
-    UFC_FIGHTER_SEARCH: '/fighters/search',
     UFC_EVENTS: '/events',
+    UFC_FIGHTERS: '/fighters',
+    UFC_RANKINGS: '/rankings',
     
     // F1 APIs
     F1_HOST: 'formula-1-standings.p.rapidapi.com',
     F1_CALENDAR: '/races',
     F1_DRIVER_STANDINGS: '/driver-standings',
     F1_CONSTRUCTOR_STANDINGS: '/constructor-standings',
-    F1_RACE_RESULTS: '/race-results',
+    
+    // Boxing APIs
+    BOXING_HOST: 'boxing-live-unofficial.p.rapidapi.com',
+    BOXING_EVENTS: '/events',
+    BOXING_FIGHTERS: '/fighters',
     
     // News APIs
     NEWS_HOST: 'sports-news-api.p.rapidapi.com',
     NEWS_HEADLINES: '/headlines',
-    TRENDING_TOPICS: '/trending'
+    NEWS_TRENDING: '/trending'
   },
   
-  // Feature flags
+  // ===== DATA REFRESH INTERVALS =====
+  // Time in milliseconds between data refreshes
+  REFRESH_INTERVALS: {
+    LIVE_SCORES: 60000, // 1 minute
+    STANDINGS: 3600000, // 1 hour
+    NEWS: 1800000, // 30 minutes
+    FEATURED_EVENTS: 3600000 // 1 hour
+  },
+  
+  // ===== FEATURE FLAGS =====
+  // Enable/disable features
   FEATURES: {
-    BLOG_AUTO_GENERATION: true,
+    DARK_MODE: true,
+    AUTO_REFRESH: true,
     REMINDERS: true,
     LIVE_SCORES: true,
     DARK_MODE: true,
-    NEWSLETTER: true
+    NEWSLETTER: true,
+    ERROR_TRACKING: true
   },
   
-  // Blog configuration
+  // ===== BLOG CONFIGURATION =====
   BLOG: {
     POSTS_PER_DAY: 5,
     STORAGE_KEY: 'blogPosts',
@@ -79,7 +101,7 @@ const CONFIG = {
     }
   },
   
-  // Reminder configuration
+  // ===== REMINDER CONFIGURATION =====
   REMINDERS: {
     STORAGE_KEY: 'eventReminders',
     CHECK_INTERVAL: 60000, // Check every minute
@@ -90,7 +112,7 @@ const CONFIG = {
     }
   },
   
-  // Placeholder images
+  // ===== PLACEHOLDER IMAGES =====
   PLACEHOLDER_IMAGES: {
     TEAM: '/main/images/placeholder-team.png',
     PLAYER: '/main/images/placeholder-player.png',

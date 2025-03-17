@@ -1,0 +1,44 @@
+.loading {
+  @include flex(row, center, center);
+  min-height: 200px;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: $border-radius-circle;
+    border: 3px solid $border;
+    border-top-color: $accent;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-lg;
+  
+  i {
+    font-size: 2rem;
+    color: $primary-color;
+    margin-bottom: $spacing-sm;
+  }
+  
+  span {
+    color: $gray-600;
+  }
+}
+
+.center-spinner {
+  min-height: 200px;
+} 

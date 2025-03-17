@@ -1,0 +1,27 @@
+.site-header {
+  background-color: $bg-primary;
+  @include box-shadow($shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: $spacing-md 0;
+
+  .header-content {
+    @include flex(row, space-between, center);
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+
+    &-text {
+      color: $text-primary;
+    }
+
+    &-highlight {
+      color: $primary-color;
+    }
+  }
+}
+
+// Basic header styles will go here 

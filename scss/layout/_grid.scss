@@ -1,0 +1,64 @@
+.container {
+  width: 100%;
+  max-width: $container-max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $spacing-md;
+  padding-right: $spacing-md;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -$spacing-md;
+  margin-right: -$spacing-md;
+}
+
+// Create basic grid columns
+@for $i from 1 through 12 {
+  .col-#{$i} {
+    width: percentage($i / 12);
+    padding-left: $spacing-md;
+    padding-right: $spacing-md;
+  }
+}
+
+// Responsive grid
+@include respond-to(md) {
+  @for $i from 1 through 12 {
+    .col-md-#{$i} {
+      width: percentage($i / 12);
+    }
+  }
+}
+
+@include respond-to(sm) {
+  @for $i from 1 through 12 {
+    .col-sm-#{$i} {
+      width: percentage($i / 12);
+    }
+  }
+  
+  .col-sm-full {
+    width: 100%;
+  }
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: $spacing-lg;
+  margin: $spacing-xl 0;
+
+  @include respond-to('large') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond-to('medium') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.news-grid {
+  @extend .content-grid;
+} 

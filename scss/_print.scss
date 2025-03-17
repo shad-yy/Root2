@@ -1,0 +1,37 @@
+body {
+  color: #000 !important;
+  background: #fff !important;
+}
+
+.site-header,
+.mobile-menu,
+.cta-button,
+.newsletter-section,
+.footer {
+  display: none !important;
+}
+
+.container {
+  width: 100% !important;
+  max-width: none !important;
+  padding: 0 !important;
+}
+
+a {
+  text-decoration: none !important;
+  color: #000 !important;
+
+  &::after {
+    content: " (" attr(href) ")";
+  }
+}
+
+.page-hero {
+  background: none !important;
+  color: #000 !important;
+  padding: 1rem 0 !important;
+
+  &::before {
+    display: none !important;
+  }
+} 

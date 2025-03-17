@@ -1,0 +1,62 @@
+@media print {
+  // General print styles
+  body {
+    background-color: white;
+    color: black;
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+  
+  // Hide unnecessary elements
+  .site-header,
+  .mobile-menu,
+  .site-footer,
+  .sidebar,
+  .cta-button,
+  .mobile-cta,
+  .social-links,
+  .mobile-menu-btn,
+  .header-actions {
+    display: none !important;
+  }
+  
+  // Ensure links show their URLs
+  a {
+    color: black;
+    text-decoration: underline;
+    
+    &::after {
+      content: " (" attr(href) ")";
+      font-size: 0.9em;
+    }
+    
+    &[href^="#"]::after,
+    &[href^="javascript:"]::after {
+      content: "";
+    }
+  }
+  
+  // Ensure page breaks are clean
+  h1, h2, h3, h4, h5, h6,
+  img {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+  
+  p, h2, h3 {
+    orphans: 3;
+    widows: 3;
+  }
+  
+  // Ensure images print correctly
+  img {
+    max-width: 100% !important;
+  }
+  
+  // Add a margin to the body
+  @page {
+    margin: 2cm;
+  }
+} 
+
+// Print styles will go here 

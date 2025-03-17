@@ -1,0 +1,142 @@
+// Media Queries
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: $breakpoint-xs) { @content; }
+  } @else if $breakpoint == sm {
+    @media (max-width: $breakpoint-sm) { @content; }
+  } @else if $breakpoint == md {
+    @media (max-width: $breakpoint-md) { @content; }
+  } @else if $breakpoint == lg {
+    @media (max-width: $breakpoint-lg) { @content; }
+  } @else if $breakpoint == xl {
+    @media (max-width: $breakpoint-xl) { @content; }
+  } @else if $breakpoint == xxl {
+    @media (max-width: $breakpoint-xxl) { @content; }
+  }
+}
+
+// Flexbox
+@mixin flex($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
+}
+
+// Grid utilities
+@mixin grid($columns: repeat(auto-fill, minmax(250px, 1fr)), $gap: $spacing-md) {
+  display: grid;
+  grid-template-columns: $columns;
+  gap: $gap;
+}
+
+// Font styling
+@mixin font-style($size: $font-size-base, $weight: $font-weight-normal, $line-height: $line-height-base) {
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $line-height;
+}
+
+// Container
+@mixin container($max-width: $container-max-width, $padding: 0 $spacing-md) {
+  width: 100%;
+  max-width: $max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding: $padding;
+}
+
+// Truncate text with ellipsis
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Clearfix
+@mixin clearfix {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+// Button styles
+@mixin button-variant($bg, $color, $hover-bg, $hover-color) {
+  background-color: $bg;
+  color: $color;
+  
+  &:hover, &:focus {
+    background-color: $hover-bg;
+    color: $hover-color;
+  }
+}
+
+// Card styles
+@mixin card($padding: $spacing-md, $bg: white, $radius: $border-radius) {
+  padding: $padding;
+  border-radius: $radius;
+  background-color: $bg;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+// Absolute position
+@mixin absolute($top: auto, $right: auto, $bottom: auto, $left: auto) {
+  position: absolute;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+// Fixed position
+@mixin fixed($top: auto, $right: auto, $bottom: auto, $left: auto) {
+  position: fixed;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+// Center element absolutely
+@mixin center-absolute {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Transition
+@mixin transition($property: all, $duration: 0.3s, $timing: ease) {
+  transition: $property $duration $timing;
+}
+
+// Hide visually but keep accessible for screen readers
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Transitions
+@mixin transition($properties...) {
+  $transitions: ();
+  @each $property in $properties {
+    $transitions: append($transitions, $property $transition-normal, comma);
+  }
+  transition: $transitions;
+}
+
+// Box Shadow
+@mixin box-shadow($shadow) {
+  -webkit-box-shadow: $shadow;
+  box-shadow: $shadow;
+} 

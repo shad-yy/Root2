@@ -1,0 +1,77 @@
+.form-group {
+  margin-bottom: $spacing-md;
+
+  label {
+    display: block;
+    margin-bottom: $spacing-xs;
+    font-weight: $font-weight-medium;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="tel"],
+  select,
+  textarea {
+    width: 100%;
+    padding: $spacing-sm;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    transition: $transition-base;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+    }
+  }
+
+  textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 5l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right $spacing-md center;
+    padding-right: $spacing-xl;
+  }
+
+  &.checkbox-group {
+    display: flex;
+    align-items: flex-start;
+
+    input[type="checkbox"] {
+      margin-right: $spacing-sm;
+      margin-top: 0.25rem;
+    }
+  }
+}
+
+.form-status {
+  margin-top: $spacing-md;
+  padding: $spacing-sm;
+  border-radius: $border-radius;
+
+  &.success {
+    background-color: rgba($secondary-color, 0.1);
+    color: $secondary-color;
+  }
+
+  &.error {
+    background-color: rgba($primary-color, 0.1);
+    color: $primary-color;
+  }
+}
+
+.contact-form {
+  .submit-button {
+    margin-top: $spacing-md;
+    @extend .cta-button;
+  }
+}

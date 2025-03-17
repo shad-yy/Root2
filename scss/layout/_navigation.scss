@@ -1,0 +1,26 @@
+// Navigation styles will go here
+
+.main-nav {
+  ul {
+    @include flex;
+    gap: $spacing-lg;
+    list-style: none;
+  }
+
+  a {
+    color: $text-primary;
+    font-weight: 500;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius-sm;
+
+    &:hover,
+    &.active {
+      color: $primary-color;
+      background-color: $bg-secondary;
+    }
+  }
+
+  @include respond-to('medium') {
+    display: none;
+  }
+} 

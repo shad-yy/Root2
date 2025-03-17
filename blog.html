@@ -64,15 +64,15 @@
         <div class="logo">SMART<span> Live TV</span></div>
         <nav aria-label="Main Navigation">
           <ul class="nav-menu">
-            <li><a href="/index.html">Home</a></li>
-            <li><a href="/football.html">Football</a></li>
-            <li><a href="/ufc.html">UFC</a></li>
-            <li><a href="/f1.html">F1</a></li>
+            <li><a href="/main/index.html">Home</a></li>
+            <li><a href="/main/football.html">Football</a></li>
+            <li><a href="/main/ufc.html">UFC</a></li>
+            <li><a href="/main/f1.html">F1</a></li>
 
-            <li><a href="/boxing.html">Boxing</a></li>
-            <li><a href="/blog.html" class="active">Blog</a></li>
-            <li><a href="/about-us.html">About Us</a></li>
-            <li><a href="/contact.html">Contact</a></li>
+            <li><a href="/main/boxing.html">Boxing</a></li>
+            <li><a href="/main/blog.html" class="active">Blog</a></li>
+            <li><a href="/main/about-us.html">About Us</a></li>
+            <li><a href="/main/contact.html">Contact</a></li>
           </ul>
         </nav>
         <!-- Scripts -->
@@ -99,16 +99,16 @@
         <button class="mobile-menu-close">✕</button>
       </div>
       <ul class="mobile-menu-links">
-        <li><a href="/index.html">Home</a></li>
-        <li><a href="/football.html">Football</a></li>
+        <li><a href="/main/index.html">Home</a></li>
+        <li><a href="/main/football.html">Football</a></li>
         <li><a href="/basketball.html">Basketball</a></li>
-        <li><a href="/ufc.html">UFC</a></li>
-        <li><a href="/f1.html">F1</a></li>
+        <li><a href="/main/ufc.html">UFC</a></li>
+        <li><a href="/main/f1.html">F1</a></li>
 
-        <li><a href="/boxing.html">Boxing</a></li>
-        <li><a href="/blog.html">Blog</a></li>
-        <li><a href="/about-us.html">About Us</a></li>
-        <li><a href="/contact.html">Contact</a></li>
+        <li><a href="/main/boxing.html">Boxing</a></li>
+        <li><a href="/main/blog.html">Blog</a></li>
+        <li><a href="/main/about-us.html">About Us</a></li>
+        <li><a href="/main/contact.html">Contact</a></li>
       </ul>
       <button
         class="cta-button"
@@ -122,8 +122,8 @@
     <!-- Breadcrumbs -->
     <div class="container">
       <ul class="breadcrumbs">
-        <li><a href="/index.html">Home</a></li>
-        <li><a href="/blog.html">Blog</a></li>
+        <li><a href="/main/index.html">Home</a></li>
+        <li><a href="/main/blog.html">Blog</a></li>
         <li>{{blog_post_title}}</li>
       </ul>
     </div>
@@ -169,14 +169,14 @@
           <div class="sidebar-card">
             <h3 class="section-title">Popular Tags</h3>
             <div class="tags">
-              <a href="/blog.html/tag/football" class="tag">Football</a>
-              <a href="/blog.html/tag/ufc" class="tag">UFC</a>
-              <a href="/blog.html/tag/f1" class="tag">Formula 1</a>
-              <a href="/blog.html/tag/basketball" class="tag">Basketball</a>
-              <a href="/blog.html/tag/tennis" class="tag">Tennis</a>
-              <a href="/blog.html/tag/boxing" class="tag">Boxing</a>
-              <a href="/blog.html/tag/transfers" class="tag">Transfers</a>
-              <a href="/blog.html/tag/champions-league" class="tag"
+              <a href="/main/blog.html/tag/football" class="tag">Football</a>
+              <a href="/main/blog.html/tag/ufc" class="tag">UFC</a>
+              <a href="/main/blog.html/tag/f1" class="tag">Formula 1</a>
+              <a href="/main/blog.html/tag/basketball" class="tag">Basketball</a>
+              <a href="/main/blog.html/tag/tennis" class="tag">Tennis</a>
+              <a href="/main/blog.html/tag/boxing" class="tag">Boxing</a>
+              <a href="/main/blog.html/tag/transfers" class="tag">Transfers</a>
+              <a href="/main/blog.html/tag/champions-league" class="tag"
                 >Champions League</a
               >
             </div>
@@ -222,8 +222,8 @@
           <div class="footer-col">
             <h3>SMART Live TV</h3>
             <ul class="footer-links">
-              <li><a href="/about-us.html">About Us</a></li>
-              <li><a href="/contact.html">Contact</a></li>
+              <li><a href="/main/about-us.html">About Us</a></li>
+              <li><a href="/main/contact.html">Contact</a></li>
               <li><a href="/careers">Careers</a></li>
               <li><a href="/press">Press</a></li>
             </ul>
@@ -231,11 +231,11 @@
           <div class="footer-col">
             <h3>Sports</h3>
             <ul class="footer-links">
-              <li><a href="/football.html">Football</a></li>
-              <li><a href="/ufc.html">UFC/MMA</a></li>
-              <li><a href="/f1.html">Formula 1</a></li>
+              <li><a href="/main/football.html">Football</a></li>
+              <li><a href="/main/ufc.html">UFC/MMA</a></li>
+              <li><a href="/main/f1.html">Formula 1</a></li>
 
-              <li><a href="/boxing.html">Boxing</a></li>
+              <li><a href="/main/boxing.html">Boxing</a></li>
             </ul>
           </div>
           <div class="footer-col">
@@ -370,7 +370,7 @@
                 const postItem = document.createElement("div");
                 postItem.className = "blog-post-related-item";
                 postItem.innerHTML = `
-                                <h4><a href="/blog.html/${relatedPost.slug}">${
+                                <h4><a href="/main/blog.html/${relatedPost.slug}">${
                   relatedPost.title
                 }</a></h4>
                                 <p>${
@@ -396,7 +396,7 @@
               postItem.innerHTML = `
                             <strong>${latestPost.title}</strong>
                             <p>${latestPost.formattedDate || "Recently"}</p>
-                            <a href="/blog.html/${
+                            <a href="/main/blog.html/${
                               latestPost.slug
                             }" class="read-more">Read More</a>
                         `;
@@ -408,7 +408,7 @@
                         <div class="error-message">
                             <h2>Post Not Found</h2>
                             <p>The blog post you're looking for could not be found. It may have been removed or the URL is incorrect.</p>
-                            <p><a href="/blog.html" class="cta-button" style="margin-top: 20px;">View All Blog Posts</a></p>
+                            <p><a href="/main/blog.html" class="cta-button" style="margin-top: 20px;">View All Blog Posts</a></p>
                         </div>
                     `;
           }

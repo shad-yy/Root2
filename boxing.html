@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Watch live boxing matches, rankings, and upcoming fights - SMART Live TV">
+  <meta name="keywords" content="boxing, live boxing, boxing matches, boxing rankings, boxing news">
+  <title>Boxing - SMART Live TV</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  
+  <!-- Preload critical CSS -->
+  <link rel="preload" href="/css/styles.css" as="style">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/css/styles.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Open Graph tags for social sharing -->
+  <meta property="og:title" content="Boxing - SMART Live TV">
+  <meta property="og:description" content="Watch live boxing matches, rankings, and upcoming fights">
+  <meta property="og:image" content="images/og-boxing.jpg">
+  <meta property="og:url" content="https://smartlivetv.net/boxing.html">
+  <meta property="og:type" content="website">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <a href="/main/index.html">
+            <span class="logo-text">SMART<span class="logo-highlight">Live</span> TV</span>
+          </a>
+        </div>
+        
+        <button class="mobile-menu-btn">
+          <i class="fas fa-bars"></i>
+        </button>
+        
+        <nav class="main-nav">
+          <ul>
+            <li><a href="/main/index.html">Home</a></li>
+            <li><a href="/main/football.html">Football</a></li>
+            <li><a href="/main/ufc.html">UFC/MMA</a></li>
+            <li><a href="/main/f1.html">Formula 1</a></li>
+            <li><a href="/main/boxing.html" class="active">Boxing</a></li>
+            <li><a href="/main/blog.html">Blog</a></li>
+            <li><a href="/main/about.html">About Us</a></li>
+            <li><a href="/main/contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        
+        <div class="header-actions">
+          <a href="#" class="cta-button">Watch Live</a>
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <ul>
+      <li><a href="/main/index.html">Home</a></li>
+      <li><a href="/main/football.html">Football</a></li>
+      <li><a href="/main/ufc.html">UFC/MMA</a></li>
+      <li><a href="/main/f1.html">Formula 1</a></li>
+      <li><a href="/main/boxing.html" class="active">Boxing</a></li>
+      <li><a href="/main/blog.html">Blog</a></li>
+      <li><a href="/main/about.html">About Us</a></li>
+      <li><a href="/main/contact.html">Contact</a></li>
+      <li><a href="#" class="mobile-cta">Watch Live</a></li>
+    </ul>
+  </div>
+  
+  <!-- Hero Section -->
+  <section class="page-hero boxing-hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Live Boxing</h1>
+        <p>Watch the biggest boxing matches live and stay updated with upcoming fights, rankings, and news.</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Main Content -->
+  <main class="site-main">
+    <!-- Live Match Section -->
+    <section class="live-match-section">
+      <div class="container">
+        <h2 class="section-title">Live Now</h2>
+        <div id="live-match-container" class="live-match-container">
+          <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <span>Loading live matches...</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Upcoming Fights Section -->
+    <section class="upcoming-events-section">
+      <div class="container">
+        <h2 class="section-title">Upcoming Fights</h2>
+        <div id="upcoming-events" class="event-cards">
+          <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <span>Loading upcoming fights...</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Weight Class Rankings -->
+    <section class="rankings-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Boxing Rankings</h2>
+          <div class="section-filters">
+            <select id="weight-class-filter" class="filter-dropdown">
+              <option value="heavyweight">Heavyweight</option>
+              <option value="cruiserweight">Cruiserweight</option>
+              <option value="lightheavyweight">Light Heavyweight</option>
+              <option value="supermiddleweight">Super Middleweight</option>
+              <option value="middleweight">Middleweight</option>
+              <option value="superwelterweight">Super Welterweight</option>
+              <option value="welterweight">Welterweight</option>
+              <option value="superlightweight">Super Lightweight</option>
+              <option value="lightweight">Lightweight</option>
+              <option value="superfeatherweight">Super Featherweight</option>
+              <option value="featherweight">Featherweight</option>
+              <option value="superbantamweight">Super Bantamweight</option>
+              <option value="bantamweight">Bantamweight</option>
+              <option value="superflyweight">Super Flyweight</option>
+              <option value="flyweight">Flyweight</option>
+            </select>
+          </div>
+        </div>
+        
+        <div id="rankings-container" class="rankings-container">
+          <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <span>Loading rankings...</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- News Section -->
+    <section class="news-section">
+      <div class="container">
+        <h2 class="section-title">Boxing News</h2>
+        <div id="news-container" class="news-grid">
+          <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <span>Loading news...</span>
+          </div>
+        </div>
+        <div class="view-more-container">
+          <a href="/main/blog.html?category=boxing" class="view-more-btn">View More News</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3>About</h3>
+          <p>SMART Live TV is your ultimate destination for live sports streaming, real-time scores, and in-depth sports analysis.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Sports</h3>
+          <ul class="footer-links">
+            <li><a href="/main/football.html">Football</a></li>
+            <li><a href="/main/ufc.html">UFC/MMA</a></li>
+            <li><a href="/main/f1.html">Formula 1</a></li>
+            <li><a href="/main/boxing.html">Boxing</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="/main/blog.html">Blog</a></li>
+            <li><a href="/main/about.html">About Us</a></li>
+            <li><a href="/main/contact.html">Contact</a></li>
+            <li><a href="/main/privacy.html">Privacy Policy</a></li>
+            <li><a href="/main/terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Contact</h3>
+          <ul class="contact-info">
+            <li><i class="fas fa-envelope"></i> info@smartlivetv.net</li>
+            <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+            <li><i class="fas fa-map-marker-alt"></i> 123 Sports Avenue, NY 10001</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <div class="copyright">
+          &copy; 2023 SMART Live TV. All rights reserved.
+        </div>
+        <div class="data-update-info">
+          <small>Data is updated in real-time</small>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- JavaScript -->
+  <script type="module" src="js/config.js"></script>
+  <script type="module" src="js/error-handler.js"></script>
+  <script type="module" src="js/api-service.js"></script>
+  <script type="module" src="js/reminder-service.js"></script>
+  <script type="module" src="js/blog-service.js"></script>
+  <script type="module" src="js/boxing.js"></script>
+</body>
+</html> 

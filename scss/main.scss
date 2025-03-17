@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+/*
+* SMART Live TV - Sports Streaming Platform
+* Main Stylesheet
+* Version: 1.0.0
+*/
+
+// Abstracts
+@import 'abstracts/variables';
+@import 'abstracts/functions';
+@import 'abstracts/mixins';
+
+// Base styles
+@import 'base/reset';
+@import 'base/typography';
+
+// Components
+@import 'components/buttons';
+@import 'components/forms';
+@import 'components/cards';
+@import 'components/loader';
+
+// Layout
+@import 'layout/grid';
+@import 'layout/header';
+@import 'layout/navigation';
+@import 'layout/footer';
+
+// Pages
+@import 'pages/home';
+@import 'pages/about';
+@import 'pages/contact';
+@import 'pages/sports';
+@import 'pages/blog';
+@import 'pages/policy';
+
+// Themes
+@import 'themes/default';
+
+// Print styles
+@import 'base/print'; 

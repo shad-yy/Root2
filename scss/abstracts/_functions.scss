@@ -1,0 +1,32 @@
+// Convert pixels to rem
+@function rem($pixels) {
+  @return calc($pixels / 16) + rem;
+}
+
+// Get color from map
+@function get-color($color) {
+  @if map-has-key($colors, $color) {
+    @return map-get($colors, $color);
+  }
+  @warn "Unknown color: #{$color}.";
+  @return null;
+}
+
+// Z-index management
+@function z($layer) {
+  @if map-has-key($z-layers, $layer) {
+    @return map-get($z-layers, $layer);
+  }
+  @warn "Unknown z-index layer: #{$layer}.";
+  @return null;
+}
+
+// Lighten color
+@function tint($color, $percentage) {
+  @return mix(white, $color, $percentage);
+}
+
+// Darken color
+@function shade($color, $percentage) {
+  @return mix(black, $color, $percentage);
+} 

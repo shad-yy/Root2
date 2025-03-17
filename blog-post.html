@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Article on SMART Live TV - Sports news, analysis, and insights">
+  <meta name="keywords" content="sports news, sports article, sports analysis">
+  <title>Blog Post - SMART Live TV</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  
+  <!-- Preload critical CSS -->
+  <link rel="preload" href="/css/styles.css" as="style">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/css/styles.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Open Graph tags for social sharing (dynamically set by JavaScript) -->
+  <meta property="og:type" content="article">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <a href="/main/index.html">
+            <span class="logo-text">SMART<span class="logo-highlight">Live</span> TV</span>
+          </a>
+        </div>
+        
+        <button class="mobile-menu-btn">
+          <i class="fas fa-bars"></i>
+        </button>
+        
+        <nav class="main-nav">
+          <ul>
+            <li><a href="/main/index.html">Home</a></li>
+            <li><a href="/main/football.html">Football</a></li>
+            <li><a href="/main/ufc.html">UFC/MMA</a></li>
+            <li><a href="/main/f1.html">Formula 1</a></li>
+            <li><a href="/main/boxing.html">Boxing</a></li>
+            <li><a href="/main/blog.html" class="active">Blog</a></li>
+            <li><a href="/main/about.html">About Us</a></li>
+            <li><a href="/main/contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        
+        <div class="header-actions">
+          <a href="#" class="cta-button">Watch Live</a>
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <ul>
+      <li><a href="/main/index.html">Home</a></li>
+      <li><a href="/main/football.html">Football</a></li>
+      <li><a href="/main/ufc.html">UFC/MMA</a></li>
+      <li><a href="/main/f1.html">Formula 1</a></li>
+      <li><a href="/main/boxing.html">Boxing</a></li>
+      <li><a href="/main/blog.html" class="active">Blog</a></li>
+      <li><a href="/main/about.html">About Us</a></li>
+      <li><a href="/main/contact.html">Contact</a></li>
+      <li><a href="#" class="mobile-cta">Watch Live</a></li>
+    </ul>
+  </div>
+  
+  <!-- Main Content -->
+  <main class="site-main">
+    <div class="container">
+      <div class="blog-post-wrapper">
+        <!-- Blog Post Loading State -->
+        <div id="blog-post-loading" class="loading-spinner center-spinner">
+          <i class="fas fa-spinner fa-spin"></i>
+          <span>Loading article...</span>
+        </div>
+        
+        <!-- Blog Post Content (will be populated by JavaScript) -->
+        <article id="blog-post-content" class="blog-post-content" style="display: none;">
+          <!-- Content loaded dynamically -->
+        </article>
+        
+        <!-- Error Message (shown if post cannot be loaded) -->
+        <div id="blog-post-error" class="error-message" style="display: none;">
+          <i class="fas fa-exclamation-circle"></i>
+          <p>There was an error loading the article.</p>
+          <p>The article may not exist or there might be a temporary issue.</p>
+          <div class="error-actions">
+            <button class="retry-btn" id="retry-load-post">Retry</button>
+            <a href="/main/blog.html" class="return-btn">Return to Blog</a>
+          </div>
+        </div>
+        
+        <!-- Related Posts -->
+        <section id="related-posts-section" class="related-posts-section" style="display: none;">
+          <h2 class="section-title">Related Articles</h2>
+          <div id="related-posts" class="related-posts-grid">
+            <!-- Related posts loaded dynamically -->
+          </div>
+        </section>
+        
+        <!-- Newsletter -->
+        <section class="newsletter-section">
+          <div class="newsletter-container">
+            <div class="newsletter-content">
+              <h2>Subscribe to Our Newsletter</h2>
+              <p>Get the latest sports news and updates delivered straight to your inbox.</p>
+              <form id="newsletter-form" class="newsletter-form">
+                <div class="form-group">
+                  <input type="email" id="newsletter-email" name="email" placeholder="Your email address" required>
+                  <button type="submit" class="newsletter-submit">Subscribe</button>
+                </div>
+                <div id="newsletter-status" class="form-status"></div>
+              </form>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+      <!-- Sidebar -->
+      <aside class="blog-sidebar">
+        <div class="sidebar-widget">
+          <h3 class="widget-title">Popular Posts</h3>
+          <div id="popular-posts" class="popular-posts">
+            <div class="loading-spinner">
+              <i class="fas fa-spinner fa-spin"></i>
+              <span>Loading popular posts...</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="sidebar-widget">
+          <h3 class="widget-title">Categories</h3>
+          <div id="categories-list" class="categories-list">
+            <div class="loading-spinner">
+              <i class="fas fa-spinner fa-spin"></i>
+              <span>Loading categories...</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="sidebar-widget">
+          <h3 class="widget-title">Tags</h3>
+          <div id="tags-cloud" class="tags-cloud">
+            <div class="loading-spinner">
+              <i class="fas fa-spinner fa-spin"></i>
+              <span>Loading tags...</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3>About</h3>
+          <p>SMART Live TV is your ultimate destination for live sports streaming, real-time scores, and in-depth sports analysis.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Sports</h3>
+          <ul class="footer-links">
+            <li><a href="/main/football.html">Football</a></li>
+            <li><a href="/main/ufc.html">UFC/MMA</a></li>
+            <li><a href="/main/f1.html">Formula 1</a></li>
+            <li><a href="/main/boxing.html">Boxing</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="/main/blog.html">Blog</a></li>
+            <li><a href="/main/about.html">About Us</a></li>
+            <li><a href="/main/contact.html">Contact</a></li>
+            <li><a href="/main/privacy.html">Privacy Policy</a></li>
+            <li><a href="/main/terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Contact</h3>
+          <ul class="contact-info">
+            <li><i class="fas fa-envelope"></i> info@smartlivetv.net</li>
+            <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+            <li><i class="fas fa-map-marker-alt"></i> 123 Sports Avenue, NY 10001</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <div class="copyright">
+          &copy; 2023 SMART Live TV. All rights reserved.
+        </div>
+        <div class="data-update-info">
+          <small>Data is updated in real-time</small>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- JavaScript -->
+  <script type="module" src="js/config.js"></script>
+  <script type="module" src="js/error-handler.js"></script>
+  <script type="module" src="js/api-service.js"></script>
+  <script type="module" src="js/blog-service.js"></script>
+  <script type="module" src="js/blog-post.js"></script>
+</body>
+</html> 

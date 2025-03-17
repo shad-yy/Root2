@@ -1,203 +1,343 @@
 /**
  * SMART Live TV - Blog Service
  * 
- * Handles automated blog post generation, publishing, and management.
- * Uses trending keywords and sports news APIs to create dynamic content.
+ * Handles blog-related functionality:
+ * - Fetching blog posts
+ * - Searching and filtering
+ * - Generating formatted HTML for posts
  */
+
+import CONFIG from './config.js';
+import ApiService from './api-service.js';
+import ErrorHandler from './error-handler.js';
 
 const BlogService = {
   /**
-   * Initialize the blog service
+   * Store for current blogs state
    */
-  init() {
-    // Set up scheduled updates for blog posts
-    this.schedulePostGeneration();
-
-    console.log('Blog service initialized');
+  state: {
+    posts: [],
+    categories: [],
+    tags: [],
+    popularPosts: [],
+    totalPosts: 0,
+    currentPage: 1,
+    totalPages: 1,
+    postsPerPage: CONFIG.CONTENT.MAX_BLOG_POSTS_PER_PAGE,
+    currentCategory: 'all'
   },
-
+  
   /**
-   * Schedule regular post generation
+   * Get blog posts
+   * @param {string} category - Category filter
+   * @param {number} page - Page number
+   * @param {number} limit - Posts per page
+   * @returns {Promise} - Blog posts with metadata
    */
-  schedulePostGeneration() {
-    // Generate posts immediately on startup
-    this.generateNewPosts();
-
-    // Then schedule to run twice daily
-    const now = new Date();
-
-    // Morning update (10 AM)
-    let morningUpdate = new Date(now);
-    morningUpdate.setHours(10, 0, 0, 0);
-    if (morningUpdate < now) {
-      morningUpdate.setDate(morningUpdate.getDate() + 1);
-    }
-
-    // Evening update (6 PM)
-    let eveningUpdate = new Date(now);
-    eveningUpdate.setHours(18, 0, 0, 0);
-    if (eveningUpdate < now) {
-      eveningUpdate.setDate(eveningUpdate.getDate() + 1);
-    }
-
-    // Set timers
-    const msUntilMorning = morningUpdate - now;
-    const msUntilEvening = eveningUpdate - now;
-
-    setTimeout(() => this.generateNewPosts(), msUntilMorning);
-    setTimeout(() => this.generateNewPosts(), msUntilEvening);
-
-    console.log(`Blog post generation scheduled for ${morningUpdate.toLocaleString()} and ${eveningUpdate.toLocaleString()}`);
-  },
-
-  /**
-   * Generate new blog posts based on trending keywords
-   */
-  async generateNewPosts() {
+  async getPosts(category = 'all', page = 1, limit = CONFIG.CONTENT.MAX_BLOG_POSTS_PER_PAGE) {
     try {
-      // Use the ApiService to generate posts
-      if (typeof ApiService !== 'undefined' && ApiService.generateAutomatedBlogPosts) {
-        const posts = await ApiService.generateAutomatedBlogPosts(10);
-
-        // Save posts to localStorage (in a real app, these would go to a database)
-        this.savePosts(posts);
-
-        console.log(`Generated ${posts.length} new blog posts`);
-        return posts;
-      }
+      const response = await ApiService.getBlogPosts(category, limit, page);
+      
+      // Update state
+      this.state.posts = response.posts;
+      this.state.totalPosts = response.total;
+      this.state.currentPage = page;
+      this.state.totalPages = response.totalPages;
+      this.state.postsPerPage = limit;
+      this.state.currentCategory = category;
+      
+      return response;
     } catch (error) {
-      console.error('Error generating blog posts:', error);
+      ErrorHandler.logError('blog_get_posts', error);
+      throw error;
     }
-
-    return [];
   },
-
+  
   /**
-   * Save posts to localStorage
-   * @param {Array} newPosts - The posts to save
+   * Get a single blog post by ID
+   * @param {string} postId - Post ID
+   * @returns {Promise} - Blog post
    */
-  savePosts(newPosts) {
-    if (!newPosts || newPosts.length === 0) return;
-
+  async getPost(postId) {
     try {
-      // Get existing posts
-      const existingPosts = this.getPosts();
-
-      // Combine posts, avoiding duplicates by slug
-      const slugs = new Set(existingPosts.map(post => post.slug));
-      const uniqueNewPosts = newPosts.filter(post => !slugs.has(post.slug));
-
-      // Combine and sort by date (newest first)
-      const allPosts = [...uniqueNewPosts, ...existingPosts]
-        .sort((a, b) => new Date(b.date) - new Date(a.date))
-        .slice(0, 100); // Keep only the most recent 100 posts
-
-      // Save to localStorage
-      localStorage.setItem('blogPosts', JSON.stringify(allPosts));
+      return await ApiService.getBlogPost(postId);
     } catch (error) {
-      console.error('Error saving blog posts:', error);
+      ErrorHandler.logError('blog_get_post', error, { postId });
+      throw error;
     }
   },
-
+  
   /**
-   * Get all blog posts
-   * @returns {Array} - The list of blog posts
+   * Search blog posts
+   * @param {string} query - Search query
+   * @param {number} page - Page number
+   * @param {number} limit - Posts per page
+   * @returns {Promise} - Search results
    */
-  getPosts() {
+  async searchPosts(query, page = 1, limit = CONFIG.CONTENT.MAX_BLOG_POSTS_PER_PAGE) {
     try {
-      const postsJson = localStorage.getItem('blogPosts');
-      return postsJson ? JSON.parse(postsJson) : [];
+      const response = await ApiService.searchBlogPosts(query, limit, page);
+      
+      // Update state but keep category as 'search'
+      this.state.posts = response.posts;
+      this.state.totalPosts = response.total;
+      this.state.currentPage = page;
+      this.state.totalPages = response.totalPages;
+      this.state.postsPerPage = limit;
+      this.state.currentCategory = 'search';
+      
+      return response;
     } catch (error) {
-      console.error('Error getting blog posts:', error);
-      return [];
+      ErrorHandler.logError('blog_search_posts', error, { query });
+      throw error;
     }
   },
-
+  
   /**
-   * Get a single blog post by slug
-   * @param {string} slug - The post slug
-   * @returns {Object|null} - The blog post or null if not found
+   * Get posts by tag
+   * @param {string} tag - Tag to filter by
+   * @param {number} page - Page number
+   * @param {number} limit - Posts per page
+   * @returns {Promise} - Posts with tag
    */
-  getPostBySlug(slug) {
-    const posts = this.getPosts();
-    return posts.find(post => post.slug === slug) || null;
-  },
-
-  /**
-   * Get posts by keyword/tag
-   * @param {string} keyword - The keyword to filter by
-   * @returns {Array} - The filtered posts
-   */
-  getPostsByKeyword(keyword) {
-    if (!keyword) return [];
-
-    const normalizedKeyword = keyword.toLowerCase();
-    const posts = this.getPosts();
-
-    return posts.filter(post => {
-      // Check if keyword appears in post keyword, title or content
-      return post.keyword?.toLowerCase().includes(normalizedKeyword) ||
-        post.title?.toLowerCase().includes(normalizedKeyword) ||
-        post.content?.toLowerCase().includes(normalizedKeyword);
-    });
-  },
-
-  /**
-   * Render blog posts to the page
-   * @param {string} containerId - The ID of the container element
-   * @param {number} limit - Maximum number of posts to show
-   */
-  renderPosts(containerId = '.news-container', limit = 4) {
-    const container = document.querySelector(containerId);
-    if (!container) return;
-
-    // Get posts
-    const posts = this.getPosts().slice(0, limit);
-
-    // Clear loading state
-    container.querySelectorAll('.loading').forEach(el => el.remove());
-
-    if (posts.length === 0) {
-      container.innerHTML += '<div class="error-message">No blog posts available at this time.</div>';
-      return;
+  async getPostsByTag(tag, page = 1, limit = CONFIG.CONTENT.MAX_BLOG_POSTS_PER_PAGE) {
+    try {
+      const response = await ApiService.request(`blog/tags/${encodeURIComponent(tag)}?page=${page}&limit=${limit}`);
+      
+      // Update state but keep category as 'tag'
+      this.state.posts = response.posts;
+      this.state.totalPosts = response.total;
+      this.state.currentPage = page;
+      this.state.totalPages = response.totalPages;
+      this.state.postsPerPage = limit;
+      this.state.currentCategory = 'tag';
+      
+      return response.posts;
+    } catch (error) {
+      ErrorHandler.logError('blog_get_posts_by_tag', error, { tag });
+      throw error;
     }
-
-    // Render each post
-    posts.forEach(post => {
-      const postCard = document.createElement('div');
-      postCard.className = 'news-card';
-
-      // Create placeholder image
-      const imagePath = `/images/news/automated-${Math.floor(Math.random() * 5) + 1}.jpg`;
-
-      postCard.innerHTML = `
-        <img src="${imagePath}" alt="${post.title}" class="news-image">
-        <div class="news-content">
-          <div class="news-meta">
-            <span>${post.keyword}</span>
-            <span>${post.formattedDate || 'Recently'}</span>
-          </div>
-          <h3 class="news-title">${post.title}</h3>
-          <p class="news-excerpt">${post.summary}</p>
-          <a href="blog/${post.slug}" class="read-more">Read Full Story</a>
+  },
+  
+  /**
+   * Get popular posts
+   * @param {number} limit - Number of posts to return
+   * @returns {Promise} - Popular posts
+   */
+  async getPopularPosts(limit = 4) {
+    try {
+      const posts = await ApiService.getPopularBlogPosts(limit);
+      this.state.popularPosts = posts;
+      return posts;
+    } catch (error) {
+      ErrorHandler.logError('blog_get_popular_posts', error);
+      throw error;
+    }
+  },
+  
+  /**
+   * Get blog categories
+   * @returns {Promise} - Blog categories
+   */
+  async getCategories() {
+    try {
+      const categories = await ApiService.getBlogCategories();
+      this.state.categories = categories;
+      return categories;
+    } catch (error) {
+      ErrorHandler.logError('blog_get_categories', error);
+      throw error;
+    }
+  },
+  
+  /**
+   * Get blog tags
+   * @param {number} limit - Number of tags to return
+   * @returns {Promise} - Blog tags
+   */
+  async getTags(limit = 20) {
+    try {
+      const tags = await ApiService.getBlogTags(limit);
+      this.state.tags = tags;
+      return tags;
+    } catch (error) {
+      ErrorHandler.logError('blog_get_tags', error);
+      throw error;
+    }
+  },
+  
+  /**
+   * Format post date
+   * @param {string} dateString - ISO date string
+   * @returns {string} - Formatted date
+   */
+  formatPostDate(dateString) {
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    } catch (error) {
+      return dateString;
+    }
+  },
+  
+  /**
+   * Generate HTML for blog post card
+   * @param {object} post - Blog post
+   * @returns {string} - HTML for blog post card
+   */
+  generatePostCardHTML(post) {
+    const formattedDate = this.formatPostDate(post.date);
+    const excerpt = post.excerpt || post.content.substring(0, 150) + '...';
+    
+    return `
+      <article class="blog-card">
+        <div class="blog-card-image">
+          <a href="/main/blog-post.html?id=${post.id}">
+            <img src="${post.image}" alt="${post.title}" loading="lazy">
+          </a>
         </div>
+        <div class="blog-card-content">
+          <div class="blog-card-meta">
+            <span class="blog-card-category">
+              <a href="#" data-category="${post.category.slug}">${post.category.name}</a>
+            </span>
+            <span class="blog-card-date">
+              <i class="fas fa-calendar-alt"></i> ${formattedDate}
+            </span>
+          </div>
+          <h2 class="blog-card-title">
+            <a href="/main/blog-post.html?id=${post.id}">${post.title}</a>
+          </h2>
+          <div class="blog-card-excerpt">
+            <p>${excerpt}</p>
+          </div>
+          <a href="/main/blog-post.html?id=${post.id}" class="read-more">
+            Read More <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </article>
+    `;
+  },
+  
+  /**
+   * Generate HTML for popular post
+   * @param {object} post - Blog post
+   * @param {number} index - Post index
+   * @returns {string} - HTML for popular post
+   */
+  generatePopularPostHTML(post, index) {
+    const formattedDate = this.formatPostDate(post.date);
+    
+    return `
+      <div class="popular-post">
+        <span class="popular-post-number">${index + 1}</span>
+        <div class="popular-post-content">
+          <h3 class="popular-post-title">
+            <a href="/main/blog-post.html?id=${post.id}">${post.title}</a>
+          </h3>
+          <div class="popular-post-meta">
+            <span class="popular-post-date">
+              <i class="fas fa-calendar-alt"></i> ${formattedDate}
+            </span>
+          </div>
+        </div>
+      </div>
+    `;
+  },
+  
+  /**
+   * Generate HTML for category list
+   * @param {array} categories - List of categories
+   * @param {string} currentCategory - Currently selected category
+   * @returns {string} - HTML for category list
+   */
+  generateCategoriesHTML(categories, currentCategory = 'all') {
+    let html = `
+      <option value="all" ${currentCategory === 'all' ? 'selected' : ''}>All Categories</option>
+    `;
+    
+    categories.forEach(category => {
+      html += `
+        <option value="${category.slug}" ${currentCategory === category.slug ? 'selected' : ''}>
+          ${category.name} (${category.count})
+        </option>
       `;
-
-      container.appendChild(postCard);
     });
+    
+    return html;
+  },
+  
+  /**
+   * Generate HTML for tag cloud
+   * @param {array} tags - List of tags
+   * @returns {string} - HTML for tag cloud
+   */
+  generateTagCloudHTML(tags) {
+    let html = '';
+    
+    tags.forEach(tag => {
+      // Calculate tag size based on count (1-5)
+      const size = Math.max(1, Math.min(5, Math.floor(tag.count / 5) + 1));
+      
+      html += `
+        <a href="#" class="tag tag-size-${size}" data-tag="${tag.slug}">
+          ${tag.name}
+        </a>
+      `;
+    });
+    
+    return html;
+  },
+  
+  /**
+   * Share blog post
+   * @param {string} platform - Social platform
+   * @param {object} post - Blog post
+   */
+  sharePost(platform, post) {
+    const shareUrl = encodeURIComponent(window.location.href);
+    const shareTitle = encodeURIComponent(post.title);
+    const shareText = encodeURIComponent(`Check out this article: ${post.title}`);
+    
+    let shareLink = '';
+    
+    switch (platform) {
+      case 'facebook':
+        shareLink = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+        break;
+      case 'twitter':
+        shareLink = `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`;
+        break;
+      case 'linkedin':
+        shareLink = `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`;
+        break;
+      case 'email':
+        shareLink = `mailto:?subject=${shareTitle}&body=${shareText}%0A%0A${shareUrl}`;
+        break;
+      default:
+        shareLink = '';
+    }
+    
+    if (shareLink) {
+      // Open share window or use native share if available
+      if (navigator.share && platform !== 'email') {
+        navigator.share({
+          title: post.title,
+          text: `Check out this article: ${post.title}`,
+          url: window.location.href
+        }).catch(error => {
+          console.log('Error sharing:', error);
+          window.open(shareLink, '_blank');
+        });
+      } else {
+        window.open(shareLink, '_blank');
+      }
+    }
   }
 };
 
-// Initialize the blog service on DOM content loaded
-document.addEventListener('DOMContentLoaded', () => {
-  if (typeof BlogService !== 'undefined') {
-    BlogService.init();
-
-    // Render blog posts on blog page
-    if (window.location.pathname.includes('/blog') ||
-      window.location.pathname === '/' ||
-      window.location.pathname.endsWith('/')) {
-      BlogService.renderPosts();
-    }
-  }
-});
+export default BlogService;

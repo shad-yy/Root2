@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMART Live TV - Documentation</title>
+  <style>
+    /* Basic styling for readability */
+    :root {
+      --primary-color: #e53935;
+      --secondary-color: #1e88e5;
+      --dark-color: #333;
+      --light-color: #f4f4f4;
+      --code-bg: #f8f8f8;
+      --code-border: #eaeaea;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--dark-color);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+    
+    h2 {
+      font-size: 1.8rem;
+      color: var(--secondary-color);
+      margin-top: 30px;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    h3 {
+      font-size: 1.3rem;
+      margin-top: 25px;
+      margin-bottom: 10px;
+    }
+    
+    p {
+      margin-bottom: 15px;
+    }
+    
+    ul, ol {
+      margin-bottom: 15px;
+      padding-left: 25px;
+    }
+    
+    li {
+      margin-bottom: 5px;
+    }
+    
+    code {
+      font-family: 'Courier New', Courier, monospace;
+      background-color: var(--code-bg);
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+    
+    pre {
+      background-color: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 4px;
+      padding: 15px;
+      overflow-x: auto;
+      margin-bottom: 15px;
+    }
+    
+    pre code {
+      background-color: transparent;
+      padding: 0;
+    }
+    
+    a {
+      color: var(--secondary-color);
+      text-decoration: none;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+    
+    .toc {
+      background-color: var(--light-color);
+      padding: 20px;
+      border-radius: 5px;
+      margin-bottom: 30px;
+    }
+    
+    .toc h2 {
+      margin-top: 0;
+      border-bottom: none;
+    }
+    
+    .toc ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    
+    .toc li {
+      margin-bottom: 8px;
+    }
+    
+    .toc a {
+      display: inline-block;
+      padding: 3px 0;
+    }
+    
+    .section {
+      margin-bottom: 40px;
+    }
+    
+    .directory-structure pre {
+      line-height: 1.4;
+    }
+    
+    footer {
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SMART Live TV</h1>
+    <p>Comprehensive documentation for developers</p>
+  </header>
+  
+  <section class="section">
+    <h2 id="project-overview">Project Overview</h2>
+    <p>SMART Live TV is a comprehensive sports streaming and information website that provides live sports updates, match schedules, news, and analytics for various sports including Football, UFC/MMA, Formula 1, and Boxing. The platform is designed with a modern, responsive interface that works seamlessly across desktop, tablet, and mobile devices.</p>
+  </section>
+  
+  <section class="toc">
+    <h2>Table of Contents</h2>
+    <ul>
+      <li><a href="#project-overview">Project Overview</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#directory-structure">Directory Structure</a></li>
+      <li><a href="#technologies-used">Technologies Used</a></li>
+      <li><a href="#setup-instructions">Setup Instructions</a></li>
+      <li><a href="#javascript-architecture">JavaScript Architecture</a></li>
+      <li><a href="#page-structure">Page Structure</a></li>
+      <li><a href="#styling-system">Styling System</a></li>
+      <li><a href="#api-integration">API Integration</a></li>
+      <li><a href="#error-handling">Error Handling</a></li>
+      <li><a href="#browser-compatibility">Browser Compatibility</a></li>
+      <li><a href="#performance-optimization">Performance Optimization</a></li>
+      <li><a href="#deployment">Deployment</a></li>
+      <li><a href="#contributing">Contributing</a></li>
+      <li><a href="#license">License</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </section>
+  
+  <section class="section">
+    <h2 id="features">Features</h2>
+    <ul>
+      <li><strong>Live Sports Streaming</strong>: Watch live matches and events across multiple sports</li>
+      <li><strong>Real-time Score Updates</strong>: Get up-to-the-minute match scores and statistics</li>
+      <li><strong>Upcoming Events</strong>: View and set reminders for upcoming sports events</li>
+      <li><strong>Sports News Blog</strong>: Read the latest news and analysis for various sports</li>
+      <li><strong>Event Reminders</strong>: Set notifications for upcoming matches</li>
+      <li><strong>Social Sharing</strong>: Share articles and content across social media platforms</li>
+      <li><strong>Responsive Design</strong>: Seamlessly works on desktop, tablet, and mobile devices</li>
+      <li><strong>Advanced Error Handling</strong>: Robust error handling and user feedback systems</li>
+      <li><strong>Dark/Light Mode</strong>: Toggle between dark and light themes (planned for future)</li>
+    </ul>
+  </section>
+  
+  <section class="section directory-structure">
+    <h2 id="directory-structure">Directory Structure</h2>
+    <pre><code>smart-live-tv/
+│
+├── index.html                 # Home page
+├── football.html              # Football page
+├── ufc.html                   # UFC/MMA page
+├── f1.html                    # Formula 1 page
+├── boxing.html                # Boxing page
+├── blog.html                  # Blog listing page
+├── blog-post.html             # Individual blog post template
+├── about.html                 # About us page
+├── contact.html               # Contact page
+├── privacy.html               # Privacy policy
+├── terms.html                 # Terms of service
+│
+├── css/
+│   └── styles.css             # Main stylesheet
+│
+├── js/
+│   ├── config.js              # Application configuration
+│   ├── error-handler.js       # Error handling service
+│   ├── api-service.js         # API communication service
+│   ├── blog-service.js        # Blog functionality service
+│   ├── reminder-service.js    # Event reminder service
+│   ├── index.js               # Homepage functionality
+│   ├── football.js            # Football page functionality
+│   ├── ufc.js                 # UFC page functionality
+│   ├── f1.js                  # Formula 1 page functionality
+│   ├── boxing.js              # Boxing page functionality
+│   ├── blog.js                # Blog page functionality
+│   ├── blog-post.js           # Blog post page functionality
+│   ├── about.js               # About page functionality
+│   └── contact.js             # Contact page functionality
+│
+└── images/
+    ├── favicon.png            # Site favicon
+    ├── og-home.jpg            # Open Graph image for home
+    ├── og-football.jpg        # Open Graph image for football
+    ├── og-ufc.jpg             # Open Graph image for UFC
+    ├── og-f1.jpg              # Open Graph image for F1
+    ├── og-boxing.jpg          # Open Graph image for boxing
+    ├── og-blog.jpg            # Open Graph image for blog
+    ├── og-about.jpg           # Open Graph image for about
+    ├── og-contact.jpg         # Open Graph image for contact
+    └── ...                    # Other images</code></pre>
+  </section>
+  
+  <section class="section">
+    <h2 id="technologies-used">Technologies Used</h2>
+    <ul>
+      <li><strong>HTML5</strong>: Semantic markup for better accessibility and SEO</li>
+      <li><strong>CSS3</strong>: Modern styling with variables, flexbox, and grid layouts</li>
+      <li><strong>JavaScript (ES6+)</strong>: Modern JavaScript with ES modules</li>
+      <li><strong>Font Awesome 6</strong>: Icon library</li>
+      <li><strong>Google Fonts</strong>: Web font integration (Roboto, Montserrat)</li>
+      <li><strong>Local Storage API</strong>: For storing user preferences and reminders</li>
+    </ul>
+  </section>
+  
+  <section class="section">
+    <h2 id="setup-instructions">Setup Instructions</h2>
+    
+    <h3>Prerequisites</h3>
+    <ul>
+      <li>A modern web browser (Chrome, Firefox, Safari, Edge)</li>
+      <li>Basic knowledge of HTML, CSS, and JavaScript</li>
+      <li>A code editor (VS Code, Sublime Text, etc.)</li>
+      <li>A local development server (optional but recommended)</li>
+    </ul>
+    
+    <h3>Installation</h3>
+    <ol>
+      <li>
+        <p>Clone the repository or download the source code:</p>
+        <pre><code>git clone https://github.com/yourusername/smart-live-tv.git</code></pre>
+      </li>
+      <li>
+        <p>Navigate to the project directory:</p>
+        <pre><code>cd smart-live-tv</code></pre>
+      </li>
+      <li>
+        <p>Start a local development server:</p>
+        <ul>
+          <li>For VS Code users, install the "Live Server" extension and click "Go Live"</li>
+          <li>
+            For command line, you can use Python's built-in server:
+            <pre><code>python -m http.server</code></pre>
+          </li>
+          <li>
+            Or use Node.js with a package like <code>http-server</code>:
+            <pre><code>npx http-server</code></pre>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p>Open your browser and navigate to <code>http://localhost:8080</code> (or whatever port your server is using)</p>
+      </li>
+    </ol>
+    
+    <h3>Configuration</h3>
+    <p>The website's behavior can be customized by modifying the <code>config.js</code> file:</p>
+    <pre><code>const CONFIG = {
+  API: {
+    BASE_URL: 'https://api.smartlivetv.net/v1',
+    TIMEOUT: 10000,
+    RETRY_ATTEMPTS: 3,
+    CACHE_DURATION: 300000 // 5 minutes in milliseconds
+  },
+  FEATURES: {
+    ENABLE_DARK_MODE: true,
+    ENABLE_NOTIFICATIONS: true,
+    SHOW_LIVE_INDICATOR: true
+  },
+  // ... additional configuration options
+};</code></pre>
+  </section>
+  
+  <section class="section">
+    <h2 id="javascript-architecture">JavaScript Architecture</h2>
+    <p>SMART Live TV follows a service-based architecture with modular JavaScript files:</p>
+    
+    <h3>Core Services</h3>
+    <ol>
+      <li><strong>config.js</strong>: Central configuration for the entire application</li>
+      <li><strong>error-handler.js</strong>: Handles errors across the application with consistent user feedback</li>
+      <li><strong>api-service.js</strong>: Manages all API calls with caching, retries, and error handling</li>
+      <li><strong>blog-service.js</strong>: Handles blog-related functionality like fetching posts and rendering</li>
+      <li><strong>reminder-service.js</strong>: Manages user reminders for upcoming sports events</li>
+    </ol>
+    
+    <h3>Page-Specific Scripts</h3>
+    <p>Each page has its own JavaScript file that imports the necessary services and handles page-specific logic:</p>
+    <ul>
+      <li><strong>index.js</strong>: Home page functionality</li>
+      <li><strong>football.js</strong>: Football page functionality</li>
+      <li><strong>ufc.js</strong>: UFC/MMA page functionality</li>
+      <li><strong>f1.js</strong>: Formula 1 page functionality</li>
+      <li><strong>boxing.js</strong>: Boxing page functionality</li>
+      <li>etc.</li>
+    </ul>
+    
+    <h3>Module Pattern</h3>
+    <p>All JavaScript files use ES modules for better organization and dependency management:</p>
+    <pre><code>// Importing services
+import CONFIG from './config.js';
+import ApiService from './api-service.js';
+import ErrorHandler from './error-handler.js';
+
+// Feature implementation
+function initPage() {
+  // ... code
+}
+
+// Export functions that need to be accessible globally
+window.functionName = functionName;</code></pre>
+  </section>
+  
+  <section class="section">
+    <h2 id="page-structure">Page Structure</h2>
+    <p>All pages follow a consistent structure:</p>
+    <ol>
+      <li><strong>Head Section</strong>: Contains meta tags, title, CSS links, and Open Graph data</li>
+      <li><strong>Header</strong>: Main navigation and site logo</li>
+      <li><strong>Mobile Menu</strong>: Responsive navigation for smaller screens</li>
+      <li><strong>Main Content</strong>: Page-specific content</li>
+      <li><strong>Footer</strong>: Site information, links, and copyright</li>
+    </ol>
+    
+    <h3>Example:</h3>
+    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;!-- Meta tags, title, CSS links --&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- Header --&gt;
+  &lt;header class="site-header"&gt;...&lt;/header&gt;
+  
+  &lt;!-- Mobile Menu --&gt;
+  &lt;div class="mobile-menu"&gt;...&lt;/div&gt;
+  
+  &lt;!-- Page Title --&gt;
+  &lt;section class="page-title-section"&gt;...&lt;/section&gt;
+  
+  &lt;!-- Main Content --&gt;
+  &lt;main class="site-main"&gt;...&lt;/main&gt;
+  
+  &lt;!-- Footer --&gt;
+  &lt;footer class="site-footer"&gt;...&lt;/footer&gt;
+  
+  &lt;!-- JavaScript --&gt;
+  &lt;script type="module" src="/main/js/config.js"&gt;&lt;/script&gt;
+  &lt;script type="module" src="/main/js/error-handler.js"&gt;&lt;/script&gt;
+  &lt;script type="module" src="/main/js/api-service.js"&gt;&lt;/script&gt;
+  &lt;script type="module" src="/main/js/page-specific.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+  </section>
+  
+  <section class="section">
+    <h2 id="styling-system">Styling System</h2>
+    <p>The website uses a single <code>styles.css</code> file with CSS variables for consistent theming:</p>
+    
+    <h3>CSS Variables</h3>
+    <pre><code>:root {
+  /* Colors */
+  --primary-color: #e53935;
+  --secondary-color: #1e88e5;
+  /* ... other variables */
+}</code></pre>
+    
+    <h3>Component Classes</h3>
+    <p>Each UI component has its own CSS class with consistent naming conventions:</p>
+    <ul>
+      <li><code>.site-header</code>: Main header</li>
+      <li><code>.main-nav</code>: Primary navigation</li>
+      <li><code>.mobile-menu</code>: Mobile navigation</li>
+      <li><code>.hero-section</code>: Hero banner</li>
+      <li><code>.card</code>: Content card</li>
+      <li>etc.</li>
+    </ul>
+    
+    <h3>Utility Classes</h3>
+    <p>The CSS includes utility classes for common styling needs:</p>
+    <ul>
+      <li><code>.text-center</code>, <code>.text-right</code>, <code>.text-left</code>: Text alignment</li>
+      <li><code>.mt-1</code> through <code>.mt-5</code>: Margin-top utilities</li>
+      <li><code>.mb-1</code> through <code>.mb-5</code>: Margin-bottom utilities</li>
+      <li><code>.hidden</code>: Hide an element</li>
+    </ul>
+    
+    <h3>Responsive Design</h3>
+    <p>The stylesheet includes media queries for responsive layouts:</p>
+    <ul>
+      <li>Desktop: 992px and above</li>
+      <li>Tablet: 768px to 991px</li>
+      <li>Mobile: 767px and below</li>
+    </ul>
+  </section>
+  
+  <section class="section">
+    <h2 id="api-integration">API Integration</h2>
+    <p>The <code>api-service.js</code> file handles all API communication:</p>
+    
+    <h3>Features</h3>
+    <ul>
+      <li><strong>Caching</strong>: Reduces unnecessary API calls</li>
+      <li><strong>Auto-Retry</strong>: Automatically retries failed requests</li>
+      <li><strong>Error Handling</strong>: Consistent error handling</li>
+      <li><strong>Response Normalization</strong>: Standardizes API responses</li>
+    </ul>
+    
+    <h3>Usage Example</h3>
+    <pre><code>// Get upcoming matches
+try {
+  const matches = await ApiService.get('/football/matches/upcoming');
+  renderMatches(matches);
+} catch (error) {
+  ErrorHandler.showError('Failed to load upcoming matches', error);
+}</code></pre>
+  </section>
+  
+  <section class="section">
+    <h2 id="error-handling">Error Handling</h2>
+    <p>The <code>error-handler.js</code> service provides consistent error handling:</p>
+    
+    <h3>Features</h3>
+    <ul>
+      <li><strong>Centralized Logging</strong>: All errors are logged in one place</li>
+      <li><strong>User-Friendly Messages</strong>: Translates technical errors to user-friendly messages</li>
+      <li><strong>Automatic Recovery</strong>: Provides retry options when appropriate</li>
+      <li><strong>Error Tracking</strong>: Tracks unique errors to avoid repetitive notifications</li>
+    </ul>
+    
+    <h3>Usage Example</h3>
+    <pre><code>try {
+  // Code that might fail
+} catch (error) {
+  ErrorHandler.logError('operation_name', error);
+  ErrorHandler.showError('User-friendly message');
+}</code></pre>
+  </section>
+  
+  <section class="section">
+    <h2 id="browser-compatibility">Browser Compatibility</h2>
+    <p>SMART Live TV is compatible with:</p>
+    <ul>
+      <li>Chrome (latest 2 versions)</li>
+      <li>Firefox (latest 2 versions)</li>
+      <li>Safari (latest 2 versions)</li>
+      <li>Edge (latest 2 versions)</li>
+      <li>iOS Safari (latest 2 versions)</li>
+      <li>Android Chrome (latest 2 versions)</li>
+    </ul>
+  </section>
+  
+  <section class="section">
+    <h2 id="performance-optimization">Performance Optimization</h2>
+    <p>The website incorporates several performance optimizations:</p>
+    <ol>
+      <li><strong>Lazy Loading</strong>: Images are loaded only when needed</li>
+      <li><strong>API Caching</strong>: Prevents unnecessary API calls</li>
+      <li><strong>Proper Event Delegation</strong>: Minimizes event listeners</li>
+      <li><strong>CSS Organization</strong>: Efficient CSS selectors</li>
+      <li><strong>Throttling and Debouncing</strong>: For scroll and resize events</li>
+    </ol>
+  </section>
+  
+  <section class="section">
+    <h2 id="deployment">Deployment</h2>
+    
+    <h3>Development Environment</h3>
+    <p>For local development, use any static file server as described in the Setup Instructions.</p>
+    
+    <h3>Production Deployment</h3>
+    <p>For production, we recommend:</p>
+    
+    <ol>
+      <li>
+        <strong>Static Site Hosting</strong>:
+        <ul>
+          <li>Netlify</li>
+          <li>Vercel</li>
+          <li>GitHub Pages</li>
+          <li>AWS S3 + CloudFront</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Build Process</strong> (if adding a build step in the future):
+        <ul>
+          <li>Minify HTML, CSS, and JavaScript</li>
+          <li>Optimize images</li>
+          <li>Generate asset hashes for cache busting</li>
+        </ul>
+      </li>
+    </ol>
+    
+    <h3>Example Netlify Deployment</h3>
+    <ol>
+      <li>
+        <p>Create a <code>netlify.toml</code> file:</p>
+        <pre><code>[build]
+  publish = "/"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200</code></pre>
+      </li>
+      <li>
+        <p>Deploy to Netlify:</p>
+        <ul>
+          <li>Connect your GitHub repository to Netlify</li>
+          <li>Configure build settings</li>
+          <li>Deploy</li>
+        </ul>
+      </li>
+    </ol>
+  </section>
+  
+  <section class="section">
+    <h2 id="contributing">Contributing</h2>
+    
+    <h3>Development Workflow</h3>
+    <ol>
+      <li><strong>Fork the repository</strong></li>
+      <li>
+        <strong>Create a feature branch</strong>:
+        <pre><code>git checkout -b feature/your-feature-name</code></pre>
+      </li>
+      <li><strong>Make your changes</strong></li>
+      <li><strong>Test thoroughly</strong></li>
+      <li>
+        <strong>Commit with clear messages</strong>:
+        <pre><code>git commit -m "Add: feature description"</code></pre>
+      </li>
+      <li>
+        <strong>Push to your fork</strong>:
+        <pre><code>git push origin feature/your-feature-name</code></pre>
+      </li>
+      <li><strong>Create a pull request</strong></li>
+    </ol>
+    
+    <h3>Coding Standards</h3>
+    <ul>
+      <li>HTML: Follow semantic HTML5 conventions</li>
+      <li>CSS: Follow BEM naming convention when adding new components</li>
+      <li>JavaScript: Use ES6+ features and document complex functions</li>
+    </ul>
+  </section>
+  
+  <section class="section">
+    <h2 id="license">License</h2>
+    <p>This project is licensed under the MIT License - see the LICENSE file for details.</p>
+  </section>
+  
+  <section class="section">
+    <h2 id="contact">Contact</h2>
+    <p>For questions or support, please contact:</p>
+    <ul>
+      <li><strong>Email</strong>: dev@smartlivetv.net</li>
+      <li><strong>Website</strong>: <a href="https://smartlivetv.net">https://smartlivetv.net</a></li>
+    </ul>
+  </section>
+  
+  <footer>
+    <p>SMART Live TV Documentation - Last updated July 2023</p>
+  </footer>
+</body>
+</html>

@@ -3,32 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Watch Formula 1 races live in HD - Get race results, driver standings, team rankings, and F1 news on SMART Live TV.">
-    <meta name="keywords" content="F1 live, Formula 1 streaming, F1 races, F1 standings, Formula 1 drivers, F1 news">
+    <meta name="description" content="Watch live Formula 1 races, driver standings, and race schedules - SMART Live TV">
+    <meta name="keywords" content="Formula 1, F1, live racing, F1 races, F1 drivers">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.smartlivetv.net/f1">
-    <meta property="og:title" content="Formula 1 – SMART Live TV">
-    <meta property="og:description" content="Watch Formula 1 races live in HD - Get race results, driver standings, team rankings, and F1 news on SMART Live TV.">
-    <meta property="og:image" content="https://www.smartlivetv.net/images/og-f1.jpg">
+    <meta property="og:url" content="https://smartlivetv.net/main/f1.html">
+    <meta property="og:title" content="Formula 1 - SMART Live TV">
+    <meta property="og:description" content="Watch live Formula 1 races, driver standings, and race schedules">
+    <meta property="og:image" content="https://smartlivetv.net/main/images/og-f1.jpg">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://www.smartlivetv.net/f1">
-    <meta property="twitter:title" content="Formula 1 – SMART Live TV">
-    <meta property="twitter:description" content="Watch Formula 1 races live in HD - Get race results, driver standings, team rankings, and F1 news on SMART Live TV.">
-    <meta property="twitter:image" content="https://www.smartlivetv.net/images/twitter-f1.jpg">
+    <meta property="twitter:url" content="https://smartlivetv.net/main/f1.html">
+    <meta property="twitter:title" content="Formula 1 - SMART Live TV">
+    <meta property="twitter:description" content="Watch live Formula 1 races, driver standings, and race schedules">
+    <meta property="twitter:image" content="https://smartlivetv.net/main/images/twitter-f1.jpg">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.smartlivetv.net/f1">
+    <link rel="canonical" href="https://smartlivetv.net/main/f1.html">
     
-    <title>Formula 1 – SMART Live TV</title>
+    <title>Formula 1 - SMART Live TV</title>
     
     <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="/main/images/favicon.png" type="image/png">
     
     <style>
         /* F1-specific styles */
@@ -318,28 +318,34 @@
 </head>
 <body>
     <!-- Header -->
-    <header>
+    <header class="site-header">
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <a href="/">
-                        <img src="/images/logo.png" alt="SMART Live TV Logo">
+                    <a href="/main/index.html">
+                        <span class="logo-text">SMART<span class="logo-highlight">Live</span> TV</span>
                     </a>
                 </div>
+                
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
                 <nav class="main-nav">
                     <ul>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/football.html">Football</a></li>
-                        <li><a href="/ufc.html">UFC/MMA</a></li>
-                        <li class="active"><a href="/f1.html">Formula 1</a></li>
-                        <li><a href="/blog.html">News</a></li>
+                        <li><a href="/main/index.html">Home</a></li>
+                        <li><a href="/main/football.html">Football</a></li>
+                        <li><a href="/main/ufc.html">UFC/MMA</a></li>
+                        <li><a href="/main/f1.html" class="active">Formula 1</a></li>
+                        <li><a href="/main/boxing.html">Boxing</a></li>
+                        <li><a href="/main/blog.html">Blog</a></li>
+                        <li><a href="/main/about.html">About Us</a></li>
+                        <li><a href="/main/contact.html">Contact</a></li>
                     </ul>
                 </nav>
+                
                 <div class="header-actions">
-                    <button class="cta-button" onclick="trackShopRedirect('header')">Watch Live</button>
-                    <button class="mobile-menu-btn">
-                        <i class="fas fa-bars"></i>
-                    </button>
+                    <a href="#" class="cta-button">Watch Live</a>
                 </div>
             </div>
         </div>
@@ -347,186 +353,214 @@
     
     <!-- Mobile Menu -->
     <div class="mobile-menu">
-        <div class="mobile-menu-header">
-            <div class="logo">
-                <img src="/images/logo.png" alt="SMART Live TV Logo">
-            </div>
-            <button class="mobile-menu-close">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <nav class="mobile-nav">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/football.html">Football</a></li>
-                <li><a href="/ufc.html">UFC/MMA</a></li>
-                <li class="active"><a href="/f1.html">Formula 1</a></li>
-                <li><a href="/blog.html">News</a></li>
-            </ul>
-        </nav>
-        <div class="mobile-actions">
-            <button class="cta-button" onclick="trackShopRedirect('mobile-menu')">Watch Live</button>
-        </div>
+        <ul>
+            <li><a href="/main/index.html">Home</a></li>
+            <li><a href="/main/football.html">Football</a></li>
+            <li><a href="/main/ufc.html">UFC/MMA</a></li>
+            <li><a href="/main/f1.html" class="active">Formula 1</a></li>
+            <li><a href="/main/boxing.html">Boxing</a></li>
+            <li><a href="/main/blog.html">Blog</a></li>
+            <li><a href="/main/about.html">About Us</a></li>
+            <li><a href="/main/contact.html">Contact</a></li>
+            <li><a href="#" class="mobile-cta">Watch Live</a></li>
+        </ul>
     </div>
     
     <!-- Hero Section -->
-    <section class="hero f1-hero">
+    <section class="sport-hero f1-hero">
         <div class="container">
-            <div class="hero-content">
-                <h1>Formula 1</h1>
-                <p>Watch every race live, get the latest standings, and stay updated with F1 news</p>
-                <button class="cta-button" onclick="trackShopRedirect('f1-hero')">Watch F1 Live</button>
+            <div class="sport-hero-content">
+                <h1>Formula 1 Live</h1>
+                <p>Watch every Grand Prix race live with real-time updates, driver standings, and team information.</p>
+                <div class="cta-buttons">
+                    <a href="#next-race" class="cta-button">Next Race</a>
+                    <a href="#race-calendar" class="cta-button outline">Race Calendar</a>
+                </div>
             </div>
         </div>
     </section>
     
     <!-- Main Content -->
-    <main>
+    <main class="main-content">
         <div class="container">
-            <!-- Next Race -->
-            <section class="next-race" id="next-race">
-                <div class="next-race-header">
-                    <h2 class="next-race-title">Next Race</h2>
-                    <div class="next-race-countdown" id="next-race-countdown">Loading...</div>
-                </div>
-                <div class="next-race-details">
-                    <div class="next-race-info">
-                        <div class="next-race-name" id="next-race-name">Loading race information...</div>
-                        <div class="next-race-circuit" id="next-race-circuit"></div>
-                        <div class="next-race-country" id="next-race-country"></div>
-                        <div class="next-race-date" id="next-race-date"></div>
+            <!-- Next Race Section -->
+            <section id="next-race" class="next-race-section">
+                <div class="section-header">
+                    <h2>Next Race</h2>
+                    <div class="race-countdown" id="race-countdown">
+                        <!-- Countdown will be inserted by JavaScript -->
                     </div>
-                    <div class="next-race-actions">
-                        <button class="cta-button" onclick="trackShopRedirect('next-race')">Watch Live</button>
-                        <button class="secondary-button" id="set-reminder-btn">Set Reminder</button>
+                </div>
+                
+                <div class="next-race-container">
+                    <!-- This will be populated by JavaScript with API data -->
+                    <div class="loading-indicator">
+                        <div class="spinner"></div>
+                        <p>Loading next race data...</p>
                     </div>
                 </div>
             </section>
             
-            <!-- Season Selector -->
-            <div class="season-selector">
-                <button class="season-button active" data-season="2023">2023 Season</button>
-                <button class="season-button" data-season="2022">2022 Season</button>
-                <button class="season-button" data-season="2021">2021 Season</button>
-                <button class="season-button" data-season="2020">2020 Season</button>
-                <button class="season-button" data-season="2019">2019 Season</button>
-            </div>
-            
-            <!-- F1 Tabs -->
-            <div class="f1-tabs">
-                <button class="f1-tab-button active" data-tab="calendar">Race Calendar</button>
-                <button class="f1-tab-button" data-tab="drivers">Driver Standings</button>
-                <button class="f1-tab-button" data-tab="constructors">Constructor Standings</button>
-                <button class="f1-tab-button" data-tab="results">Race Results</button>
-            </div>
-            
-            <!-- Calendar Tab -->
-            <div class="f1-tab-content active" id="calendar-content">
-                <h2 id="race-calendar-heading">2023 Race Calendar</h2>
-                <div class="race-calendar">
-                    <div class="loading-container">
-                        <div class="loading-spinner"></div>
+            <!-- Race Calendar -->
+            <section id="race-calendar" class="race-calendar-section">
+                <div class="section-header">
+                    <h2>2023 Race Calendar</h2>
+                    <div class="season-selector">
+                        <select id="season-selector">
+                            <option value="2023">2023 Season</option>
+                            <option value="2022">2022 Season</option>
+                            <option value="2021">2021 Season</option>
+                        </select>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Driver Standings Tab -->
-            <div class="f1-tab-content" id="drivers-content">
-                <h2>Driver Standings</h2>
-                <div class="driver-standings-table">
-                    <div class="loading-container">
-                        <div class="loading-spinner"></div>
+                
+                <div class="race-calendar-container">
+                    <!-- This will be populated by JavaScript with API data -->
+                    <div class="loading-indicator">
+                        <div class="spinner"></div>
+                        <p>Loading race calendar...</p>
                     </div>
                 </div>
-            </div>
+            </section>
             
-            <!-- Constructor Standings Tab -->
-            <div class="f1-tab-content" id="constructors-content">
-                <h2>Constructor Standings</h2>
-                <div class="constructor-standings-table">
-                    <div class="loading-container">
-                        <div class="loading-spinner"></div>
+            <!-- Driver Standings -->
+            <section id="driver-standings" class="standings-section">
+                <div class="section-header">
+                    <h2>Driver Standings</h2>
+                </div>
+                
+                <div class="driver-standings-container">
+                    <!-- This will be populated by JavaScript with API data -->
+                    <div class="loading-indicator">
+                        <div class="spinner"></div>
+                        <p>Loading driver standings...</p>
                     </div>
                 </div>
-            </div>
+            </section>
             
-            <!-- Race Results Tab -->
-            <div class="f1-tab-content" id="results-content">
-                <h2>Race Results</h2>
-                <div class="race-results">
-                    <div class="loading-container">
-                        <div class="loading-spinner"></div>
+            <!-- Constructor Standings -->
+            <section id="constructor-standings" class="standings-section">
+                <div class="section-header">
+                    <h2>Constructor Standings</h2>
+                </div>
+                
+                <div class="constructor-standings-container">
+                    <!-- This will be populated by JavaScript with API data -->
+                    <div class="loading-indicator">
+                        <div class="spinner"></div>
+                        <p>Loading constructor standings...</p>
                     </div>
                 </div>
-            </div>
+            </section>
             
-            <!-- F1 News -->
+            <!-- Recent Results -->
+            <section id="recent-results" class="results-section">
+                <div class="section-header">
+                    <h2>Recent Race Results</h2>
+                </div>
+                
+                <div class="recent-results-container">
+                    <!-- This will be populated by JavaScript with API data -->
+                    <div class="loading-indicator">
+                        <div class="spinner"></div>
+                        <p>Loading recent results...</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Formula 1 News -->
             <section class="news-section">
-                <h2>Latest F1 News</h2>
-                <div class="news-container">
-                    <div class="loading-container">
-                        <div class="loading-spinner"></div>
+                <div class="section-header">
+                    <h2>Latest F1 News</h2>
+                    <a href="/main/blog.html?category=Formula 1" class="view-all">View All</a>
+                </div>
+                
+                <div class="news-grid f1-news">
+                    <!-- This will be populated by JavaScript with blog data -->
+                    <div class="loading-indicator">
+                        <div class="spinner"></div>
+                        <p>Loading news...</p>
                     </div>
+                </div>
+            </section>
+            
+            <!-- Newsletter -->
+            <section class="newsletter">
+                <div class="container">
+                    <h2>Never Miss a Race</h2>
+                    <p>Subscribe to our newsletter for race reminders, exclusive content, and special offers.</p>
+                    <form class="newsletter-form" id="newsletter-form">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
                 </div>
             </section>
         </div>
     </main>
     
     <!-- Footer -->
-    <footer>
+    <footer class="site-footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h3>SMART Live TV</h3>
-                    <ul class="footer-links">
-                        <li><a href="/about-us.html">About Us</a></li>
-                        <li><a href="/contact.html">Contact</a></li>
-                        <li><a href="/careers">Careers</a></li>
-                        <li><a href="/press">Press</a></li>
-                    </ul>
+                    <h3>About</h3>
+                    <p>SMART Live TV is your ultimate destination for live sports streaming, real-time scores, and in-depth sports analysis.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
                 </div>
+                
                 <div class="footer-col">
                     <h3>Sports</h3>
                     <ul class="footer-links">
-                        <li><a href="/football.html">Football</a></li>
-                        <li><a href="/ufc.html">UFC/MMA</a></li>
-                        <li><a href="/f1.html">Formula 1</a></li>
-                        <li><a href="/boxing.html">Boxing</a></li>
+                        <li><a href="/main/football.html">Football</a></li>
+                        <li><a href="/main/ufc.html">UFC/MMA</a></li>
+                        <li><a href="/main/f1.html">Formula 1</a></li>
+                        <li><a href="/main/boxing.html">Boxing</a></li>
                     </ul>
                 </div>
+                
                 <div class="footer-col">
-                    <h3>Help</h3>
+                    <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="/faq">FAQs</a></li>
-                        <li><a href="/shop">Subscription</a></li>
-                        <li><a href="/support">Support</a></li>
-                        <li><a href="/account">Account</a></li>
+                        <li><a href="/main/blog.html">Blog</a></li>
+                        <li><a href="/main/about.html">About Us</a></li>
+                        <li><a href="/main/contact.html">Contact</a></li>
+                        <li><a href="/main/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/main/terms.html">Terms of Service</a></li>
                     </ul>
                 </div>
+                
                 <div class="footer-col">
-                    <h3>Legal</h3>
-                    <ul class="footer-links">
-                        <li><a href="/terms">Terms of Service</a></li>
-                        <li><a href="/privacy">Privacy Policy</a></li>
-                        <li><a href="/cookies">Cookie Policy</a></li>
-                        <li><a href="/copyright">Copyright</a></li>
+                    <h3>Contact</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-envelope"></i> info@smartlivetv.net</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Sports Avenue, NY 10001</li>
                     </ul>
                 </div>
             </div>
-            <div class="copyright">
-                &copy; 2025 SMART Live TV. All rights reserved.
-            </div>
-            <div class="data-update-info">
-                <small>Data is updated twice daily at 8 AM and 8 PM</small>
+            
+            <div class="footer-bottom">
+                <div class="copyright">
+                    &copy; 2023 SMART Live TV. All rights reserved.
+                </div>
+                <div class="data-update-info">
+                    <small>Data is updated in real-time</small>
+                </div>
             </div>
         </div>
     </footer>
     
     <!-- JavaScript -->
-    <script type="module" src="/js/config.js"></script>
-    <script type="module" src="/js/api-service.js"></script>
-    <script type="module" src="/js/data-processor.js"></script>
-    <script type="module" src="/js/sports-app.js"></script>
-    <script type="module" src="/js/main.js"></script>
+    <script type="module" src="/main/js/config.js"></script>
+    <script type="module" src="/main/js/error-handler.js"></script>
+    <script type="module" src="/main/js/api-service.js"></script>
+    <script type="module" src="/main/js/reminder-service.js"></script>
+    <script type="module" src="/main/js/blog-service.js"></script>
+    <script type="module" src="/main/js/f1.js"></script>
 </body>
 </html>

@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Watch live sports streaming in HD - football, basketball, UFC, F1 and more. Get real-time scores, rankings and sports news on SMART Live TV."
+      content="Watch live sports streaming in HD - football, basketball, UFC, F1 and more. Get real-time scores, rankings and sports news."
     />
     <meta
       name="keywords"
-      content="live sports, sports streaming, football live, UFC live, basketball streaming, F1 races, sports scores"
+      content="live sports, sports streaming, football live, UFC live, F1 live, boxing live, sports news"
     />
     <meta name="robots" content="index, follow" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.smartlivetv.net/" />
+    <meta property="og:url" content="https://smartlivetv.net/main/" />
     <meta
       property="og:title"
       content="SMART Live TV – The Ultimate Sports Streaming & News Hub"
@@ -26,12 +26,12 @@
     />
     <meta
       property="og:image"
-      content="https://www.smartlivetv.com/images/og-image.jpg"
+      content="https://smartlivetv.net/main/images/og-image.jpg"
     />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://www.smartlivetv.com/" />
+    <meta property="twitter:url" content="https://smartlivetv.net/main/" />
     <meta
       property="twitter:title"
       content="SMART Live TV – The Ultimate Sports Streaming & News Hub"
@@ -42,11 +42,11 @@
     />
     <meta
       property="twitter:image"
-      content="https://www.smartlivetv.com/images/twitter-image.jpg"
+      content="https://smartlivetv.net/main/images/twitter-image.jpg"
     />
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.smartlivetv.com/" />
+    <link rel="canonical" href="https://smartlivetv.net/main/" />
 
     <title>SMART Live TV – The Ultimate Sports Streaming & News Hub</title>
 
@@ -110,252 +110,307 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
     />
-    <link rel="icon" href="/images/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="/main/images/favicon.png" type="image/x-icon" />
   </head>
   <body>
     <!-- Accessibility Skip Link -->
     <a href="#main-content" class="skip-to-content">Skip to content</a>
 
     <!-- Header -->
-    <header>
-      <div class="container header-container">
-        <div class="logo">SMART<span> Live TV</span></div>
-        <nav aria-label="Main Navigation">
-          <ul class="nav-menu">
-            <li><a href="/main/index.html" class="active">Home</a></li>
-            <li><a href="/main/football.html">Football</a></li>
-            <li><a href="/main/ufc.html">UFC</a></li>
-            <li><a href="/main/f1.html">F1</a></li>
-
-            <li><a href="/main/boxing.html">Boxing</a></li>
-            <li><a href="/main/blog.html">Blog</a></li>
-            <li><a href="/main/about-us.html">About Us</a></li>
-            <li><a href="/main/contact.html">Contact</a></li>
-          </ul>
-        </nav>
-        <script src="js/config.js"></script>
-        <script src="js/api-service.js"></script>
-        <script src="js/blog-service.js"></script>
-        <script src="js/blog-generator.js"></script>
-        <script src="js/main.js"></script>
-        <button class="mobile-menu-btn" aria-label="Open Menu">☰</button>
-        <button class="cta-button" onclick="location.href=' /shop'">
-          Watch Live
-        </button>
+    <header class="site-header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <a href="/main/index.html">
+              <img src="/main/images/logo.png" alt="SMART Live TV" />
+            </a>
+          </div>
+          
+          <button class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+          </button>
+          
+          <nav class="main-nav">
+            <ul>
+              <li><a href="/main/index.html">Home</a></li>
+              <li><a href="/main/football.html">Football</a></li>
+              <li><a href="/main/ufc.html">UFC/MMA</a></li>
+              <li><a href="/main/f1.html">Formula 1</a></li>
+              <li><a href="/main/boxing.html">Boxing</a></li>
+              <li><a href="/main/blog.html">Blog</a></li>
+              <li><a href="/main/about-us.html">About Us</a></li>
+              <li><a href="/main/contact.html">Contact</a></li>
+            </ul>
+          </nav>
+          
+          <div class="header-actions">
+            <button class="dark-mode-toggle" title="Toggle Dark Mode">
+              <i class="fas fa-moon"></i>
+            </button>
+            <a href="/main/shop.html" class="cta-button watch-live-btn" onclick="trackShopRedirect('header')">Watch Live</a>
+          </div>
+        </div>
       </div>
     </header>
 
-    <!-- Mobile Menu (hidden by default) -->
+    <!-- Mobile Menu -->
     <div class="mobile-menu">
-      <div class="mobile-menu-header">
-        <div class="logo">SMART<span> Live TV</span></div>
-        <button class="mobile-menu-close" aria-label="Close Menu">✕</button>
-      </div>
-      <ul class="mobile-menu-links">
+      <button class="mobile-menu-close">
+        <i class="fas fa-times"></i>
+      </button>
+      <ul>
         <li><a href="/main/index.html">Home</a></li>
-        <li>
-          <a href="/main/football.html">Football</a>
-          <!-- Submenu will be added by JavaScript -->
-        </li>
-        <li>
-          <a href="/main/basketball.html">Basketball</a>
-          <!-- Submenu will be added by JavaScript -->
-        </li>
-        <li>
-          <a href="/main/ufc.html">UFC</a>
-          <!-- Submenu will be added by JavaScript -->
-        </li>
-        <li>
-          <a href="/main/f1.html">F1</a>
-          <!-- Submenu will be added by JavaScript -->
-        </li>
-
+        <li><a href="/main/football.html">Football</a></li>
+        <li><a href="/main/ufc.html">UFC/MMA</a></li>
+        <li><a href="/main/f1.html">Formula 1</a></li>
         <li><a href="/main/boxing.html">Boxing</a></li>
         <li><a href="/main/blog.html">Blog</a></li>
         <li><a href="/main/about-us.html">About Us</a></li>
         <li><a href="/main/contact.html">Contact</a></li>
+        <li><a href="/main/shop.html" class="mobile-cta">Watch Live</a></li>
       </ul>
-      <button
-        class="cta-button"
-        style="width: 100%; margin-top: 20px"
-        onclick="location.href=' /shop'"
-      >
-        Watch Live
-      </button>
     </div>
 
     <!-- Hero Section -->
-    <section class="hero" aria-label="Featured Content">
-      <div class="hero-content">
-        <h1>Never Miss a Live Sports Moment</h1>
-        <p>
-          Get real-time scores, in-depth analysis, and watch your favorite
-          sports events live in HD streaming quality.
-        </p>
-        <button class="cta-button cta-large" onclick="location.href=' /shop'">
-          Start Watching Now
-        </button>
-      </div>
-      <!-- New Feature Callout -->
-      <div class="feature-callout">
-        <div class="feature-callout-icon">
-          <i class="fas fa-fire"></i>
-        </div>
-        <div class="feature-callout-text">
-          UFC 307: Jones vs Aspinall - Watch Live This Weekend!
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Never Miss a Live Sports Moment</h1>
+          <p>
+            Get real-time scores, in-depth analysis, and watch your favorite
+            sports events live in HD streaming quality.
+          </p>
+          <a href="/main/shop.html" class="cta-button" onclick="trackShopRedirect('hero')">Start Watching Now</a>
         </div>
       </div>
     </section>
 
-    <!-- Main Content -->
-    <main id="main-content" class="container">
-      <!-- Sports Categories -->
-      <section aria-labelledby="categories-heading">
-        <h2 id="categories-heading" class="visually-hidden">
-          Sports Categories
-        </h2>
+    <!-- Event Promotion -->
+    <div class="event-promotion">
+      <a href="/main/ufc.html" onclick="trackShopRedirect('promotion_banner')">
+        UFC 307: Jones vs Aspinall - Watch Live This Weekend!
+      </a>
+    </div>
+
+    <!-- Sports Categories -->
+    <section class="sports-categories">
+      <div class="container">
         <div class="categories">
-          <div class="category active">All Sports</div>
-          <div class="category">Football</div>
-          <div class="category">UFC</div>
-          <div class="category">F1</div>
-          <div class="category">Boxing</div>
+          <button class="category active" data-category="all">All Sports</button>
+          <button class="category" data-category="football">Football</button>
+          <button class="category" data-category="ufc">UFC</button>
+          <button class="category" data-category="f1">F1</button>
+          <button class="category" data-category="boxing">Boxing</button>
         </div>
-      </section>
-
-      <!-- Live Scores Section -->
-      <section aria-labelledby="live-scores-heading">
-        <h2 id="live-scores-heading" class="section-title">
-          Match Schedule
-          <span class="data-status-badge">Updated daily</span>
-        </h2>
-        <div class="scores-container">
-          <!-- Loading indicator that will be replaced by actual content -->
-          <div class="loading"></div>
-        </div>
-      </section>
-
-      <!-- League Rankings -->
-      <section aria-labelledby="rankings-heading">
-        <h2 id="rankings-heading" class="section-title">
-          Premier League Table
-        </h2>
-        <div class="rankings-container">
-          <!-- Loading indicator that will be replaced by actual content -->
-          <div class="loading"></div>
-        </div>
-      </section>
-
-      <!-- News and Blog Section -->
-      <div class="content-grid">
-        <div class="news-container">
-          <h2 class="section-title">Latest News</h2>
-          <!-- News cards will be loaded here -->
-          <div class="loading"></div>
-        </div>
-
-        <div class="sidebar">
-          <!-- Promo Card -->
-          <div class="promo-card">
-            <h3 class="promo-title">Never Miss a Match Again!</h3>
-            <p class="promo-text">
-              Get unlimited access to all live matches, replays, and exclusive
-              content with our premium subscription.
-            </p>
-            <button
-              class="cta-button"
-              onclick="location.href='/shop?source=promo'"
-            >
-              Subscribe Now
-            </button>
+        
+        <!-- All Sports Content -->
+        <div class="content-section active" data-category="all">
+          <!-- Match Schedule -->
+          <div class="section-header">
+            <h2>Match Schedule</h2>
+            <span class="update-time">Updates daily</span>
           </div>
-
-          <!-- Trending Topics -->
-          <div class="sidebar-card">
-            <h3 class="section-title">Trending Topics</h3>
-            <ul class="trending-list">
-              <!-- Trending topics will be loaded here -->
-              <div class="loading loading-sm"></div>
-            </ul>
+          <div id="match-schedule" class="match-schedule">
+            <div class="loading-container">
+              <div class="loading-spinner"></div>
+            </div>
           </div>
-
-          <!-- Upcoming Matches -->
-          <div class="sidebar-card">
-            <h3 class="section-title">Upcoming Matches</h3>
-            <div class="trending-list">
-              <div
-                class="trending-item upcoming-match"
-                data-timestamp="1716562800000"
-              >
-                <strong>Liverpool vs Chelsea</strong>
-                <p>Premier League • Tomorrow, 20:00</p>
-                <p class="match-countdown">24h 30m</p>
-                <a
-                  href="/watch/premier-league/liverpool-vs-chelsea"
-                  class="watch-now"
-                  style="margin-top: 10px"
-                  >Set Reminder</a
-                >
-              </div>
-              <div
-                class="trending-item upcoming-match"
-                data-timestamp="1716736800000"
-              >
-                <strong>Bayern Munich vs PSG</strong>
-                <p>Champions League • Wednesday, 21:00</p>
-                <p class="match-countdown">48h 30m</p>
-                <a
-                  href="/watch/champions-league/bayern-vs-psg"
-                  class="watch-now"
-                  style="margin-top: 10px"
-                  >Set Reminder</a
-                >
-              </div>
-              <div
-                class="trending-item upcoming-match"
-                data-timestamp="1716780000000"
-              >
-                <strong>Lakers vs Warriors</strong>
-                <p>NBA • Thursday, 03:30</p>
-                <p class="match-countdown">60h 30m</p>
-                <a
-                  href="/watch/nba/lakers-vs-warriors"
-                  class="watch-now"
-                  style="margin-top: 10px"
-                  >Set Reminder</a
-                >
-              </div>
-              <div
-                class="trending-item upcoming-match"
-                data-timestamp="1717171200000"
-              >
-                <strong>O'Malley vs Dvalishvili</strong>
-                <p>UFC • Saturday, 22:00</p>
-                <p class="match-countdown">5d 22h</p>
-                <a
-                  href="/watch/ufc/omalley-vs-dvalishvili"
-                  class="watch-now"
-                  style="margin-top: 10px"
-                  >Set Reminder</a
-                >
-              </div>
+          
+          <!-- Premier League Table -->
+          <div class="section-header">
+            <h2>Premier League Table</h2>
+            <span class="update-time">Updates daily</span>
+          </div>
+          <div id="league-standings" class="league-standings">
+            <div class="loading-container">
+              <div class="loading-spinner"></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Football Content -->
+        <div class="content-section" data-category="football">
+          <div class="section-header">
+            <h2>Football Matches</h2>
+            <span class="update-time">Updates daily</span>
+          </div>
+          <div id="football-matches" class="match-schedule">
+            <div class="loading-container">
+              <div class="loading-spinner"></div>
+            </div>
+          </div>
+          
+          <div class="section-header">
+            <h2>Top Leagues</h2>
+          </div>
+          <div class="leagues-grid">
+            <a href="/main/football.html?league=39" class="league-card">
+              <img src="/main/images/leagues/premier-league.png" alt="Premier League">
+              <span>Premier League</span>
+            </a>
+            <a href="/main/football.html?league=140" class="league-card">
+              <img src="/main/images/leagues/la-liga.png" alt="La Liga">
+              <span>La Liga</span>
+            </a>
+            <a href="/main/football.html?league=135" class="league-card">
+              <img src="/main/images/leagues/serie-a.png" alt="Serie A">
+              <span>Serie A</span>
+            </a>
+            <a href="/main/football.html?league=78" class="league-card">
+              <img src="/main/images/leagues/bundesliga.png" alt="Bundesliga">
+              <span>Bundesliga</span>
+            </a>
+          </div>
+        </div>
+        
+        <!-- UFC Content -->
+        <div class="content-section" data-category="ufc">
+          <div class="section-header">
+            <h2>Upcoming UFC Events</h2>
+            <span class="update-time">Updates daily</span>
+          </div>
+          <div id="ufc-events" class="match-schedule">
+            <div class="loading-container">
+              <div class="loading-spinner"></div>
+            </div>
+          </div>
+          
+          <div class="section-header">
+            <h2>UFC Rankings</h2>
+          </div>
+          <div id="ufc-rankings" class="ufc-rankings">
+            <div class="loading-container">
+              <div class="loading-spinner"></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- F1 Content -->
+        <div class="content-section" data-category="f1">
+          <div class="section-header">
+            <h2>F1 Race Calendar</h2>
+            <span class="update-time">Updates daily</span>
+          </div>
+          <div id="f1-calendar" class="match-schedule">
+            <div class="loading-container">
+              <div class="loading-spinner"></div>
+            </div>
+          </div>
+          
+          <div class="section-header">
+            <h2>Driver Standings</h2>
+          </div>
+          <div id="f1-driver-standings" class="f1-standings">
+            <div class="loading-container">
+              <div class="loading-spinner"></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Boxing Content -->
+        <div class="content-section" data-category="boxing">
+          <div class="section-header">
+            <h2>Upcoming Boxing Matches</h2>
+            <span class="update-time">Updates daily</span>
+          </div>
+          <div id="boxing-matches" class="match-schedule">
+            <div class="loading-container">
+              <div class="loading-spinner"></div>
+            </div>
+          </div>
+          
+          <div class="section-header">
+            <h2>Boxing Rankings</h2>
+          </div>
+          <div id="boxing-rankings" class="boxing-rankings">
+            <div class="loading-container">
+              <div class="loading-spinner"></div>
             </div>
           </div>
         </div>
       </div>
-    </main>
+    </section>
+
+    <!-- Latest News -->
+    <section class="latest-news">
+      <div class="container">
+        <div class="section-header">
+          <h2>Latest Sports News</h2>
+          <a href="/main/blog.html" class="view-all">View All</a>
+        </div>
+        <div class="news-grid">
+          <div class="news-card">
+            <div class="news-image">
+              <img src="/main/images/news/news1.jpg" alt="Football News">
+            </div>
+            <div class="news-content">
+              <span class="news-category">Football</span>
+              <h3>Premier League Transfer Window: Top 5 Signings This Summer</h3>
+              <p>The Premier League transfer window has seen some major moves this summer with clubs strengthening their squads...</p>
+              <a href="/main/blog/premier-league-transfers.html" class="read-more">Read More</a>
+            </div>
+          </div>
+          <div class="news-card">
+            <div class="news-image">
+              <img src="/main/images/news/news2.jpg" alt="UFC News">
+            </div>
+            <div class="news-content">
+              <span class="news-category">UFC</span>
+              <h3>UFC 307: Jones vs Aspinall Preview and Predictions</h3>
+              <p>The highly anticipated heavyweight title fight between Jon Jones and Tom Aspinall headlines UFC 307...</p>
+              <a href="/main/blog/ufc-307-preview.html" class="read-more">Read More</a>
+            </div>
+          </div>
+          <div class="news-card">
+            <div class="news-image">
+              <img src="/main/images/news/news3.jpg" alt="F1 News">
+            </div>
+            <div class="news-content">
+              <span class="news-category">Formula 1</span>
+              <h3>F1 Mid-Season Review: Verstappen Dominance and Team Battles</h3>
+              <p>As Formula 1 reaches its mid-season break, we look at the key storylines including Max Verstappen's continued dominance...</p>
+              <a href="/main/blog/f1-mid-season-review.html" class="read-more">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+      <div class="container">
+        <div class="newsletter-content">
+          <h2>Never Miss a Match</h2>
+          <p>Subscribe to our newsletter for the latest sports updates, exclusive content, and special offers.</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Your email address" required>
+            <button type="submit" class="cta-button">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </section>
 
     <!-- Footer -->
-    <footer>
+    <footer class="site-footer">
       <div class="container">
         <div class="footer-grid">
           <div class="footer-col">
-            <h3>SMART Live TV</h3>
+            <h3>About Us</h3>
+            <p>SMART Live TV is your ultimate destination for live sports streaming, real-time scores, and in-depth sports analysis.</p>
+            <div class="social-links">
+              <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+              <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+              <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h3>Company</h3>
             <ul class="footer-links">
               <li><a href="/main/about-us.html">About Us</a></li>
               <li><a href="/main/contact.html">Contact</a></li>
-              <li><a href="/careers">Careers</a></li>
-              <li><a href="/press">Press</a></li>
+              <li><a href="/main/careers.html">Careers</a></li>
+              <li><a href="/main/press.html">Press</a></li>
             </ul>
           </div>
           <div class="footer-col">
@@ -364,36 +419,33 @@
               <li><a href="/main/football.html">Football</a></li>
               <li><a href="/main/ufc.html">UFC/MMA</a></li>
               <li><a href="/main/f1.html">Formula 1</a></li>
-
               <li><a href="/main/boxing.html">Boxing</a></li>
             </ul>
           </div>
           <div class="footer-col">
             <h3>Help</h3>
             <ul class="footer-links">
-              <li><a href="/faq">FAQs</a></li>
-              <li><a href="/subscription">Subscription</a></li>
-              <li><a href="/support">Support</a></li>
-              <li><a href="/account">Account</a></li>
+              <li><a href="/main/faq.html">FAQs</a></li>
+              <li><a href="/main/shop.html">Subscription</a></li>
+              <li><a href="/main/support.html">Support</a></li>
+              <li><a href="/main/account.html">Account</a></li>
             </ul>
           </div>
           <div class="footer-col">
             <h3>Legal</h3>
             <ul class="footer-links">
-              <li><a href="/terms">Terms of Service</a></li>
-              <li><a href="/privacy">Privacy Policy</a></li>
-              <li><a href="/cookies">Cookie Policy</a></li>
-              <li><a href="/copyright">Copyright</a></li>
+              <li><a href="/main/terms.html">Terms of Service</a></li>
+              <li><a href="/main/privacy.html">Privacy Policy</a></li>
+              <li><a href="/main/cookies.html">Cookie Policy</a></li>
+              <li><a href="/main/copyright.html">Copyright</a></li>
             </ul>
           </div>
         </div>
         <div class="copyright">
-          &copy; 2025 SMART Live TV. All rights reserved.
+          &copy; 2023 SMART Live TV. All rights reserved.
         </div>
         <div class="data-update-info">
-          <small
-            >Data is updated three times daily at 8 AM, 2 PM, and 8 PM</small
-          >
+          <small>Data is updated twice daily at 8 AM and 8 PM</small>
         </div>
       </div>
     </footer>
@@ -403,8 +455,12 @@
     <!-- Theme Toggle Button (Added via JavaScript) -->
 
     <!-- Scripts -->
-    <script type="module" src="js/config.js"></script>
-    <script type="module" src="js/api-service.js"></script>
-    <script type="module" src="js/main.js"></script>
+    <script type="module" src="/main/js/config.js"></script>
+    <script type="module" src="/main/js/api-service.js"></script>
+    <script type="module" src="/main/js/data-processor.js"></script>
+    <script type="module" src="/main/js/error-handler.js"></script>
+    <script type="module" src="/main/js/reminder-service.js"></script>
+    <script type="module" src="/main/js/sports-app.js"></script>
+    <script type="module" src="/main/js/main.js"></script>
   </body>
 </html>

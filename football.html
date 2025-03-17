@@ -5,441 +5,344 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Watch live football matches in HD - Premier League, La Liga, Serie A, Bundesliga and more. Get live scores, standings and football news on SMART Live TV."
+      content="Watch live football matches, league tables, and match schedules - SMART Live TV"
     />
     <meta
       name="keywords"
-      content="football live, football streaming, Premier League, La Liga, football scores, football news"
+      content="football, live football, football scores, football matches"
     />
     <meta name="robots" content="index, follow" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.smartlivetv.net/football" />
-    <meta property="og:title" content="Football – SMART Live TV" />
+    <meta property="og:url" content="https://smartlivetv.net/football.html" />
+    <meta property="og:title" content="Football - SMART Live TV" />
     <meta
       property="og:description"
-      content="Watch live football matches in HD - Premier League, La Liga, Serie A, Bundesliga and more. Get live scores, standings and football news."
+      content="Watch live football matches, league tables, and match schedules"
     />
     <meta
       property="og:image"
-      content="https://www.smartlivetv.net/images/og-football.jpg"
+      content="https://smartlivetv.net/main/images/og-football.jpg"
     />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta
       property="twitter:url"
-      content="https://www.smartlivetv.net/football"
+      content="https://smartlivetv.net/football.html"
     />
-    <meta property="twitter:title" content="Football – SMART Live TV" />
+    <meta property="twitter:title" content="Football - SMART Live TV" />
     <meta
       property="twitter:description"
-      content="Watch live football matches in HD - Premier League, La Liga, Serie A, Bundesliga and more. Get live scores, standings and football news."
+      content="Watch live football matches, league tables, and match schedules"
     />
     <meta
       property="twitter:image"
-      content="https://www.smartlivetv.net/images/twitter-football.jpg"
+      content="https://smartlivetv.net/main/images/twitter-football.jpg"
     />
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.smartlivetv.net/football" />
+    <link rel="canonical" href="https://smartlivetv.net/football.html" />
 
-    <title>Football – SMART Live TV</title>
+    <title>Football - SMART Live TV</title>
 
-    <link rel="stylesheet" href="/css/styles.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-    />
-    <link rel="icon" href="/images/favicon.png" type="image/x-icon" />
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="/css/styles.css" as="style">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/styles.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="/main/images/favicon.png" type="image/png" />
   </head>
   <body>
     <!-- Header -->
-    <header>
-      <div class="container header-container">
-        <div class="logo">SMART<span> Live TV</span></div>
-        <nav aria-label="Main Navigation">
-          <ul class="nav-menu">
-            <li><a href="/index.html">Home</a></li>
-            <li><a href="/football.html" class="active">Football</a></li>
-            <li><a href="/ufc.html">UFC</a></li>
-            <li><a href="/f1.html">F1</a></li>
-
-            <li><a href="/boxing.html">Boxing</a></li>
-            <li><a href="/blog.html">Blog</a></li>
-            <li><a href="/about-us.html">About Us</a></li>
-            <li><a href="/contact.html">Contact</a></li>
-          </ul>
-        </nav>
-        <button class="mobile-menu-btn" aria-label="Open Menu">☰</button>
-        <button class="cta-button" onclick="location.href=' /shop'">
-          Watch Live
-        </button>
+    <header class="site-header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <a href="/main/index.html">
+              <span class="logo-text">SMART<span class="logo-highlight">Live</span> TV</span>
+            </a>
+          </div>
+          
+          <button class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+          </button>
+          
+          <nav class="main-nav">
+            <ul>
+              <li><a href="/main/index.html">Home</a></li>
+              <li><a href="/main/football.html" class="active">Football</a></li>
+              <li><a href="/main/ufc.html">UFC/MMA</a></li>
+              <li><a href="/main/f1.html">Formula 1</a></li>
+              <li><a href="/main/boxing.html">Boxing</a></li>
+              <li><a href="/main/blog.html">Blog</a></li>
+              <li><a href="/main/about.html">About Us</a></li>
+              <li><a href="/main/contact.html">Contact</a></li>
+            </ul>
+          </nav>
+          
+          <div class="header-actions">
+            <a href="#" class="cta-button">Watch Live</a>
+          </div>
+        </div>
       </div>
     </header>
 
-    <!-- Mobile Menu (hidden by default) -->
+    <!-- Mobile Menu -->
     <div class="mobile-menu">
-      <div class="mobile-menu-header">
-        <div class="logo">SMART<span> Live TV</span></div>
-        <button class="mobile-menu-close">✕</button>
-      </div>
-      <ul class="mobile-menu-links">
-        <li><a href="/index.html">Home</a></li>
-        <li><a href="/football.html">Football</a></li>
-        <li><a href="/basketball.html">Basketball</a></li>
-        <li><a href="/ufc.html">UFC</a></li>
-        <li><a href="/f1.html">F1</a></li>
-
-        <li><a href="/boxing.html">Boxing</a></li>
-        <li><a href="/blog.html">Blog</a></li>
-        <li><a href="/about-us.html">About Us</a></li>
-        <li><a href="/contact.html">Contact</a></li>
+      <ul>
+        <li><a href="/main/index.html">Home</a></li>
+        <li><a href="/main/football.html" class="active">Football</a></li>
+        <li><a href="/main/ufc.html">UFC/MMA</a></li>
+        <li><a href="/main/f1.html">Formula 1</a></li>
+        <li><a href="/main/boxing.html">Boxing</a></li>
+        <li><a href="/main/blog.html">Blog</a></li>
+        <li><a href="/main/about.html">About Us</a></li>
+        <li><a href="/main/contact.html">Contact</a></li>
+        <li><a href="#" class="mobile-cta">Watch Live</a></li>
       </ul>
-      <button
-        class="cta-button"
-        style="width: 100%; margin-top: 20px"
-        onclick="location.href=' /shop'"
-      >
-        Watch Live
-      </button>
     </div>
 
-    <!-- Page Title -->
-    <section class="page-title">
+    <!-- Hero Section -->
+    <section class="sport-hero football-hero">
       <div class="container">
-        <h1>Football</h1>
-        <p>
-          Watch live football matches, check the latest scores, standings, and
-          news from the world's top leagues.
-        </p>
+        <div class="sport-hero-content">
+          <h1>Live Football Streaming</h1>
+          <p>Watch Premier League, La Liga, Serie A, Bundesliga, and Champions League in HD quality with real-time stats and analysis.</p>
+          <div class="cta-buttons">
+            <a href="#live-matches" class="cta-button">Live Matches</a>
+            <a href="#upcoming-matches" class="cta-button outline">Upcoming Matches</a>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- Main Content -->
-    <main class="container">
-      <!-- League Selector -->
-      <section aria-labelledby="leagues-heading">
-        <h2 id="leagues-heading" class="visually-hidden">Football Leagues</h2>
-        <div class="league-selector">
-          <button class="league-button active" data-league-id="1">
-            Premier League
-          </button>
-          <button class="league-button" data-league-id="2">La Liga</button>
-          <button class="league-button" data-league-id="3">Serie A</button>
-          <button class="league-button" data-league-id="4">Bundesliga</button>
-          <button class="league-button" data-league-id="5">Ligue 1</button>
-        </div>
-      </section>
-
-      <!-- Live Scores Section -->
-      <section aria-labelledby="football-scores-heading">
-        <h2 id="football-scores-heading" class="section-title">
-          Match Schedule
-        </h2>
-        <div class="scores-container">
-          <!-- Scores will be loaded dynamically -->
-          <div class="loading"></div>
-        </div>
-      </section>
-
-      <!-- League Table -->
-      <section aria-labelledby="league-table-heading">
-        <h2 id="league-table-heading" class="section-title">League Table</h2>
-        <div class="rankings-container">
-          <!-- League table will be loaded dynamically -->
-          <div class="loading"></div>
-        </div>
-      </section>
-
-      <!-- News and Blog Section -->
-      <div class="content-grid">
-        <div class="news-container">
-          <h2 class="section-title">Latest Football News</h2>
-
-          <!-- News Card 1 -->
-          <div class="news-card">
-            <img
-              src="images/news/football-news1.jpg"
-              alt="Liverpool vs Manchester City"
-              class="news-image"
-            />
-            <div class="news-content">
-              <div class="news-meta">
-                <span>Premier League</span>
-                <span>2 hours ago</span>
-              </div>
-              <h3 class="news-title">
-                Liverpool Takes the Lead in Premier League Title Race
-              </h3>
-              <p class="news-excerpt">
-                After a stunning victory against Manchester City, Liverpool now
-                sits comfortably at the top of the Premier League table with a
-                three-point advantage and a game in hand.
-              </p>
-              <a href="/blog.html/liverpool-title-race" class="read-more"
-                >Read Full Story</a
-              >
+    <main class="main-content">
+      <div class="container">
+        <!-- Live Matches Section -->
+        <section id="live-matches" class="live-matches-section">
+          <div class="section-header">
+            <h2>Live Matches</h2>
+            <div class="live-indicator">
+              <span class="pulse"></span> Live Now
             </div>
           </div>
-
-          <!-- News Card 2 -->
-          <div class="news-card">
-            <img
-              src="images/news/football-news2.jpg"
-              alt="Champions League"
-              class="news-image"
-            />
-            <div class="news-content">
-              <div class="news-meta">
-                <span>Champions League</span>
-                <span>1 day ago</span>
-              </div>
-              <h3 class="news-title">
-                Champions League Quarter-Finals Draw: Bayern to Face PSG
-              </h3>
-              <p class="news-excerpt">
-                The Champions League quarter-finals draw has delivered some
-                massive fixtures, with Bayern Munich set to face PSG in what
-                promises to be an epic European clash.
-              </p>
-              <a href="blog/champions-league-draw" class="read-more"
-                >Read Full Story</a
-              >
+          
+          <div class="live-matches-container">
+            <!-- This will be populated by JavaScript with real-time API data -->
+            <div class="loading-indicator">
+              <div class="spinner"></div>
+              <p>Loading live matches...</p>
             </div>
           </div>
-
-          <!-- News Card 3 -->
-          <div class="news-card">
-            <img
-              src="images/news/football-news3.jpg"
-              alt="Transfer News"
-              class="news-image"
-            />
-            <div class="news-content">
-              <div class="news-meta">
-                <span>Transfers</span>
-                <span>2 days ago</span>
-              </div>
-              <h3 class="news-title">
-                Summer Transfer Window: Top 5 Moves to Watch
-              </h3>
-              <p class="news-excerpt">
-                With the summer transfer window approaching, clubs are already
-                positioning themselves to make key signings. Here are the top
-                five potential moves that could reshape the footballing
-                landscape.
-              </p>
-              <a href="/blog.html/summer-transfers" class="read-more"
-                >Read Full Story</a
-              >
-            </div>
+        </section>
+        
+        <!-- League Selection -->
+        <section class="leagues-section">
+          <div class="section-header">
+            <h2>Top Leagues</h2>
           </div>
-
-          <!-- News Card 4 -->
-          <div class="news-card">
-            <img
-              src="images/news/football-news4.jpg"
-              alt="Football Manager"
-              class="news-image"
-            />
-            <div class="news-content">
-              <div class="news-meta">
-                <span>La Liga</span>
-                <span>3 days ago</span>
-              </div>
-              <h3 class="news-title">
-                Barcelona Appoints New Manager Following Recent Struggles
-              </h3>
-              <p class="news-excerpt">
-                Barcelona has appointed a new manager following a string of
-                disappointing results, with the club looking to return to their
-                winning ways under fresh leadership.
-              </p>
-              <a href="/blog.html/barcelona-new-manager" class="read-more"
-                >Read Full Story</a
-              >
-            </div>
-          </div>
-        </div>
-
-        <div class="sidebar">
-          <!-- Upcoming Matches -->
-          <div class="sidebar-card">
-            <h3 class="section-title">Upcoming Matches</h3>
-            <div class="trending-list">
-              <div
-                class="trending-item upcoming-match"
-                data-timestamp="1716562800000"
-              >
-                <strong>Liverpool vs Chelsea</strong>
-                <p>Premier League • Tomorrow, 20:00</p>
-                <p class="match-countdown">24h 30m</p>
-                <a
-                  href="/watch/premier-league/liverpool-vs-chelsea"
-                  class="watch-now"
-                  style="margin-top: 10px"
-                  >Set Reminder</a
-                >
-              </div>
-              <div
-                class="trending-item upcoming-match"
-                data-timestamp="1716736800000"
-              >
-                <strong>Bayern Munich vs PSG</strong>
-                <p>Champions League • Wednesday, 21:00</p>
-                <p class="match-countdown">48h 30m</p>
-                <a
-                  href="/watch/champions-league/bayern-vs-psg"
-                  class="watch-now"
-                  style="margin-top: 10px"
-                  >Set Reminder</a
-                >
-              </div>
-              <div
-                class="trending-item upcoming-match"
-                data-timestamp="1716996000000"
-              >
-                <strong>Real Madrid vs Barcelona</strong>
-                <p>El Clásico • Saturday, 21:00</p>
-                <p class="match-countdown">4d 6h</p>
-                <a
-                  href="/watch/la-liga/real-madrid-vs-barcelona"
-                  class="watch-now"
-                  style="margin-top: 10px"
-                  >Set Reminder</a
-                >
-              </div>
-              <div
-                class="trending-item upcoming-match"
-                data-timestamp="1717082400000"
-              >
-                <strong>Arsenal vs Tottenham</strong>
-                <p>North London Derby • Sunday, 16:30</p>
-                <p class="match-countdown">5d 2h</p>
-                <a
-                  href="/watch/premier-league/arsenal-vs-tottenham"
-                  class="watch-now"
-                  style="margin-top: 10px"
-                  >Set Reminder</a
-                >
-              </div>
-            </div>
-          </div>
-
-          <!-- Promo Card -->
-          <div class="promo-card">
-            <h3 class="promo-title">Never Miss a Match Again!</h3>
-            <p class="promo-text">
-              Get unlimited access to all live matches, replays, and exclusive
-              content with our premium subscription.
-            </p>
-            <button class="cta-button" onclick="location.href=' /shop'">
-              Subscribe Now
+          
+          <div class="leagues-container">
+            <button class="league-button active" data-league-id="39">
+              <img src="/main/images/leagues/premier-league.png" alt="Premier League">
+              <span>Premier League</span>
+            </button>
+            <button class="league-button" data-league-id="140">
+              <img src="/main/images/leagues/la-liga.png" alt="La Liga">
+              <span>La Liga</span>
+            </button>
+            <button class="league-button" data-league-id="135">
+              <img src="/main/images/leagues/serie-a.png" alt="Serie A">
+              <span>Serie A</span>
+            </button>
+            <button class="league-button" data-league-id="78">
+              <img src="/main/images/leagues/bundesliga.png" alt="Bundesliga">
+              <span>Bundesliga</span>
+            </button>
+            <button class="league-button" data-league-id="61">
+              <img src="/main/images/leagues/ligue-1.png" alt="Ligue 1">
+              <span>Ligue 1</span>
+            </button>
+            <button class="league-button" data-league-id="2">
+              <img src="/main/images/leagues/champions-league.png" alt="Champions League">
+              <span>Champions League</span>
             </button>
           </div>
-
-          <!-- Twitter Feed -->
-          <div class="sidebar-card">
-            <h3 class="section-title">Football Twitter</h3>
-            <div class="twitter-feed">
-              <div class="tweet">
-                <div class="tweet-avatar">
-                  <img
-                    src="images/avatars/premier-league.png"
-                    alt="Premier League"
-                  />
-                </div>
-                <div class="tweet-content">
-                  <div class="tweet-header">
-                    <span class="tweet-name">Premier League</span>
-                    <span class="tweet-handle">@premierleague</span>
-                  </div>
-                  <p class="tweet-text">
-                    In-form Liverpool have won their last 6 #PL matches 🔥
-                  </p>
-                  <div class="tweet-time">2 hours ago</div>
-                </div>
-              </div>
-              <div class="tweet">
-                <div class="tweet-avatar">
-                  <img
-                    src="images/avatars/champions-league.png"
-                    alt="Champions League"
-                  />
-                </div>
-                <div class="tweet-content">
-                  <div class="tweet-header">
-                    <span class="tweet-name">UEFA Champions League</span>
-                    <span class="tweet-handle">@ChampionsLeague</span>
-                  </div>
-                  <p class="tweet-text">
-                    🚨 Quarter-finals draw ✅ <br />Most exciting tie? 🤔
-                  </p>
-                  <div class="tweet-time">1 day ago</div>
-                </div>
-              </div>
+        </section>
+        
+        <!-- Upcoming Matches -->
+        <section id="upcoming-matches" class="upcoming-matches-section">
+          <div class="section-header">
+            <h2>Upcoming Matches</h2>
+            <select id="league-filter" class="league-filter">
+              <option value="all">All Leagues</option>
+              <option value="39">Premier League</option>
+              <option value="140">La Liga</option>
+              <option value="135">Serie A</option>
+              <option value="78">Bundesliga</option>
+              <option value="61">Ligue 1</option>
+              <option value="2">Champions League</option>
+            </select>
+          </div>
+          
+          <div class="upcoming-matches-container">
+            <!-- This will be populated by JavaScript with API data -->
+            <div class="loading-indicator">
+              <div class="spinner"></div>
+              <p>Loading upcoming matches...</p>
             </div>
           </div>
-        </div>
+          
+          <div class="load-more-container">
+            <button id="load-more-matches" class="load-more-button">
+              Load More Matches
+            </button>
+          </div>
+        </section>
+        
+        <!-- League Standings -->
+        <section class="standings-section">
+          <div class="section-header">
+            <h2>League Standings</h2>
+            <div class="standings-league-selector">
+              <select id="standings-league-filter" class="standings-league-filter">
+                <option value="39">Premier League</option>
+                <option value="140">La Liga</option>
+                <option value="135">Serie A</option>
+                <option value="78">Bundesliga</option>
+                <option value="61">Ligue 1</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="standings-container">
+            <!-- This will be populated by JavaScript with API data -->
+            <div class="loading-indicator">
+              <div class="spinner"></div>
+              <p>Loading standings...</p>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Top Scorers -->
+        <section class="top-scorers-section">
+          <div class="section-header">
+            <h2>Top Scorers</h2>
+            <select id="scorers-league-filter" class="scorers-league-filter">
+              <option value="39">Premier League</option>
+              <option value="140">La Liga</option>
+              <option value="135">Serie A</option>
+              <option value="78">Bundesliga</option>
+              <option value="61">Ligue 1</option>
+            </select>
+          </div>
+          
+          <div class="top-scorers-container">
+            <!-- This will be populated by JavaScript with API data -->
+            <div class="loading-indicator">
+              <div class="spinner"></div>
+              <p>Loading top scorers...</p>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Football News -->
+        <section class="news-section">
+          <div class="section-header">
+            <h2>Latest Football News</h2>
+            <a href="/main/blog.html?category=Football" class="view-all">View All</a>
+          </div>
+          
+          <div class="news-grid football-news">
+            <!-- This will be populated by JavaScript with blog data -->
+            <div class="loading-indicator">
+              <div class="spinner"></div>
+              <p>Loading news...</p>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Newsletter -->
+        <section class="newsletter">
+          <div class="container">
+            <h2>Never Miss a Match</h2>
+            <p>Subscribe to our newsletter for match reminders, exclusive content, and special offers.</p>
+            <form class="newsletter-form" id="newsletter-form">
+              <input type="email" placeholder="Your email address" required>
+              <button type="submit">Subscribe</button>
+            </form>
+          </div>
+        </section>
       </div>
     </main>
 
     <!-- Footer -->
-    <footer>
+    <footer class="site-footer">
       <div class="container">
         <div class="footer-grid">
           <div class="footer-col">
-            <h3>SMART Live TV</h3>
-            <ul class="footer-links">
-              <li><a href="/about-us.html">About Us</a></li>
-              <li><a href="/contact.html">Contact</a></li>
-              <li><a href="/careers">Careers</a></li>
-              <li><a href="/press">Press</a></li>
-            </ul>
+            <h3>About</h3>
+            <p>SMART Live TV is your ultimate destination for live sports streaming, real-time scores, and in-depth sports analysis.</p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
           </div>
+          
           <div class="footer-col">
             <h3>Sports</h3>
             <ul class="footer-links">
-              <li><a href="/football.html">Football</a></li>
-              <li><a href="/ufc.html">UFC/MMA</a></li>
-              <li><a href="/f1.html">Formula 1</a></li>
-
-              <li><a href="/boxing.html">Boxing</a></li>
+              <li><a href="/main/football.html">Football</a></li>
+              <li><a href="/main/ufc.html">UFC/MMA</a></li>
+              <li><a href="/main/f1.html">Formula 1</a></li>
+              <li><a href="/main/boxing.html">Boxing</a></li>
             </ul>
           </div>
+          
           <div class="footer-col">
-            <h3>Help</h3>
+            <h3>Quick Links</h3>
             <ul class="footer-links">
-              <li><a href="/faq">FAQs</a></li>
-              <li><a href="/shop">Subscription</a></li>
-              <li><a href="/support">Support</a></li>
-              <li><a href="/account">Account</a></li>
+              <li><a href="/main/blog.html">Blog</a></li>
+              <li><a href="/main/about.html">About Us</a></li>
+              <li><a href="/main/contact.html">Contact</a></li>
+              <li><a href="/main/privacy.html">Privacy Policy</a></li>
+              <li><a href="/main/terms.html">Terms of Service</a></li>
             </ul>
           </div>
+          
           <div class="footer-col">
-            <h3>Legal</h3>
-            <ul class="footer-links">
-              <li><a href="/terms">Terms of Service</a></li>
-              <li><a href="/privacy">Privacy Policy</a></li>
-              <li><a href="/cookies">Cookie Policy</a></li>
-              <li><a href="/copyright">Copyright</a></li>
+            <h3>Contact</h3>
+            <ul class="contact-info">
+              <li><i class="fas fa-envelope"></i> info@smartlivetv.net</li>
+              <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+              <li><i class="fas fa-map-marker-alt"></i> 123 Sports Avenue, NY 10001</li>
             </ul>
           </div>
         </div>
-        <div class="copyright">
-          &copy; 2025 SMART Live TV. All rights reserved.
-        </div>
-        <div class="data-update-info">
-          <small>Data is updated twice daily at 8 AM and 8 PM</small>
+        
+        <div class="footer-bottom">
+          <div class="copyright">
+            &copy; 2023 SMART Live TV. All rights reserved.
+          </div>
+          <div class="data-update-info">
+            <small>Data is updated in real-time</small>
+          </div>
         </div>
       </div>
     </footer>
 
     <!-- JavaScript -->
-    <script src="js/config.js"></script>
-    <script src="js/api-service.js"></script>
-    <script src="js/main.js"></script>
+    <script type="module" src="/main/js/config.js"></script>
+    <script type="module" src="/main/js/error-handler.js"></script>
+    <script type="module" src="/main/js/api-service.js"></script>
+    <script type="module" src="/main/js/reminder-service.js"></script>
+    <script type="module" src="/main/js/blog-service.js"></script>
+    <script type="module" src="/main/js/football.js"></script>
   </body>
 </html>

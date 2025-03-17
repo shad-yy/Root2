@@ -1,318 +1,288 @@
 /**
  * SMART Live TV - Reminder Service
  * 
- * Manages event reminders, including:
- * - Setting reminders for upcoming events
- * - Sending browser notifications
- * - Managing user's reminder list
- * - Syncing with different reminder methods
+ * Handles setting, displaying, and managing reminders for upcoming events
  */
 
 import CONFIG from './config.js';
+import ErrorHandler from './error-handler.js';
 
-/**
- * ReminderService - Manages sports event reminders
- */
 const ReminderService = {
   /**
-   * Initialize the reminder service
+   * Storage key for reminders
+   */
+  STORAGE_KEY: 'smart_live_tv_reminders',
+  
+  /**
+   * Initialize reminder service
    */
   init() {
-    // Check for reminders every minute
-    setInterval(() => this.checkReminders(), 60000);
-
-    // Request notification permission if needed
-    this.requestNotificationPermission();
-
-    console.log('Reminder Service initialized');
-  },
-
-  /**
-   * Request notification permission
-   */
-  requestNotificationPermission() {
-    if (CONFIG.REMINDERS.NOTIFICATION_OPTIONS.BROWSER && 'Notification' in window) {
-      if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-        // Wait a bit before asking for permission
-        setTimeout(() => {
-          Notification.requestPermission();
-        }, 10000);
-      }
+    console.log('Reminder service initialized');
+    
+    // Check if notifications are supported
+    this.checkNotificationSupport();
+    
+    // Check for upcoming reminders on page load
+    if (CONFIG.FEATURES.ENABLE_NOTIFICATIONS) {
+      this.checkUpcomingReminders();
+      
+      // Set interval to check for reminders every minute
+      setInterval(() => this.checkUpcomingReminders(), 60000);
     }
   },
-
+  
   /**
-   * Set reminder for event
-   * @param {string} eventId - Event ID
-   * @param {string} eventName - Event name
-   * @param {string} eventType - Event type (football, ufc, f1)
-   * @param {Date} eventDate - Event date
-   * @param {number} minutesBefore - Minutes before event to send reminder
-   * @returns {string} - Reminder ID
+   * Check if notifications are supported
    */
-  setReminder(eventId, eventName, eventType, eventDate, minutesBefore = 30) {
+  checkNotificationSupport() {
+    if (!('Notification' in window)) {
+      console.log('This browser does not support notifications');
+      return false;
+    }
+    
+    return true;
+  },
+  
+  /**
+   * Request notification permission if needed
+   * @returns {Promise} - Permission result
+   */
+  async requestPermission() {
+    if (!this.checkNotificationSupport()) {
+      return 'denied';
+    }
+    
+    if (Notification.permission === 'granted') {
+      return 'granted';
+    }
+    
+    if (Notification.permission !== 'denied') {
+      try {
+        const permission = await Notification.requestPermission();
+        return permission;
+      } catch (error) {
+        ErrorHandler.logError('notification_permission_request', error);
+        return 'denied';
+      }
+    }
+    
+    return Notification.permission;
+  },
+  
+  /**
+   * Set a reminder for an event
+   * @param {object} event - Event to set reminder for
+   * @param {string} event.id - Event ID
+   * @param {string} event.title - Event title
+   * @param {string} event.time - Event time (ISO string)
+   * @returns {boolean} - Success state
+   */
+  async setReminder(event) {
     try {
-      // Validate inputs
-      if (!eventId || !eventName || !eventDate) {
-        console.error('Missing required parameters for reminder');
-        return null;
+      // Request permission first
+      const permission = await this.requestPermission();
+      
+      if (permission !== 'granted') {
+        ErrorHandler.showError(
+          'Notification permission is required to set reminders. Please enable notifications in your browser settings.',
+          'warning'
+        );
+        return false;
       }
-      
-      // Convert to Date object if string
-      const eventDateTime = eventDate instanceof Date ? eventDate : new Date(eventDate);
-      
-      // Validate event date
-      if (isNaN(eventDateTime.getTime())) {
-        console.error('Invalid event date');
-        return null;
-      }
-      
-      // Create reminder object
-      const reminderId = `reminder-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`;
-      const reminder = {
-        id: reminderId,
-        eventId: eventId,
-        eventName: eventName,
-        eventType: eventType || 'general',
-        eventDate: eventDateTime.toISOString(),
-        minutesBefore: minutesBefore,
-        created: new Date().toISOString(),
-        sent: false
-      };
       
       // Get existing reminders
-      const reminders = this.getUserReminders();
+      const reminders = this.getReminders();
       
-      // Add new reminder
-      reminders.push(reminder);
+      // Check if reminder already exists
+      const existingIndex = reminders.findIndex(r => r.id === event.id);
       
-      // Save updated reminders
-      localStorage.setItem(CONFIG.REMINDERS.STORAGE_KEY, JSON.stringify(reminders));
-      
-      // Request notification permission if needed
-      this.requestNotificationPermission();
-      
-      // Return reminder ID
-      return reminderId;
-    } catch (error) {
-      console.error('Error setting reminder:', error);
-      return null;
-    }
-  },
-
-  /**
-   * Check and send due reminders
-   */
-  checkReminders() {
-    try {
-      // Get reminders from localStorage
-      const remindersJson = localStorage.getItem(CONFIG.REMINDERS.STORAGE_KEY);
-      if (!remindersJson) return;
-
-      const reminders = JSON.parse(remindersJson);
-      const now = new Date();
-      const updatedReminders = [];
-
-      reminders.forEach(reminder => {
-        const eventDate = new Date(reminder.eventDate);
-        const reminderTime = new Date(eventDate.getTime() - (reminder.minutesBefore * 60 * 1000));
-
-        // If reminder is due (current time is past reminder time)
-        if (now >= reminderTime && !reminder.sent) {
-          // Send notification
-          this.sendReminderNotification(reminder);
-
-          // Mark as sent
-          reminder.sent = true;
-          reminder.sentAt = now.toISOString();
-        }
-
-        // Keep reminder if event hasn't passed yet or recently sent (for history)
-        if (eventDate > now || (reminder.sent && (now - eventDate) < 86400000)) { // Keep for 24 hours after event
-          updatedReminders.push(reminder);
-        }
-      });
-
-      // Save updated reminders back to localStorage
-      localStorage.setItem(CONFIG.REMINDERS.STORAGE_KEY, JSON.stringify(updatedReminders));
-    } catch (error) {
-      console.error('Error checking reminders:', error);
-    }
-  },
-
-  /**
-   * Send reminder notification
-   * @param {Object} reminder - Reminder object
-   */
-  sendReminderNotification(reminder) {
-    // Browser notification
-    if (CONFIG.REMINDERS.NOTIFICATION_OPTIONS.BROWSER && 'Notification' in window) {
-      if (Notification.permission === 'granted') {
-        const eventDate = new Date(reminder.eventDate);
-        const formattedTime = eventDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-        const title = `Event Reminder: ${reminder.eventName}`;
-        const options = {
-          body: `Starting in ${reminder.minutesBefore} minutes at ${formattedTime}!`,
-          icon: '/images/notification-icon.png',
-          tag: reminder.id,
-          data: {
-            eventId: reminder.eventId,
-            eventType: reminder.eventType
-          }
+      if (existingIndex !== -1) {
+        // Update existing reminder
+        reminders[existingIndex] = {
+          ...event,
+          createdAt: reminders[existingIndex].createdAt,
+          updatedAt: new Date().toISOString()
         };
-
-        const notification = new Notification(title, options);
-
-        // Handle notification click
-        notification.onclick = function () {
-          window.focus();
-          const url = `/watch/${reminder.eventType}/${reminder.eventId}`;
-          window.location.href = CONFIG.getRelativePath(url);
-        };
-
-        console.log(`Notification sent for ${reminder.eventName}`);
+      } else {
+        // Add new reminder
+        reminders.push({
+          ...event,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        });
       }
-    }
-
-    // Add sound effect if enabled
-    if (CONFIG.REMINDERS.NOTIFICATION_OPTIONS.SOUND) {
-      try {
-        const audio = new Audio('/sounds/notification.mp3');
-        audio.play();
-      } catch (e) {
-        console.warn('Could not play notification sound:', e);
-      }
+      
+      // Save reminders
+      this.saveReminders(reminders);
+      
+      return true;
+    } catch (error) {
+      ErrorHandler.logError('set_reminder', error, { event });
+      ErrorHandler.showError('Failed to set reminder. Please try again.');
+      return false;
     }
   },
-
+  
   /**
-   * Get user reminders
-   * @returns {Array} - User reminders
+   * Remove a reminder
+   * @param {string} eventId - Event ID to remove reminder for
+   * @returns {boolean} - Success state
    */
-  getUserReminders() {
+  removeReminder(eventId) {
     try {
-      const remindersJson = localStorage.getItem(CONFIG.REMINDERS.STORAGE_KEY);
+      // Get existing reminders
+      const reminders = this.getReminders();
+      
+      // Filter out the reminder to remove
+      const filteredReminders = reminders.filter(r => r.id !== eventId);
+      
+      // Save reminders
+      this.saveReminders(filteredReminders);
+      
+      return true;
+    } catch (error) {
+      ErrorHandler.logError('remove_reminder', error, { eventId });
+      return false;
+    }
+  },
+  
+  /**
+   * Get all reminders
+   * @returns {array} - List of reminders
+   */
+  getReminders() {
+    try {
+      const remindersJson = localStorage.getItem(this.STORAGE_KEY);
       return remindersJson ? JSON.parse(remindersJson) : [];
     } catch (error) {
-      console.error('Error getting user reminders:', error);
+      ErrorHandler.logError('get_reminders', error);
       return [];
     }
   },
-
+  
   /**
-   * Delete reminder
-   * @param {string} reminderId - Reminder ID
-   * @returns {boolean} - Success status
+   * Save reminders to local storage
+   * @param {array} reminders - List of reminders
    */
-  deleteReminder(reminderId) {
+  saveReminders(reminders) {
     try {
-      const reminders = this.getUserReminders();
-      const updatedReminders = reminders.filter(r => r.id !== reminderId);
-
-      if (updatedReminders.length === reminders.length) {
-        // No reminder found with this ID
-        return false;
-      }
-
-      // Save updated reminders
-      localStorage.setItem(CONFIG.REMINDERS.STORAGE_KEY, JSON.stringify(updatedReminders));
-      return true;
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(reminders));
     } catch (error) {
-      console.error('Error deleting reminder:', error);
-      return false;
+      ErrorHandler.logError('save_reminders', error);
     }
   },
-
+  
   /**
-   * Format relative time until an event
-   * @param {Date|string} eventDate - Event date
-   * @returns {string} - Formatted relative time
+   * Check for upcoming reminders
    */
-  formatRelativeTime(eventDate) {
-    const timeRemaining = CONFIG.getTimeRemaining(eventDate);
-
-    if (timeRemaining.totalMs <= 0) {
-      return 'Starting now';
-    }
-
-    if (timeRemaining.days > 0) {
-      return `${timeRemaining.days}d ${timeRemaining.hours}h ${timeRemaining.minutes}m`;
-    } else if (timeRemaining.hours > 0) {
-      return `${timeRemaining.hours}h ${timeRemaining.minutes}m`;
-    } else {
-      return `${timeRemaining.minutes}m`;
-    }
-  },
-
-  /**
-   * Get upcoming reminders
-   * @param {number} limit - Maximum number of reminders to return
-   * @returns {Array} - List of upcoming reminders
-   */
-  getUpcomingReminders(limit = 5) {
-    const reminders = this.getUserReminders();
-    const now = new Date();
-
-    // Filter for upcoming reminders that haven't been sent yet
-    const upcomingReminders = reminders
-      .filter(r => {
-        const eventDate = new Date(r.eventDate);
-        return eventDate > now && !r.sent;
-      })
-      // Sort by closest first
-      .sort((a, b) => new Date(a.eventDate) - new Date(b.eventDate));
-
-    // Limit results
-    return upcomingReminders.slice(0, limit);
-  },
-
-  /**
-   * Update reminder settings
-   * @param {string} reminderId - Reminder ID 
-   * @param {Object} settings - New settings
-   * @returns {boolean} - Success status
-   */
-  updateReminderSettings(reminderId, settings) {
+  checkUpcomingReminders() {
     try {
-      const reminders = this.getUserReminders();
-      const reminder = reminders.find(r => r.id === reminderId);
-
-      if (!reminder) {
-        return false;
-      }
-
-      // Update settings
-      if (settings.minutesBefore) {
-        reminder.minutesBefore = settings.minutesBefore;
-      }
-
-      // Save updated reminders
-      localStorage.setItem(CONFIG.REMINDERS.STORAGE_KEY, JSON.stringify(reminders));
-      return true;
+      const reminders = this.getReminders();
+      const now = new Date();
+      
+      // Check each reminder
+      reminders.forEach(reminder => {
+        const eventTime = new Date(reminder.time);
+        const timeDiff = eventTime - now;
+        
+        // If event is within 30 minutes and not in the past
+        if (timeDiff > 0 && timeDiff <= 30 * 60 * 1000) {
+          // Send notification
+          this.sendNotification(reminder);
+          
+          // Remove reminder after notification is sent
+          this.removeReminder(reminder.id);
+        }
+      });
     } catch (error) {
-      console.error('Error updating reminder settings:', error);
-      return false;
+      ErrorHandler.logError('check_upcoming_reminders', error);
     }
   },
-
+  
   /**
-   * Clear all reminders
-   * @returns {boolean} - Success status
+   * Send notification for a reminder
+   * @param {object} reminder - Reminder to notify about
    */
-  clearAllReminders() {
-    try {
-      localStorage.removeItem(CONFIG.REMINDERS.STORAGE_KEY);
-      return true;
-    } catch (error) {
-      console.error('Error clearing reminders:', error);
-      return false;
+  sendNotification(reminder) {
+    if (!this.checkNotificationSupport() || Notification.permission !== 'granted') {
+      return;
     }
+    
+    try {
+      const minutes = Math.round((new Date(reminder.time) - new Date()) / (60 * 1000));
+      
+      const notification = new Notification('Event Reminder', {
+        body: `${reminder.title} starts in ${minutes} minutes`,
+        icon: '/main/images/favicon.png',
+        badge: '/main/images/favicon.png',
+        tag: `reminder-${reminder.id}`,
+        requireInteraction: true
+      });
+      
+      // Handle notification click
+      notification.onclick = () => {
+        window.focus();
+        notification.close();
+      };
+    } catch (error) {
+      ErrorHandler.logError('send_notification', error, { reminder });
+    }
+  },
+  
+  /**
+   * Show confirmation message for set reminder
+   * @param {string} eventTitle - Event title
+   * @param {number} minutes - Minutes before event
+   */
+  showConfirmation(eventTitle, minutes = 30) {
+    const container = document.createElement('div');
+    container.className = 'reminder-confirmation';
+    container.innerHTML = `
+      <div class="confirmation-inner">
+        <i class="fas fa-bell"></i>
+        <h3>Reminder Set</h3>
+        <p>You will be notified ${minutes} minutes before <strong>${eventTitle}</strong> starts.</p>
+        <button class="close-btn">OK</button>
+      </div>
+    `;
+    
+    // Add to document
+    document.body.appendChild(container);
+    
+    // Add active class after a short delay (for animation)
+    setTimeout(() => {
+      container.classList.add('active');
+    }, 10);
+    
+    // Add close button functionality
+    const closeBtn = container.querySelector('.close-btn');
+    closeBtn.addEventListener('click', () => {
+      container.classList.remove('active');
+      
+      // Remove from DOM after animation
+      setTimeout(() => {
+        document.body.removeChild(container);
+      }, 300);
+    });
+    
+    // Auto-close after 5 seconds
+    setTimeout(() => {
+      if (document.body.contains(container)) {
+        container.classList.remove('active');
+        
+        // Remove from DOM after animation
+        setTimeout(() => {
+          if (document.body.contains(container)) {
+            document.body.removeChild(container);
+          }
+        }, 300);
+      }
+    }, 5000);
   }
 };
 
-// Initialize the service
+// Initialize reminder service
 ReminderService.init();
 
-// Export the service
+// Export reminder service
 export default ReminderService;

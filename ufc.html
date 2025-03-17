@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Watch live UFC and MMA events in HD - latest fights, fighter rankings, and MMA news on SMART Live TV."
+    />
+    <meta
+      name="keywords"
+      content="UFC live, MMA streaming, UFC fights, MMA events, UFC fighters, MMA rankings"
+    />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.smartlivetv.net/ufc" />
+    <meta property="og:title" content="UFC & MMA – SMART Live TV" />
+    <meta
+      property="og:description"
+      content="Watch live UFC and MMA events in HD - latest fights, fighter rankings, and MMA news on SMART Live TV."
+    />
+    <meta
+      property="og:image"
+      content="https://www.smartlivetv.net/images/og-ufc.jpg"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://www.smartlivetv.net/ufc" />
+    <meta property="twitter:title" content="UFC & MMA – SMART Live TV" />
+    <meta
+      property="twitter:description"
+      content="Watch live UFC and MMA events in HD - latest fights, fighter rankings, and MMA news on SMART Live TV."
+    />
+    <meta
+      property="twitter:image"
+      content="https://www.smartlivetv.net/images/twitter-ufc.jpg"
+    />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.smartlivetv.net/ufc" />
+
+    <title>UFC & MMA – SMART Live TV</title>
+
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    />
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon" />
+
+    <style>
+      /* UFC-specific styles */
+      .weight-class-selector {
+        display: flex;
+        overflow-x: auto;
+        gap: 10px;
+        padding: 10px 0;
+        margin-bottom: 20px;
+      }
+
+      .weight-class-button {
+        background-color: var(--bg-secondary);
+        border: none;
+        border-radius: 8px;
+        padding: 12px 20px;
+        min-width: 120px;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: background-color 0.3s;
+        white-space: nowrap;
+      }
+
+      .weight-class-button:hover {
+        background-color: var(--bg-tertiary);
+      }
+
+      .weight-class-button.active {
+        background-color: var(--accent);
+        color: white;
+      }
+
+      .fight-card {
+        background-color: var(--bg-secondary);
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        transition: transform 0.3s;
+      }
+
+      .fight-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .event-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .event-logo {
+        width: 60px;
+        height: 60px;
+        margin-right: 15px;
+        object-fit: contain;
+      }
+
+      .event-info h3 {
+        font-size: 20px;
+        margin-bottom: 5px;
+      }
+
+      .event-date {
+        color: var(--text-secondary);
+        font-size: 14px;
+      }
+
+      .event-location {
+        color: var(--text-secondary);
+        font-size: 14px;
+      }
+
+      .fight-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .fight-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .fight-item:last-child {
+        border-bottom: none;
+      }
+
+      .fighter {
+        display: flex;
+        align-items: center;
+        width: 40%;
+      }
+
+      .fighter.left {
+        justify-content: flex-end;
+        text-align: right;
+      }
+
+      .fighter.right {
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+      }
+
+      .fighter-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 0 10px;
+      }
+
+      .fighter-name {
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .fighter-record {
+        font-size: 12px;
+        color: var(--text-secondary);
+      }
+
+      .vs {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20%;
+        font-weight: bold;
+        color: var(--accent);
+      }
+
+      .rankings-container.ufc-rankings {
+        margin-top: 30px;
+      }
+
+      .weight-class-header {
+        background-color: rgba(230, 0, 0, 0.1);
+        color: var(--accent);
+        padding: 10px 15px;
+        border-radius: 4px;
+        margin: 30px 0 15px;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .champion-card {
+        display: flex;
+        align-items: center;
+        background-color: var(--bg-secondary);
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        border-left: 4px solid var(--accent);
+      }
+
+      .champion-img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 20px;
+      }
+
+      .champion-info h3 {
+        font-size: 22px;
+        margin-bottom: 5px;
+      }
+
+      .champion-record {
+        font-size: 14px;
+        color: var(--text-secondary);
+        margin-bottom: 8px;
+      }
+
+      .champion-stats {
+        font-size: 14px;
+      }
+
+      .champion-title {
+        display: inline-block;
+        background-color: rgba(230, 0, 0, 0.1);
+        color: var(--accent);
+        padding: 3px 8px;
+        border-radius: 4px;
+        margin-top: 8px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      @media (max-width: 768px) {
+        .fight-item {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .fighter {
+          width: 100%;
+          justify-content: center;
+          text-align: center;
+          margin-bottom: 10px;
+        }
+
+        .fighter.left,
+        .fighter.right {
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        .vs {
+          width: 100%;
+          margin: 10px 0;
+        }
+
+        .fighter-img {
+          margin-bottom: 10px;
+        }
+
+        .champion-card {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .champion-img {
+          margin-right: 0;
+          margin-bottom: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container header-container">
+        <div class="logo">SMART<span> Live TV</span></div>
+        <nav aria-label="Main Navigation">
+          <ul class="nav-menu">
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/football.html">Football</a></li>
+            <li><a href="/ufc.html" class="active">UFC</a></li>
+            <li><a href="/f1.html">F1</a></li>
+
+            <li><a href="/boxing.html">Boxing</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+            <li><a href="/about-us.html">About Us</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <button class="mobile-menu-btn" aria-label="Open Menu">☰</button>
+        <button
+          class="cta-button"
+          onclick="location.href='smartlivetv.net/shop'"
+        >
+          Watch Live
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Menu (hidden by default) -->
+    <div class="mobile-menu">
+      <div class="mobile-menu-header">
+        <div class="logo">SMART<span> Live TV</span></div>
+        <button class="mobile-menu-close">✕</button>
+      </div>
+      <ul class="mobile-menu-links">
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/football.html">Football</a></li>
+        <li><a href="/basketball.html">Basketball</a></li>
+        <li><a href="/ufc.html">UFC</a></li>
+        <li><a href="/f1.html">F1</a></li>
+
+        <li><a href="/boxing.html">Boxing</a></li>
+        <li><a href="/blog.html">Blog</a></li>
+        <li><a href="/about-us.html">About Us</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+      <button
+        class="cta-button"
+        style="width: 100%; margin-top: 20px"
+        onclick="location.href='smartlivetv.net/shop'"
+      >
+        Watch Live
+      </button>
+    </div>
+
+    <!-- Page Title -->
+    <section class="page-title">
+      <div class="container">
+        <h1>UFC & MMA</h1>
+        <p>
+          Watch live UFC events, check fighter rankings, and get the latest news
+          from the world of mixed martial arts.
+        </p>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+      <!-- Weight Class Selector -->
+      <section aria-labelledby="weight-classes-heading">
+        <h2 id="weight-classes-heading" class="visually-hidden">
+          Weight Classes
+        </h2>
+        <div class="weight-class-selector">
+          <button class="weight-class-button active" data-weight-class="all">
+            All Divisions
+          </button>
+          <button class="weight-class-button" data-weight-class="heavyweight">
+            Heavyweight
+          </button>
+          <button
+            class="weight-class-button"
+            data-weight-class="light-heavyweight"
+          >
+            Light Heavyweight
+          </button>
+          <button class="weight-class-button" data-weight-class="middleweight">
+            Middleweight
+          </button>
+          <button class="weight-class-button" data-weight-class="welterweight">
+            Welterweight
+          </button>
+          <button class="weight-class-button" data-weight-class="lightweight">
+            Lightweight
+          </button>
+          <button class="weight-class-button" data-weight-class="featherweight">
+            Featherweight
+          </button>
+          <button class="weight-class-button" data-weight-class="bantamweight">
+            Bantamweight
+          </button>
+          <button class="weight-class-button" data-weight-class="flyweight">
+            Flyweight
+          </button>
+          <button class="weight-class-button" data-weight-class="womens">
+            Women's Divisions
+          </button>
+        </div>
+      </section>
+
+      <!-- Upcoming Events -->
+      <section aria-labelledby="upcoming-events-heading">
+        <h2 id="upcoming-events-heading" class="section-title">
+          Upcoming Events
+          <span class="data-status-badge">Updated daily</span>
+        </h2>
+        <div id="events-container">
+          <!-- Event Cards will be loaded here -->
+          <div class="loading"></div>
+
+          <!-- Static placeholder for now -->
+          <div class="fight-card">
+            <div class="event-header">
+              <img
+                src="images/events/ufc-307.png"
+                alt="UFC 307"
+                class="event-logo"
+              />
+              <div class="event-info">
+                <h3>UFC 307: Jones vs Aspinall</h3>
+                <div class="event-date">
+                  Saturday, March 22, 2025 • 10:00 PM ET
+                </div>
+                <div class="event-location">T-Mobile Arena, Las Vegas, NV</div>
+              </div>
+            </div>
+            <div class="fight-list">
+              <!-- Main Event -->
+              <div class="fight-item">
+                <div class="fighter left">
+                  <div class="fighter-details">
+                    <div class="fighter-name">Jon Jones</div>
+                    <div class="fighter-record">27-1-0</div>
+                  </div>
+                  <img
+                    src="images/fighters/jones.png"
+                    alt="Jon Jones"
+                    class="fighter-img"
+                  />
+                </div>
+                <div class="vs">VS</div>
+                <div class="fighter right">
+                  <div class="fighter-details">
+                    <div class="fighter-name">Tom Aspinall</div>
+                    <div class="fighter-record">14-3-0</div>
+                  </div>
+                  <img
+                    src="images/fighters/aspinall.png"
+                    alt="Tom Aspinall"
+                    class="fighter-img"
+                  />
+                </div>
+              </div>
+
+              <!-- Co-Main Event -->
+              <div class="fight-item">
+                <div class="fighter left">
+                  <div class="fighter-details">
+                    <div class="fighter-name">Alex Pereira</div>
+                    <div class="fighter-record">9-2-0</div>
+                  </div>
+                  <img
+                    src="images/fighters/pereira.png"
+                    alt="Alex Pereira"
+                    class="fighter-img"
+                  />
+                </div>
+                <div class="vs">VS</div>
+                <div class="fighter right">
+                  <div class="fighter-details">
+                    <div class="fighter-name">Jiri Prochazka</div>
+                    <div class="fighter-record">29-4-1</div>
+                  </div>
+                  <img
+                    src="images/fighters/prochazka.png"
+                    alt="Jiri Prochazka"
+                    class="fighter-img"
+                  />
+                </div>
+              </div>
+
+              <!-- More Fights -->
+              <div class="fight-item">
+                <div class="fighter left">
+                  <div class="fighter-details">
+                    <div class="fighter-name">Sean O'Malley</div>
+                    <div class="fighter-record">17-1-0</div>
+                  </div>
+                  <img
+                    src="images/fighters/omalley.png"
+                    alt="Sean O'Malley"
+                    class="fighter-img"
+                  />
+                </div>
+                <div class="vs">VS</div>
+                <div class="fighter right">
+                  <div class="fighter-details">
+                    <div class="fighter-name">Merab Dvalishvili</div>
+                    <div class="fighter-record">16-4-0</div>
+                  </div>
+                  <img
+                    src="images/fighters/dvalishvili.png"
+                    alt="Merab Dvalishvili"
+                    class="fighter-img"
+                  />
+                </div>
+              </div>
+            </div>
+            <a href="/watch/ufc/ufc-307-jones-vs-aspinall" class="watch-now"
+              >View Full Card</a
+            >
+          </div>
+
+          <div class="fight-card">
+            <div class="event-header">
+              <img
+                src="images/events/ufc-fight-night.png"
+                alt="UFC Fight Night"
+                class="event-logo"
+              />
+              <div class="event-info">
+                <h3>UFC Fight Night: Whittaker vs Costa</h3>
+                <div class="event-date">
+                  Saturday, April 5, 2025 • 8:00 PM ET
+                </div>
+                <div class="event-location">UFC APEX, Las Vegas, NV</div>
+              </div>
+            </div>
+            <div class="fight-list">
+              <!-- Main Event -->
+              <div class="fight-item">
+                <div class="fighter left">
+                  <div class="fighter-details">
+                    <div class="fighter-name">Robert Whittaker</div>
+                    <div class="fighter-record">25-7-0</div>
+                  </div>
+                  <img
+                    src="images/fighters/whittaker.png"
+                    alt="Robert Whittaker"
+                    class="fighter-img"
+                  />
+                </div>
+                <div class="vs">VS</div>
+                <div class="fighter right">
+                  <div class="fighter-details">
+                    <div class="fighter-name">Paulo Costa</div>
+                    <div class="fighter-record">14-3-0</div>
+                  </div>
+                  <img
+                    src="images/fighters/costa.png"
+                    alt="Paulo Costa"
+                    class="fighter-img"
+                  />
+                </div>
+              </div>
+            </div>
+            <a
+              href="/watch/ufc/ufc-fight-night-whittaker-vs-costa"
+              class="watch-now"
+              >View Full Card</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- UFC Rankings -->
+      <section aria-labelledby="ufc-rankings-heading">
+        <h2 id="ufc-rankings-heading" class="section-title">UFC Rankings</h2>
+        <div class="rankings-container ufc-rankings">
+          <!-- Champions will be loaded here -->
+          <div class="loading"></div>
+
+          <!-- Heavyweight Division -->
+          <div class="weight-class-header">Heavyweight Division (265 lbs)</div>
+          <div class="champion-card">
+            <img
+              src="images/fighters/jones.png"
+              alt="Jon Jones"
+              class="champion-img"
+            />
+            <div class="champion-info">
+              <h3>Jon Jones</h3>
+              <div class="champion-record">Record: 27-1-0 (10 KO, 7 SUB)</div>
+              <div class="champion-stats">
+                Last Fight: Mar 4, 2023 - Win vs Ciryl Gane (SUB)
+              </div>
+              <div class="champion-title">Heavyweight Champion</div>
+            </div>
+          </div>
+
+          <div class="rankings-header">
+            <div class="team-rank">Rank</div>
+            <div></div>
+            <div>Fighter</div>
+            <div>Record</div>
+            <div>Last Fight</div>
+          </div>
+
+          <div class="rankings-row">
+            <div class="team-rank">1</div>
+            <div>
+              <img
+                src="images/fighters/aspinall.png"
+                alt="Tom Aspinall"
+                class="team-logo-small"
+              />
+            </div>
+            <div>Tom Aspinall</div>
+            <div>14-3-0</div>
+            <div>W (KO)</div>
+          </div>
+
+          <div class="rankings-row">
+            <div class="team-rank">2</div>
+            <div>
+              <img
+                src="images/fighters/gane.png"
+                alt="Ciryl Gane"
+                class="team-logo-small"
+              />
+            </div>
+            <div>Ciryl Gane</div>
+            <div>11-2-0</div>
+            <div>L (SUB)</div>
+          </div>
+
+          <div class="rankings-row">
+            <div class="team-rank">3</div>
+            <div>
+              <img
+                src="images/fighters/miocic.png"
+                alt="Stipe Miocic"
+                class="team-logo-small"
+              />
+            </div>
+            <div>Stipe Miocic</div>
+            <div>20-4-0</div>
+            <div>L (KO)</div>
+          </div>
+
+          <div class="rankings-row">
+            <div class="team-rank">4</div>
+            <div>
+              <img
+                src="images/fighters/pavlovich.png"
+                alt="Sergei Pavlovich"
+                class="team-logo-small"
+              />
+            </div>
+            <div>Sergei Pavlovich</div>
+            <div>18-2-0</div>
+            <div>W (KO)</div>
+          </div>
+
+          <div class="rankings-row">
+            <div class="team-rank">5</div>
+            <div>
+              <img
+                src="images/fighters/blaydes.png"
+                alt="Curtis Blaydes"
+                class="team-logo-small"
+              />
+            </div>
+            <div>Curtis Blaydes</div>
+            <div>17-4-0</div>
+            <div>W (DEC)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- News and Blog Section -->
+      <div class="content-grid">
+        <div class="news-container">
+          <h2 class="section-title">UFC News</h2>
+
+          <!-- News Card 1 -->
+          <div class="news-card">
+            <img
+              src="images/news/ufc-news1.jpg"
+              alt="Jones vs Aspinall"
+              class="news-image"
+            />
+            <div class="news-content">
+              <div class="news-meta">
+                <span>UFC 307</span>
+                <span>2 hours ago</span>
+              </div>
+              <h3 class="news-title">
+                Jones vs. Aspinall: Heavyweight Title on the Line at UFC 307
+              </h3>
+              <p class="news-excerpt">
+                The highly anticipated heavyweight championship bout between Jon
+                Jones and Tom Aspinall has fans and analysts divided on who will
+                emerge victorious in what's being called the biggest UFC event
+                of the year.
+              </p>
+              <a href="/blog.html/ufc-jones-aspinall-preview" class="read-more"
+                >Read Full Story</a
+              >
+            </div>
+          </div>
+
+          <!-- News Card 2 -->
+          <div class="news-card">
+            <img
+              src="images/news/ufc-news2.jpg"
+              alt="Pereira vs Prochazka"
+              class="news-image"
+            />
+            <div class="news-content">
+              <div class="news-meta">
+                <span>Light Heavyweight</span>
+                <span>1 day ago</span>
+              </div>
+              <h3 class="news-title">
+                Pereira vs. Prochazka 2: The Rematch Everyone Wanted
+              </h3>
+              <p class="news-excerpt">
+                After their explosive first encounter, Alex Pereira and Jiri
+                Prochazka are set to meet again in a highly anticipated rematch
+                that could redefine the light heavyweight division.
+              </p>
+              <a href="/blog.html/pereira-prochazka-rematch" class="read-more"
+                >Read Full Story</a
+              >
+            </div>
+          </div>
+
+          <!-- News Card 3 -->
+          <div class="news-card">
+            <img
+              src="images/news/ufc-news3.jpg"
+              alt="O'Malley vs Dvalishvili"
+              class="news-image"
+            />
+            <div class="news-content">
+              <div class="news-meta">
+                <span>Bantamweight</span>
+                <span>3 days ago</span>
+              </div>
+              <h3 class="news-title">
+                O'Malley Defends Title Against Dvalishvili in High-Stakes
+                Showdown
+              </h3>
+              <p class="news-excerpt">
+                Sean O'Malley puts his bantamweight championship on the line
+                against the surging Merab Dvalishvili in what promises to be a
+                clash of contrasting styles and personalities.
+              </p>
+              <a href="/blog.html/omalley-dvalishvili-preview" class="read-more"
+                >Read Full Story</a
+              >
+            </div>
+          </div>
+
+          <!-- News Card 4 -->
+          <div class="news-card">
+            <img
+              src="images/news/ufc-news4.jpg"
+              alt="UFC Expansion"
+              class="news-image"
+            />
+            <div class="news-content">
+              <div class="news-meta">
+                <span>UFC Business</span>
+                <span>5 days ago</span>
+              </div>
+              <h3 class="news-title">
+                UFC Announces Expansion Plans for Events in Africa and Middle
+                East
+              </h3>
+              <p class="news-excerpt">
+                The UFC is set to expand its global footprint with a series of
+                events planned for Africa and the Middle East in the coming
+                year, marking a significant step in the promotion's
+                international growth strategy.
+              </p>
+              <a href="/blog.html/ufc-global-expansion" class="read-more"
+                >Read Full Story</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar">
+          <!-- Fighter Spotlight -->
+          <div class="sidebar-card">
+            <h3 class="section-title">Fighter Search</h3>
+            <div class="search-form">
+              <input
+                type="text"
+                id="fighter-search-input"
+                class="search-input"
+                placeholder="Search for a fighter..."
+              />
+              <button id="fighter-search-button" class="search-btn">
+                Search
+              </button>
+            </div>
+            <div id="fighter-search-results"></div>
+          </div>
+
+          <!-- Upcoming Pay-Per-View -->
+          <div class="promo-card">
+            <h3 class="promo-title">UFC 307: Jones vs Aspinall</h3>
+            <p class="promo-text">
+              Don't miss the heavyweight championship showdown! Order now and
+              get exclusive pre-fight content and fighter interviews.
+            </p>
+            <button class="cta-button" onclick="location.href='ppv/ufc-307'">
+              Pre-Order Now
+            </button>
+          </div>
+
+          <!-- UFC Stats -->
+          <div class="sidebar-card">
+            <h3 class="section-title">UFC Stats Leaders</h3>
+            <div class="trending-list">
+              <div class="trending-item">
+                <strong>Most UFC Wins</strong>
+                <p>Donald Cerrone (23)</p>
+                <p>Jim Miller (22)</p>
+                <p>Andrei Arlovski (21)</p>
+              </div>
+              <div class="trending-item">
+                <strong>Most Knockouts</strong>
+                <p>Derrick Lewis (13)</p>
+                <p>Matt Brown (12)</p>
+                <p>Dustin Poirier (9)</p>
+              </div>
+              <div class="trending-item">
+                <strong>Most Submissions</strong>
+                <p>Charles Oliveira (16)</p>
+                <p>Demian Maia (11)</p>
+                <p>Jim Miller (10)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <h3>SMART Live TV</h3>
+            <ul class="footer-links">
+              <li><a href="/about-us.html">About Us</a></li>
+              <li><a href="/contact.html">Contact</a></li>
+              <li><a href="/careers">Careers</a></li>
+              <li><a href="/press">Press</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Sports</h3>
+            <ul class="footer-links">
+              <li><a href="/football.html">Football</a></li>
+              <li><a href="/ufc.html">UFC/MMA</a></li>
+              <li><a href="/f1.html">Formula 1</a></li>
+
+              <li><a href="/boxing.html">Boxing</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Help</h3>
+            <ul class="footer-links">
+              <li><a href="/faq">FAQs</a></li>
+              <li><a href="/shop">Subscription</a></li>
+              <li><a href="/support">Support</a></li>
+              <li><a href="/account">Account</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Legal</h3>
+            <ul class="footer-links">
+              <li><a href="/terms">Terms of Service</a></li>
+              <li><a href="/privacy">Privacy Policy</a></li>
+              <li><a href="/cookies">Cookie Policy</a></li>
+              <li><a href="/copyright">Copyright</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="copyright">
+          &copy; 2025 SMART Live TV. All rights reserved.
+        </div>
+        <div class="data-update-info">
+          <small>Data is updated twice daily at 8 AM and 8 PM</small>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/config.js"></script>
+    <script src="js/api-service.js"></script>
+    <script src="js/main.js"></script>
+
+    <!-- UFC-specific JavaScript -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Weight class selector
+        const weightClassButtons = document.querySelectorAll(
+          ".weight-class-button"
+        );
+        if (weightClassButtons) {
+          weightClassButtons.forEach((button) => {
+            button.addEventListener("click", function () {
+              // Remove active class from all buttons
+              weightClassButtons.forEach((btn) =>
+                btn.classList.remove("active")
+              );
+              // Add active class to clicked button
+              this.classList.add("active");
+
+              // Get weight class
+              const weightClass = this.getAttribute("data-weight-class");
+
+              // Filter rankings by weight class (to be implemented with API)
+              filterRankingsByWeightClass(weightClass);
+            });
+          });
+        }
+
+        // Placeholder function for filtering rankings
+        function filterRankingsByWeightClass(weightClass) {
+          console.log(`Filtering for weight class: ${weightClass}`);
+
+          // For now, just show/hide divisions based on selection
+          const weightClassHeaders = document.querySelectorAll(
+            ".weight-class-header"
+          );
+          const championCards = document.querySelectorAll(".champion-card");
+          const rankingsRows = document.querySelectorAll(".rankings-row");
+
+          if (weightClass === "all") {
+            // Show all
+            weightClassHeaders.forEach(
+              (header) => (header.style.display = "block")
+            );
+            championCards.forEach((card) => (card.style.display = "flex"));
+            rankingsRows.forEach((row) => (row.style.display = "grid"));
+          } else {
+            // Show only matching (for now just checking if the header contains the class name)
+            weightClassHeaders.forEach((header) => {
+              const shouldDisplay = header.textContent
+                .toLowerCase()
+                .includes(weightClass);
+              header.style.display = shouldDisplay ? "block" : "none";
+
+              // Find the next champion card and set its display
+              let next = header.nextElementSibling;
+              if (next && next.classList.contains("champion-card")) {
+                next.style.display = shouldDisplay ? "flex" : "none";
+              }
+
+              // Find all following rankings rows until the next header
+              while (next && !next.classList.contains("weight-class-header")) {
+                if (
+                  next.classList.contains("rankings-row") ||
+                  next.classList.contains("rankings-header")
+                ) {
+                  next.style.display = shouldDisplay ? "grid" : "none";
+                }
+                next = next.nextElementSibling;
+              }
+            });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

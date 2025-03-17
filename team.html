@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Team profile, statistics, matches and news on SMART Live TV. Get the latest information about your favorite football team."
+    />
+    <meta
+      name="keywords"
+      content="football team, team statistics, team profile, football matches, team news"
+    />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.smartlivetv.net/team" />
+    <meta property="og:title" content="Team Profile – SMART Live TV" />
+    <meta
+      property="og:description"
+      content="Team profile, statistics, matches and news on SMART Live TV. Get the latest information about your favorite football team."
+    />
+    <meta
+      property="og:image"
+      content="https://www.smartlivetv.net/images/og-team.jpg"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://www.smartlivetv.net/team" />
+    <meta property="twitter:title" content="Team Profile – SMART Live TV" />
+    <meta
+      property="twitter:description"
+      content="Team profile, statistics, matches and news on SMART Live TV. Get the latest information about your favorite football team."
+    />
+    <meta
+      property="twitter:image"
+      content="https://www.smartlivetv.net/images/twitter-team.jpg"
+    />
+
+    <!-- Canonical URL will be set dynamically -->
+    <link rel="canonical" href="https://www.smartlivetv.net/team" />
+
+    <!-- Title will be set dynamically -->
+    <title>Team Profile – SMART Live TV</title>
+
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    />
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon" />
+
+    <style>
+      /* Team-specific styles */
+      .team-header {
+        background-color: #374df5; /* Default, will be overridden by team color */
+        color: #ffffff;
+        padding: 60px 0 30px;
+        margin-bottom: 0;
+      }
+
+      .team-header-content {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .team-logo-large {
+        width: 120px;
+        height: 120px;
+        object-fit: contain;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 10px;
+      }
+
+      .team-info h1 {
+        font-size: 36px;
+        margin-bottom: 10px;
+      }
+
+      .team-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        font-size: 14px;
+        opacity: 0.9;
+      }
+
+      .team-country,
+      .team-founded,
+      .team-stadium {
+        display: flex;
+        align-items: center;
+      }
+
+      .country-flag {
+        width: 20px;
+        height: 14px;
+        margin-right: 8px;
+        border-radius: 2px;
+      }
+
+      .team-content {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        gap: 30px;
+        margin: 30px auto;
+      }
+
+      .team-stats-panel {
+        background-color: var(--bg-secondary);
+        border-radius: 8px;
+        padding: 20px;
+      }
+
+      .team-form-section,
+      .team-manager-section,
+      .team-tournament-section {
+        margin-bottom: 25px;
+      }
+
+      .team-form-section h3,
+      .team-manager-section h3,
+      .team-tournament-section h3 {
+        font-size: 18px;
+        margin-bottom: 15px;
+        position: relative;
+      }
+
+      .team-form-section h3::after,
+      .team-manager-section h3::after,
+      .team-tournament-section h3::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        height: 2px;
+        width: 30px;
+        background-color: var(--accent);
+      }
+
+      .form-indicators {
+        display: flex;
+        gap: 10px;
+      }
+
+      .form-badge {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 14px;
+      }
+
+      .form-win {
+        background-color: #2ecc71;
+        color: white;
+      }
+
+      .form-draw {
+        background-color: #f39c12;
+        color: white;
+      }
+
+      .form-loss {
+        background-color: #e74c3c;
+        color: white;
+      }
+
+      .manager-info,
+      .tournament-info {
+        padding: 15px;
+        background-color: var(--bg-tertiary);
+        border-radius: 6px;
+      }
+
+      .manager-name {
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+
+      .manager-country {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+      }
+
+      .country-flag-small {
+        width: 16px;
+        height: 11px;
+        margin-right: 6px;
+        border-radius: 2px;
+      }
+
+      .team-content-main {
+        background-color: var(--bg-secondary);
+        border-radius: 8px;
+        padding: 25px;
+      }
+
+      .content-section {
+        margin-bottom: 30px;
+      }
+
+      .content-section h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+        position: relative;
+      }
+
+      .content-section h2::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        height: 3px;
+        width: 50px;
+        background-color: var(--accent);
+      }
+
+      .content-section p {
+        line-height: 1.7;
+        margin-bottom: 15px;
+      }
+
+      .update-info {
+        margin-top: 30px;
+        color: var(--text-secondary);
+        font-size: 12px;
+        text-align: right;
+      }
+
+      @media (max-width: 768px) {
+        .team-header-content {
+          flex-direction: column;
+          text-align: center;
+          gap: 20px;
+        }
+
+        .team-meta {
+          justify-content: center;
+        }
+
+        .team-content {
+          grid-template-columns: 1fr;
+        }
+
+        .team-form-section h3::after,
+        .team-manager-section h3::after,
+        .team-tournament-section h3::after,
+        .content-section h2::after {
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        .team-form-section h3,
+        .team-manager-section h3,
+        .team-tournament-section h3,
+        .content-section h2 {
+          text-align: center;
+        }
+
+        .form-indicators {
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container header-container">
+        <div class="logo">SMART<span> Live TV</span></div>
+        <nav aria-label="Main Navigation">
+          <ul class="nav-menu">
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/football.html" class="active">Football</a></li>
+            <li><a href="/ufc.html">UFC</a></li>
+            <li><a href="/f1.html">F1</a></li>
+
+            <li><a href="/boxing.html">Boxing</a></li>
+            <li><a href="/blog.html">Blog</a></li>
+            <li><a href="/about-us.html">About Us</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <button class="mobile-menu-btn" aria-label="Open Menu">☰</button>
+        <button class="cta-button" onclick="location.href=' /shop'">
+          Watch Live
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Menu (hidden by default) -->
+    <div class="mobile-menu">
+      <div class="mobile-menu-header">
+        <div class="logo">SMART<span> Live TV</span></div>
+        <button class="mobile-menu-close">✕</button>
+      </div>
+      <ul class="mobile-menu-links">
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/football.html">Football</a></li>
+        <li><a href="/basketball.html">Basketball</a></li>
+        <li><a href="/ufc.html">UFC</a></li>
+        <li><a href="/f1.html">F1</a></li>
+
+        <li><a href="/boxing.html">Boxing</a></li>
+        <li><a href="/blog.html">Blog</a></li>
+        <li><a href="/about-us.html">About Us</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+      <button
+        class="cta-button"
+        style="width: 100%; margin-top: 20px"
+        onclick="location.href=' /shop'"
+      >
+        Watch Live
+      </button>
+    </div>
+
+    <!-- Team Profile Container -->
+    <div id="team-profile">
+      <!-- Team profile will be loaded dynamically -->
+      <div class="loading" style="min-height: 400px"></div>
+    </div>
+
+    <!-- Recent Matches -->
+    <div class="container">
+      <section aria-labelledby="recent-matches-heading">
+        <h2 id="recent-matches-heading" class="section-title">
+          Recent Matches
+        </h2>
+        <div class="scores-container">
+          <!-- Placeholder until API integration for team-specific matches -->
+          <article class="score-card">
+            <div class="league-info">
+              <img
+                src="/images/leagues/premier-league.png"
+                alt="Premier League"
+                class="league-flag"
+              />
+              <span>Premier League</span>
+              <span class="match-time">Finished</span>
+            </div>
+            <div class="match-teams">
+              <div class="team">
+                <img
+                  src="/images/teams/liverpool.png"
+                  alt="Liverpool"
+                  class="team-logo"
+                />
+                <span class="team-name">Liverpool</span>
+              </div>
+              <div class="match-score">2 - 0</div>
+              <div class="team">
+                <img
+                  src="/images/teams/tottenham.png"
+                  alt="Tottenham"
+                  class="team-logo"
+                />
+                <span class="team-name">Tottenham</span>
+              </div>
+            </div>
+            <a
+              href="/watch/premier-league/liverpool-vs-tottenham"
+              class="watch-now"
+              >Watch Highlights</a
+            >
+          </article>
+
+          <article class="score-card">
+            <div class="league-info">
+              <img
+                src="/images/leagues/premier-league.png"
+                alt="Premier League"
+                class="league-flag"
+              />
+              <span>Premier League</span>
+              <span class="match-time">Finished</span>
+            </div>
+            <div class="match-teams">
+              <div class="team">
+                <img
+                  src="/images/teams/arsenal.png"
+                  alt="Arsenal"
+                  class="team-logo"
+                />
+                <span class="team-name">Arsenal</span>
+              </div>
+              <div class="match-score">1 - 1</div>
+              <div class="team">
+                <img
+                  src="/images/teams/liverpool.png"
+                  alt="Liverpool"
+                  class="team-logo"
+                />
+                <span class="team-name">Liverpool</span>
+              </div>
+            </div>
+            <a
+              href="/watch/premier-league/arsenal-vs-liverpool"
+              class="watch-now"
+              >Watch Highlights</a
+            >
+          </article>
+
+          <article class="score-card">
+            <div class="league-info">
+              <img
+                src="/images/leagues/champions-league.png"
+                alt="Champions League"
+                class="league-flag"
+              />
+              <span>Champions League</span>
+              <span class="match-time">Finished</span>
+            </div>
+            <div class="match-teams">
+              <div class="team">
+                <img
+                  src="/images/teams/liverpool.png"
+                  alt="Liverpool"
+                  class="team-logo"
+                />
+                <span class="team-name">Liverpool</span>
+              </div>
+              <div class="match-score">3 - 1</div>
+              <div class="team">
+                <img
+                  src="/images/teams/bayern.png"
+                  alt="Bayern Munich"
+                  class="team-logo"
+                />
+                <span class="team-name">Bayern Munich</span>
+              </div>
+            </div>
+            <a
+              href="/watch/champions-league/liverpool-vs-bayern"
+              class="watch-now"
+              >Watch Highlights</a
+            >
+          </article>
+        </div>
+      </section>
+
+      <!-- Team News -->
+      <section aria-labelledby="team-news-heading">
+        <h2 id="team-news-heading" class="section-title">Team News</h2>
+        <div class="news-container">
+          <!-- Placeholder news cards until API integration -->
+          <div class="news-card">
+            <img
+              src="/images/news/team-news1.jpg"
+              alt="Team News"
+              class="news-image"
+            />
+            <div class="news-content">
+              <div class="news-meta">
+                <span>Transfer News</span>
+                <span>2 hours ago</span>
+              </div>
+              <h3 class="news-title">
+                Club Looking to Strengthen Squad with Summer Signings
+              </h3>
+              <p class="news-excerpt">
+                The club's sporting director confirmed that they are actively
+                looking to strengthen the squad during the upcoming summer
+                transfer window, with a focus on midfield and defensive
+                reinforcements.
+              </p>
+              <a href="/blog.html/summer-transfer-targets" class="read-more"
+                >Read Full Story</a
+              >
+            </div>
+          </div>
+
+          <div class="news-card">
+            <img
+              src="/images/news/team-news2.jpg"
+              alt="Team News"
+              class="news-image"
+            />
+            <div class="news-content">
+              <div class="news-meta">
+                <span>Injury Update</span>
+                <span>1 day ago</span>
+              </div>
+              <h3 class="news-title">
+                Key Player Returns to Training After Long-Term Injury
+              </h3>
+              <p class="news-excerpt">
+                The team received a significant boost as their star midfielder
+                returned to full training following a three-month absence due to
+                a hamstring injury, with a potential return to action in the
+                upcoming fixture.
+              </p>
+              <a href="/blog.html/injury-return-boost" class="read-more"
+                >Read Full Story</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <h3>SMART Live TV</h3>
+            <ul class="footer-links">
+              <li><a href="/about-us.html">About Us</a></li>
+              <li><a href="/contact.html">Contact</a></li>
+              <li><a href="/careers">Careers</a></li>
+              <li><a href="/press">Press</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Sports</h3>
+            <ul class="footer-links">
+              <li><a href="/football.html">Football</a></li>
+              <li><a href="/ufc.html">UFC/MMA</a></li>
+              <li><a href="/f1.html">Formula 1</a></li>
+
+              <li><a href="/boxing.html">Boxing</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Help</h3>
+            <ul class="footer-links">
+              <li><a href="/faq">FAQs</a></li>
+              <li><a href="/subscription">Subscription</a></li>
+              <li><a href="/support">Support</a></li>
+              <li><a href="/account">Account</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Legal</h3>
+            <ul class="footer-links">
+              <li><a href="/terms">Terms of Service</a></li>
+              <li><a href="/privacy">Privacy Policy</a></li>
+              <li><a href="/cookies">Cookie Policy</a></li>
+              <li><a href="/copyright">Copyright</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="copyright">
+          &copy; 2025 SMART Live TV. All rights reserved.
+        </div>
+        <div class="data-update-info">
+          <small>Data is updated twice daily at 8 AM and 8 PM</small>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="/js/config.js"></script>
+    <script src="/js/api-service.js"></script>
+    <script src="/js/main.js"></script>
+
+    <script>
+      // Extract team ID from URL for API calls
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get team ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const teamId = urlParams.get("id");
+
+        if (teamId) {
+          // Load team data
+          SportsApp.loadTeamPageData(teamId);
+
+          // Update page title once data is loaded
+          const observeTeamProfile = new MutationObserver(function (mutations) {
+            const teamHeader = document.querySelector(".team-header h1");
+            if (teamHeader) {
+              document.title = `${teamHeader.textContent} – SMART Live TV`;
+              observeTeamProfile.disconnect();
+            }
+          });
+
+          observeTeamProfile.observe(document.getElementById("team-profile"), {
+            childList: true,
+            subtree: true,
+          });
+        } else {
+          document.getElementById("team-profile").innerHTML =
+            '<div class="error-message" style="padding: 30px;">Team ID not provided. Please select a team from the football section.</div>';
+        }
+      });
+    </script>
+  </body>
+</html>

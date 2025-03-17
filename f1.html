@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Watch Formula 1 races live in HD - Get race results, driver standings, team rankings, and F1 news on SMART Live TV.">
+    <meta name="keywords" content="F1 live, Formula 1 streaming, F1 races, F1 standings, Formula 1 drivers, F1 news">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.smartlivetv.net/f1">
+    <meta property="og:title" content="Formula 1 – SMART Live TV">
+    <meta property="og:description" content="Watch Formula 1 races live in HD - Get race results, driver standings, team rankings, and F1 news on SMART Live TV.">
+    <meta property="og:image" content="https://www.smartlivetv.net/images/og-f1.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.smartlivetv.net/f1">
+    <meta property="twitter:title" content="Formula 1 – SMART Live TV">
+    <meta property="twitter:description" content="Watch Formula 1 races live in HD - Get race results, driver standings, team rankings, and F1 news on SMART Live TV.">
+    <meta property="twitter:image" content="https://www.smartlivetv.net/images/twitter-f1.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.smartlivetv.net/f1">
+    
+    <title>Formula 1 – SMART Live TV</title>
+    
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    
+    <style>
+        /* F1-specific styles */
+        .season-selector {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding: 10px 0;
+            margin-bottom: 20px;
+        }
+        
+        .season-button {
+            background-color: var(--bg-secondary);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            min-width: 120px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: background-color 0.3s;
+            white-space: nowrap;
+        }
+        
+        .season-button:hover {
+            background-color: var(--bg-tertiary);
+        }
+        
+        .season-button.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .f1-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        
+        .f1-tab-button {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .f1-tab-button.active {
+            border-bottom-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .f1-tab-content {
+            display: none;
+        }
+        
+        .f1-tab-content.active {
+            display: block;
+        }
+        
+        .race-card {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .race-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--bg-tertiary);
+        }
+        
+        .race-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        .race-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .race-status.upcoming {
+            color: var(--info);
+        }
+        
+        .race-status.live {
+            color: var(--danger);
+        }
+        
+        .live-indicator {
+            background-color: var(--danger);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .race-details {
+            display: flex;
+            padding: 15px;
+        }
+        
+        .race-info {
+            flex: 1;
+        }
+        
+        .race-circuit, .race-country {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .race-date-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .race-date-item {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .race-date-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        
+        .race-actions {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .countdown {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .driver-standings-table, .constructor-standings-table, .race-results {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        
+        .driver-standings-table th, .constructor-standings-table th, .race-results th {
+            text-align: left;
+            padding: 12px 15px;
+            background-color: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .driver-standings-table td, .constructor-standings-table td, .race-results td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .driver-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .driver-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .team-color {
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+        
+        .points {
+            font-weight: 700;
+        }
+        
+        .race-result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .race-result-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        
+        .race-result-date {
+            color: var(--text-secondary);
+        }
+        
+        .next-race {
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .next-race-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .next-race-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        
+        .next-race-countdown {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .next-race-details {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .next-race-info {
+            flex: 1;
+        }
+        
+        .next-race-circuit, .next-race-country, .next-race-date {
+            margin-bottom: 10px;
+        }
+        
+        .next-race-actions {
+            margin-top: 15px;
+        }
+        
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+        }
+        
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary-color);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="/">
+                        <img src="/images/logo.png" alt="SMART Live TV Logo">
+                    </a>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/football.html">Football</a></li>
+                        <li><a href="/ufc.html">UFC/MMA</a></li>
+                        <li class="active"><a href="/f1.html">Formula 1</a></li>
+                        <li><a href="/blog.html">News</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <button class="cta-button" onclick="trackShopRedirect('header')">Watch Live</button>
+                    <button class="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <div class="logo">
+                <img src="/images/logo.png" alt="SMART Live TV Logo">
+            </div>
+            <button class="mobile-menu-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav class="mobile-nav">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/football.html">Football</a></li>
+                <li><a href="/ufc.html">UFC/MMA</a></li>
+                <li class="active"><a href="/f1.html">Formula 1</a></li>
+                <li><a href="/blog.html">News</a></li>
+            </ul>
+        </nav>
+        <div class="mobile-actions">
+            <button class="cta-button" onclick="trackShopRedirect('mobile-menu')">Watch Live</button>
+        </div>
+    </div>
+    
+    <!-- Hero Section -->
+    <section class="hero f1-hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Formula 1</h1>
+                <p>Watch every race live, get the latest standings, and stay updated with F1 news</p>
+                <button class="cta-button" onclick="trackShopRedirect('f1-hero')">Watch F1 Live</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Next Race -->
+            <section class="next-race" id="next-race">
+                <div class="next-race-header">
+                    <h2 class="next-race-title">Next Race</h2>
+                    <div class="next-race-countdown" id="next-race-countdown">Loading...</div>
+                </div>
+                <div class="next-race-details">
+                    <div class="next-race-info">
+                        <div class="next-race-name" id="next-race-name">Loading race information...</div>
+                        <div class="next-race-circuit" id="next-race-circuit"></div>
+                        <div class="next-race-country" id="next-race-country"></div>
+                        <div class="next-race-date" id="next-race-date"></div>
+                    </div>
+                    <div class="next-race-actions">
+                        <button class="cta-button" onclick="trackShopRedirect('next-race')">Watch Live</button>
+                        <button class="secondary-button" id="set-reminder-btn">Set Reminder</button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Season Selector -->
+            <div class="season-selector">
+                <button class="season-button active" data-season="2023">2023 Season</button>
+                <button class="season-button" data-season="2022">2022 Season</button>
+                <button class="season-button" data-season="2021">2021 Season</button>
+                <button class="season-button" data-season="2020">2020 Season</button>
+                <button class="season-button" data-season="2019">2019 Season</button>
+            </div>
+            
+            <!-- F1 Tabs -->
+            <div class="f1-tabs">
+                <button class="f1-tab-button active" data-tab="calendar">Race Calendar</button>
+                <button class="f1-tab-button" data-tab="drivers">Driver Standings</button>
+                <button class="f1-tab-button" data-tab="constructors">Constructor Standings</button>
+                <button class="f1-tab-button" data-tab="results">Race Results</button>
+            </div>
+            
+            <!-- Calendar Tab -->
+            <div class="f1-tab-content active" id="calendar-content">
+                <h2 id="race-calendar-heading">2023 Race Calendar</h2>
+                <div class="race-calendar">
+                    <div class="loading-container">
+                        <div class="loading-spinner"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Driver Standings Tab -->
+            <div class="f1-tab-content" id="drivers-content">
+                <h2>Driver Standings</h2>
+                <div class="driver-standings-table">
+                    <div class="loading-container">
+                        <div class="loading-spinner"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Constructor Standings Tab -->
+            <div class="f1-tab-content" id="constructors-content">
+                <h2>Constructor Standings</h2>
+                <div class="constructor-standings-table">
+                    <div class="loading-container">
+                        <div class="loading-spinner"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Race Results Tab -->
+            <div class="f1-tab-content" id="results-content">
+                <h2>Race Results</h2>
+                <div class="race-results">
+                    <div class="loading-container">
+                        <div class="loading-spinner"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- F1 News -->
+            <section class="news-section">
+                <h2>Latest F1 News</h2>
+                <div class="news-container">
+                    <div class="loading-container">
+                        <div class="loading-spinner"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>SMART Live TV</h3>
+                    <ul class="footer-links">
+                        <li><a href="/about-us.html">About Us</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                        <li><a href="/careers">Careers</a></li>
+                        <li><a href="/press">Press</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Sports</h3>
+                    <ul class="footer-links">
+                        <li><a href="/football.html">Football</a></li>
+                        <li><a href="/ufc.html">UFC/MMA</a></li>
+                        <li><a href="/f1.html">Formula 1</a></li>
+                        <li><a href="/boxing.html">Boxing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Help</h3>
+                    <ul class="footer-links">
+                        <li><a href="/faq">FAQs</a></li>
+                        <li><a href="/shop">Subscription</a></li>
+                        <li><a href="/support">Support</a></li>
+                        <li><a href="/account">Account</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="/terms">Terms of Service</a></li>
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="/cookies">Cookie Policy</a></li>
+                        <li><a href="/copyright">Copyright</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 SMART Live TV. All rights reserved.
+            </div>
+            <div class="data-update-info">
+                <small>Data is updated twice daily at 8 AM and 8 PM</small>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script type="module" src="/js/config.js"></script>
+    <script type="module" src="/js/api-service.js"></script>
+    <script type="module" src="/js/data-processor.js"></script>
+    <script type="module" src="/js/sports-app.js"></script>
+    <script type="module" src="/js/main.js"></script>
+</body>
+</html>

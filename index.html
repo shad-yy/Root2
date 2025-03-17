@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Watch live sports streaming in HD - football, basketball, UFC, F1 and more. Get real-time scores, rankings and sports news on SMART Live TV."
+    />
+    <meta
+      name="keywords"
+      content="live sports, sports streaming, football live, UFC live, basketball streaming, F1 races, sports scores"
+    />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.smartlivetv.net/" />
+    <meta
+      property="og:title"
+      content="SMART Live TV – The Ultimate Sports Streaming & News Hub"
+    />
+    <meta
+      property="og:description"
+      content="Watch live sports streaming in HD - football, basketball, UFC, F1 and more. Get real-time scores, rankings and sports news."
+    />
+    <meta
+      property="og:image"
+      content="https://www.smartlivetv.com/images/og-image.jpg"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://www.smartlivetv.com/" />
+    <meta
+      property="twitter:title"
+      content="SMART Live TV – The Ultimate Sports Streaming & News Hub"
+    />
+    <meta
+      property="twitter:description"
+      content="Watch live sports streaming in HD - football, basketball, UFC, F1 and more. Get real-time scores, rankings and sports news."
+    />
+    <meta
+      property="twitter:image"
+      content="https://www.smartlivetv.com/images/twitter-image.jpg"
+    />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.smartlivetv.com/" />
+
+    <title>SMART Live TV – The Ultimate Sports Streaming & News Hub</title>
+
+    <!-- Schema.org markup for sports organization -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SportsOrganization",
+        "name": "SMART Live TV",
+        "url": "https://www.smartlivetv.com",
+        "logo": "https://www.smartlivetv.com/images/logo.png",
+        "sameAs": [
+          "https://www.facebook.com/smartlivetv",
+          "https://www.twitter.com/smartlivetv",
+          "https://www.instagram.com/smartlivetv"
+        ]
+      }
+    </script>
+
+    <!-- Schema.org markup for sports events -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SportsEvent",
+        "name": "Liverpool vs Manchester City - Premier League",
+        "startDate": "2025-03-15T15:00:00+00:00",
+        "endDate": "2025-03-15T17:00:00+00:00",
+        "location": {
+          "@type": "Place",
+          "name": "Anfield",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Liverpool",
+            "addressCountry": "UK"
+          }
+        },
+        "competitor": [
+          {
+            "@type": "SportsTeam",
+            "name": "Liverpool"
+          },
+          {
+            "@type": "SportsTeam",
+            "name": "Manchester City"
+          }
+        ],
+        "image": "https://www.smartlivetv.com/images/liverpool-vs-mancity.jpg",
+        "description": "Watch Liverpool vs Manchester City live in HD streaming quality on SMART Live TV.",
+        "offers": {
+          "@type": "Offer",
+          "url": "https://www.smartlivetv.com/watch/premier-league/liverpool-vs-manchester-city",
+          "price": "9.99",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    </script>
+
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    />
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon" />
+  </head>
+  <body>
+    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="skip-to-content">Skip to content</a>
+
+    <!-- Header -->
+    <header>
+      <div class="container header-container">
+        <div class="logo">SMART<span> Live TV</span></div>
+        <nav aria-label="Main Navigation">
+          <ul class="nav-menu">
+            <li><a href="/main/index.html" class="active">Home</a></li>
+            <li><a href="/main/football.html">Football</a></li>
+            <li><a href="/main/ufc.html">UFC</a></li>
+            <li><a href="/main/f1.html">F1</a></li>
+
+            <li><a href="/main/boxing.html">Boxing</a></li>
+            <li><a href="/main/blog.html">Blog</a></li>
+            <li><a href="/main/about-us.html">About Us</a></li>
+            <li><a href="/main/contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <script src="js/config.js"></script>
+        <script src="js/api-service.js"></script>
+        <script src="js/blog-service.js"></script>
+        <script src="js/blog-generator.js"></script>
+        <script src="js/main.js"></script>
+        <button class="mobile-menu-btn" aria-label="Open Menu">☰</button>
+        <button class="cta-button" onclick="location.href=' /shop'">
+          Watch Live
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Menu (hidden by default) -->
+    <div class="mobile-menu">
+      <div class="mobile-menu-header">
+        <div class="logo">SMART<span> Live TV</span></div>
+        <button class="mobile-menu-close" aria-label="Close Menu">✕</button>
+      </div>
+      <ul class="mobile-menu-links">
+        <li><a href="/main/index.html">Home</a></li>
+        <li>
+          <a href="/main/football.html">Football</a>
+          <!-- Submenu will be added by JavaScript -->
+        </li>
+        <li>
+          <a href="/main/basketball.html">Basketball</a>
+          <!-- Submenu will be added by JavaScript -->
+        </li>
+        <li>
+          <a href="/main/ufc.html">UFC</a>
+          <!-- Submenu will be added by JavaScript -->
+        </li>
+        <li>
+          <a href="/main/f1.html">F1</a>
+          <!-- Submenu will be added by JavaScript -->
+        </li>
+
+        <li><a href="/main/boxing.html">Boxing</a></li>
+        <li><a href="/main/blog.html">Blog</a></li>
+        <li><a href="/main/about-us.html">About Us</a></li>
+        <li><a href="/main/contact.html">Contact</a></li>
+      </ul>
+      <button
+        class="cta-button"
+        style="width: 100%; margin-top: 20px"
+        onclick="location.href=' /shop'"
+      >
+        Watch Live
+      </button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" aria-label="Featured Content">
+      <div class="hero-content">
+        <h1>Never Miss a Live Sports Moment</h1>
+        <p>
+          Get real-time scores, in-depth analysis, and watch your favorite
+          sports events live in HD streaming quality.
+        </p>
+        <button class="cta-button cta-large" onclick="location.href=' /shop'">
+          Start Watching Now
+        </button>
+      </div>
+      <!-- New Feature Callout -->
+      <div class="feature-callout">
+        <div class="feature-callout-icon">
+          <i class="fas fa-fire"></i>
+        </div>
+        <div class="feature-callout-text">
+          UFC 307: Jones vs Aspinall - Watch Live This Weekend!
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <main id="main-content" class="container">
+      <!-- Sports Categories -->
+      <section aria-labelledby="categories-heading">
+        <h2 id="categories-heading" class="visually-hidden">
+          Sports Categories
+        </h2>
+        <div class="categories">
+          <div class="category active">All Sports</div>
+          <div class="category">Football</div>
+          <div class="category">UFC</div>
+          <div class="category">F1</div>
+          <div class="category">Boxing</div>
+        </div>
+      </section>
+
+      <!-- Live Scores Section -->
+      <section aria-labelledby="live-scores-heading">
+        <h2 id="live-scores-heading" class="section-title">
+          Match Schedule
+          <span class="data-status-badge">Updated daily</span>
+        </h2>
+        <div class="scores-container">
+          <!-- Loading indicator that will be replaced by actual content -->
+          <div class="loading"></div>
+        </div>
+      </section>
+
+      <!-- League Rankings -->
+      <section aria-labelledby="rankings-heading">
+        <h2 id="rankings-heading" class="section-title">
+          Premier League Table
+        </h2>
+        <div class="rankings-container">
+          <!-- Loading indicator that will be replaced by actual content -->
+          <div class="loading"></div>
+        </div>
+      </section>
+
+      <!-- News and Blog Section -->
+      <div class="content-grid">
+        <div class="news-container">
+          <h2 class="section-title">Latest News</h2>
+          <!-- News cards will be loaded here -->
+          <div class="loading"></div>
+        </div>
+
+        <div class="sidebar">
+          <!-- Promo Card -->
+          <div class="promo-card">
+            <h3 class="promo-title">Never Miss a Match Again!</h3>
+            <p class="promo-text">
+              Get unlimited access to all live matches, replays, and exclusive
+              content with our premium subscription.
+            </p>
+            <button
+              class="cta-button"
+              onclick="location.href='/shop?source=promo'"
+            >
+              Subscribe Now
+            </button>
+          </div>
+
+          <!-- Trending Topics -->
+          <div class="sidebar-card">
+            <h3 class="section-title">Trending Topics</h3>
+            <ul class="trending-list">
+              <!-- Trending topics will be loaded here -->
+              <div class="loading loading-sm"></div>
+            </ul>
+          </div>
+
+          <!-- Upcoming Matches -->
+          <div class="sidebar-card">
+            <h3 class="section-title">Upcoming Matches</h3>
+            <div class="trending-list">
+              <div
+                class="trending-item upcoming-match"
+                data-timestamp="1716562800000"
+              >
+                <strong>Liverpool vs Chelsea</strong>
+                <p>Premier League • Tomorrow, 20:00</p>
+                <p class="match-countdown">24h 30m</p>
+                <a
+                  href="/watch/premier-league/liverpool-vs-chelsea"
+                  class="watch-now"
+                  style="margin-top: 10px"
+                  >Set Reminder</a
+                >
+              </div>
+              <div
+                class="trending-item upcoming-match"
+                data-timestamp="1716736800000"
+              >
+                <strong>Bayern Munich vs PSG</strong>
+                <p>Champions League • Wednesday, 21:00</p>
+                <p class="match-countdown">48h 30m</p>
+                <a
+                  href="/watch/champions-league/bayern-vs-psg"
+                  class="watch-now"
+                  style="margin-top: 10px"
+                  >Set Reminder</a
+                >
+              </div>
+              <div
+                class="trending-item upcoming-match"
+                data-timestamp="1716780000000"
+              >
+                <strong>Lakers vs Warriors</strong>
+                <p>NBA • Thursday, 03:30</p>
+                <p class="match-countdown">60h 30m</p>
+                <a
+                  href="/watch/nba/lakers-vs-warriors"
+                  class="watch-now"
+                  style="margin-top: 10px"
+                  >Set Reminder</a
+                >
+              </div>
+              <div
+                class="trending-item upcoming-match"
+                data-timestamp="1717171200000"
+              >
+                <strong>O'Malley vs Dvalishvili</strong>
+                <p>UFC • Saturday, 22:00</p>
+                <p class="match-countdown">5d 22h</p>
+                <a
+                  href="/watch/ufc/omalley-vs-dvalishvili"
+                  class="watch-now"
+                  style="margin-top: 10px"
+                  >Set Reminder</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <h3>SMART Live TV</h3>
+            <ul class="footer-links">
+              <li><a href="/main/about-us.html">About Us</a></li>
+              <li><a href="/main/contact.html">Contact</a></li>
+              <li><a href="/careers">Careers</a></li>
+              <li><a href="/press">Press</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Sports</h3>
+            <ul class="footer-links">
+              <li><a href="/main/football.html">Football</a></li>
+              <li><a href="/main/ufc.html">UFC/MMA</a></li>
+              <li><a href="/main/f1.html">Formula 1</a></li>
+
+              <li><a href="/main/boxing.html">Boxing</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Help</h3>
+            <ul class="footer-links">
+              <li><a href="/faq">FAQs</a></li>
+              <li><a href="/subscription">Subscription</a></li>
+              <li><a href="/support">Support</a></li>
+              <li><a href="/account">Account</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Legal</h3>
+            <ul class="footer-links">
+              <li><a href="/terms">Terms of Service</a></li>
+              <li><a href="/privacy">Privacy Policy</a></li>
+              <li><a href="/cookies">Cookie Policy</a></li>
+              <li><a href="/copyright">Copyright</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="copyright">
+          &copy; 2025 SMART Live TV. All rights reserved.
+        </div>
+        <div class="data-update-info">
+          <small
+            >Data is updated three times daily at 8 AM, 2 PM, and 8 PM</small
+          >
+        </div>
+      </div>
+    </footer>
+
+    <!-- Cookie Consent Banner (Added via JavaScript) -->
+
+    <!-- Theme Toggle Button (Added via JavaScript) -->
+
+    <!-- Scripts -->
+    <script type="module" src="js/config.js"></script>
+    <script type="module" src="js/api-service.js"></script>
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
